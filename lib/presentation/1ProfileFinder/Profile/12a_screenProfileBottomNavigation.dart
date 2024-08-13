@@ -15,6 +15,7 @@ import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/1
 import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/TestAllInvestigator.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Profile%20Manager/AllProfileManagerScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Profile/12screenProfile_complete.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/chat/chat_Home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utils/color_constant.dart';
@@ -44,6 +45,7 @@ class _ProfileBottomNavigationScreenState
     // MatchingListNavigationFourtyEightScreen(),
 
     ProfilesLoading(),
+    ChatHomeScreen(),
     // const ImagesHappyCouples(),
     // const ChatFiftyThreeScreen(),
   ];
