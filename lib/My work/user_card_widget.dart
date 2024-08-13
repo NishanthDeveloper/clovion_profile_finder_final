@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:profile_finder/core/utils/color_constant.dart';
 import 'package:profile_finder/core/utils/size_utils.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/Id123456FiftyScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/MatchingListNavigationFourtyEightScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Registeration/3ScreenSignin.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -18,13 +19,13 @@ class UserCardWidget extends StatefulWidget {
   final String imageUrl;
   final String address;
   final String subfield;
-
+  final int index;
   UserCardWidget({
     super.key,
     required this.userId,
     required this.imageUrl,
     required this.address,
-    required this.subfield,
+    required this.subfield, required this.index,
   });
 
   @override
@@ -300,6 +301,8 @@ print("User ID:${requestedUid.toString()}");
         var response = await http.post(
           Uri.parse('http://51.20.61.70:3000/requested_list/$userUid'),
           body: requestBody,
+
+
         );
 
         print("statusCodeIs${response.statusCode}");
@@ -427,7 +430,9 @@ print("User ID:${requestedUid.toString()}");
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Id123456FiftyScreen(userUidMaLi:widget.index)));
+                },
                 child: CachedNetworkImage(
                   height: 216,
                   width: 162,

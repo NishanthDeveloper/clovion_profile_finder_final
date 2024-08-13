@@ -6,6 +6,7 @@ import 'package:profile_finder/My%20work/matching_list_page.dart';
 import 'package:profile_finder/My%20work/test.dart';
 import 'package:profile_finder/core/utils/image_constant.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Account%20Settings/Aed3100FourtySevenScreen.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Account%20Settings/widgets/requested_list_widget.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/HappyCouplesUI/AddThirtyFourScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/HappyCouplesUI/HappyCouplesPackagesThirtySixScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/HighlightProfile/HighlightProfileFourtySixScreen.dart';
@@ -382,11 +383,21 @@ class _ProfileBottomNavigationScreenState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        "Requested Lists",
-                        style: TextStyle(color: Colors.white),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return RequestedListWidget();
+                          }),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "Requested Lists",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   /*

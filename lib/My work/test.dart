@@ -5,6 +5,7 @@ import 'package:profile_finder/My%20work/add_widget.dart';
 import 'package:profile_finder/My%20work/user_card_widget.dart';
 import 'package:profile_finder/core/utils/color_constant.dart';
 import 'package:profile_finder/core/utils/size_utils.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Account%20Settings/widgets/search.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/MatchingListNavigationFourtyEightScreen.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
@@ -275,6 +276,9 @@ class _MatchingListPageState extends State<MatchingListPage> {
                           width: DeviceSize.itemWidth * 1.5,
                           height: 50,
                           child: TextField(
+                            onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchScreen(uid: userId.toString(),)));
+                            },
                             decoration: InputDecoration(
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.all(15.0),
@@ -486,11 +490,13 @@ class _MatchingListPageState extends State<MatchingListPage> {
                                     },
                                     child: UserCardWidget(
                                       userId: users[userIndex]['uid'] ?? '',
-                                      imageUrl:
-                                          users[userIndex]['id_card_1'] ?? '',
+                                      imageUrl: users[userIndex]
+                                              ['profile_picture'] ??
+                                          '',
                                       address:
                                           users[userIndex]['address'] ?? '',
                                       subfield: users[userIndex]['email'] ?? '',
+                                      index: index,
                                     ),
                                   );
                                 }
@@ -585,7 +591,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                                       userId:
                                           favoriteUsers[userIndex]['uid'] ?? '',
                                       imageUrl: favoriteUsers[userIndex]
-                                              ['id_card_1'] ??
+                                              ['profile_picture'] ??
                                           '',
                                       address: favoriteUsers[userIndex]
                                               ['address'] ??
@@ -593,6 +599,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                                       subfield: favoriteUsers[userIndex]
                                               ['email'] ??
                                           '',
+                                      index: index,
                                     ),
                                   );
                                 }
@@ -687,13 +694,14 @@ class _MatchingListPageState extends State<MatchingListPage> {
                                       userId:
                                           relatedList[userIndex]['uid'] ?? '',
                                       imageUrl: relatedList[userIndex]
-                                              ['id_card_1'] ??
+                                              ['profile_picture'] ??
                                           '',
                                       address: relatedList[userIndex]
                                               ['address'] ??
                                           '',
                                       subfield:
                                           relatedList[userIndex]['email'] ?? '',
+                                      index: index,
                                     ),
                                   );
                                 }

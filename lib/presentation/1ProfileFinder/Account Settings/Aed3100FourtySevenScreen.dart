@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:profile_finder/presentation/1ProfileFinder/Account%20Settings/widgets/about.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Account%20Settings/widgets/notification.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -106,13 +107,18 @@ class _Aed3100FourtySevenScreenState extends State<Aed3100FourtySevenScreen> {
                       'assets/images/img_notification_deep_purple_a200.svg',
                       color: ColorConstant.clCardgreyColor,
                     ),
-                    title: Text(
-                      'Notification',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          //   color: ColorConstant.clPurpleCardFontColor,
-                          color: ColorConstant.clCardgreyColor,
-                          fontSize: DeviceSize.itemHeight / 10),
+                    title: GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> NotificationPage()));
+                      },
+                      child: Text(
+                        'Notification',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            //   color: ColorConstant.clPurpleCardFontColor,
+                            color: ColorConstant.clCardgreyColor,
+                            fontSize: DeviceSize.itemHeight / 10),
+                      ),
                     ),
                     tileColor: Colors.white,
                     splashColor: Colors.grey,

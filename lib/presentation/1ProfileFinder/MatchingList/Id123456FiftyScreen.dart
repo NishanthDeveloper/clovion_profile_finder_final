@@ -72,7 +72,7 @@ class _Id123456FiftyScreenState extends State<Id123456FiftyScreen> {
   @override
   void initState() {
     _getData();
-
+print(widget.userUidMaLi.toString());
     super.initState();
   }
 
