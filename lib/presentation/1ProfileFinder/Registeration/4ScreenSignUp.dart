@@ -51,6 +51,10 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
 
   TextEditingController passwordController = TextEditingController();
 
+  TextEditingController socialMediaController = TextEditingController();
+
+  TextEditingController referenceController = TextEditingController();
+
   bool _passwordVisible = true;
 
   bool _passwordVisible2 = true;
@@ -82,6 +86,24 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
           start--;
         });
       }
+    });
+  }
+
+  // How do you know dropDown List
+  String? howDoYouKnowSelectedvalue;
+  List<DropdownMenuItem<String>> get howDoYouKnow {
+    return [
+      const DropdownMenuItem(
+          value: "Social Media and Address",
+          child: Text("Social Media and Address")),
+      const DropdownMenuItem(value: "reference", child: Text("reference")),
+      const DropdownMenuItem(value: "Myself", child: Text("Myself")),
+    ];
+  }
+
+  void handlehowDoYouKnowValueChange(String? newValue) {
+    setState(() {
+      howDoYouKnowSelectedvalue = newValue;
     });
   }
 
@@ -268,7 +290,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
   @override
   void initState() {
     countryCode = '+91';
-
+    howDoYouKnowSelectedvalue = howDoYouKnow[2].value;
     super.initState();
   }
 
@@ -299,208 +321,167 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                       ),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 25, right: 25, top: 70, bottom: 20),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              child: Center(
-                                child: Text(
-                                  "Sign Up",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
+
+                      //Inside the Container SingleChildScrollView
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 25, right: 25, top: 30, bottom: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 7),
+                                child: Center(
+                                  child: Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
                                 ),
                               ),
-                            ),
 
-                            const Text("Emaill ID*"),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 10,
-                                    ),
-                                    child: TextFormField(
-                                      autofillHints: const [
-                                        AutofillHints.email
-                                      ],
-                                      controller: emailController,
-                                      validator: (value) {
-                                        RegExp regex = RegExp(r'^.{6,}$');
-                                        if (value!.isEmpty) {
-                                          return ("Email can't be Empty");
-                                        }
-                                        if (!regex.hasMatch(value)) {
-                                          return ("Please Enter Valid Email");
-                                        }
-                                        return null;
-                                      },
-                                      decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: "example@demo.com"),
-                                    )),
-                              ),
-                            ),
-
-                            // Text('$countryCode ${mobileNoController.text}'),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 20),
-                              child: Text("Mobile*"),
-                            ),
-                            Padding(
+                              // Email Field
+                              const Text("Emaill ID*"),
+                              Padding(
                                 padding: const EdgeInsets.only(top: 8),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey.shade100,
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: IntlPhoneField(
-                                          // flagsButtonMargin: EdgeInsets.only(left: 10),
-                                          disableLengthCheck: true,
-                                          dropdownIconPosition:
-                                              IconPosition.trailing,
-                                          decoration: const InputDecoration(
-                                              border: InputBorder.none),
-                                          initialCountryCode: 'IN',
-                                          // onCountryChanged: (phone) {
-                                          //   countryCode = phone.code.toString();
-                                          // },
-
-                                          onCountryChanged: (value) {
-                                            setState(() {
-                                              countryCode =
-                                                  value.fullCountryCode;
-                                            });
-                                          },
-                                          // onChanged: (phone) {
-                                          //   setState(() {
-                                          //     countryCode = phone.countryCode;
-                                          //   });
-                                          // },
-                                        ),
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
                                       ),
-                                    ),
-                                    const SizedBox(width: 10.0),
-                                    Expanded(
-                                      flex: 4,
-                                      child: Container(
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            color: Colors.grey.shade100,
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        child: TextFormField(
-                                          autofillHints: const [
-                                            AutofillHints.telephoneNumber
-                                          ],
-                                          controller: mobileNoController,
-                                          // key: ValueKey(_initialCountryData ?? 'country'),
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.all(8),
-                                            // border: OutlineInputBorder(),
+                                      child: TextFormField(
+                                        autofillHints: const [
+                                          AutofillHints.email
+                                        ],
+                                        controller: emailController,
+                                        validator: (value) {
+                                          RegExp regex = RegExp(r'^.{6,}$');
+                                          if (value!.isEmpty) {
+                                            return ("Email can't be Empty");
+                                          }
+                                          if (!regex.hasMatch(value)) {
+                                            return ("Please Enter Valid Email");
+                                          }
+                                          return null;
+                                        },
+                                        decoration: const InputDecoration(
                                             border: InputBorder.none,
-
-                                            // hintText: _initialCountryData?.phoneMaskWithoutCountryCode,
-                                            hintText: "Enter Mobile No.",
-                                            hintStyle: TextStyle(
-                                                color: Colors.black
-                                                    .withOpacity(.3)),
-                                            errorStyle: const TextStyle(
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                          keyboardType: TextInputType.phone,
-                                          // inputFormatters: [
-                                          //   PhoneInputFormatter(
-                                          //     allowEndlessPhone: false,
-                                          //     // defaultCountryCode: _initialCountryData?.countryCode,
-                                          //   )
-                                          // ],
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                )),
-
-                            // Text(countryCode),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 20),
-                              child: Text("Password*"),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 10,
-                                  ),
-                                  child: TextFormField(
-                                    autofillHints: const [
-                                      AutofillHints.password
-                                    ],
-                                    obscureText: _passwordVisible,
-                                    controller: passwordController,
-                                    validator: (value) {
-                                      RegExp regex = RegExp(r'^.{6,}$');
-                                      if (value!.isEmpty) {
-                                        return ("Password is required for login");
-                                      }
-                                      if (!regex.hasMatch(value)) {
-                                        return ("Please Enter Valid Password (Min. 6 Characters)");
-                                      }
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                        suffixIcon: IconButton(
-                                            icon: Icon(_passwordVisible
-                                                ? Icons.visibility_off
-                                                : Icons.visibility),
-                                            onPressed: () {
-                                              setState(() {
-                                                _passwordVisible =
-                                                    !_passwordVisible;
-                                              });
-                                            }),
-                                        suffixIconColor: Colors.black,
-                                        border: InputBorder.none,
-                                        hintText: "********"),
-                                  ),
+                                            hintText: "example@demo.com"),
+                                      )),
                                 ),
                               ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 20),
-                              child: Text("Confirm Password*"),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Padding(
+
+                              // Mobile Controller
+
+                              // Text('$countryCode ${mobileNoController.text}'),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Mobile*"),
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: Container(
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey.shade100,
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          child: IntlPhoneField(
+                                            // flagsButtonMargin: EdgeInsets.only(left: 10),
+                                            disableLengthCheck: true,
+                                            dropdownIconPosition:
+                                                IconPosition.trailing,
+                                            decoration: const InputDecoration(
+                                                border: InputBorder.none),
+                                            initialCountryCode: 'IN',
+                                            // onCountryChanged: (phone) {
+                                            //   countryCode = phone.code.toString();
+                                            // },
+
+                                            onCountryChanged: (value) {
+                                              setState(() {
+                                                countryCode =
+                                                    value.fullCountryCode;
+                                              });
+                                            },
+                                            // onChanged: (phone) {
+                                            //   setState(() {
+                                            //     countryCode = phone.countryCode;
+                                            //   });
+                                            // },
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      Expanded(
+                                        flex: 4,
+                                        child: Container(
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey.shade100,
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          child: TextFormField(
+                                            autofillHints: const [
+                                              AutofillHints.telephoneNumber
+                                            ],
+                                            controller: mobileNoController,
+                                            // key: ValueKey(_initialCountryData ?? 'country'),
+                                            decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.all(8),
+                                              // border: OutlineInputBorder(),
+                                              border: InputBorder.none,
+
+                                              // hintText: _initialCountryData?.phoneMaskWithoutCountryCode,
+                                              hintText: "Enter Mobile No.",
+                                              hintStyle: TextStyle(
+                                                  color: Colors.black
+                                                      .withOpacity(.3)),
+                                              errorStyle: const TextStyle(
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            keyboardType: TextInputType.phone,
+                                            // inputFormatters: [
+                                            //   PhoneInputFormatter(
+                                            //     allowEndlessPhone: false,
+                                            //     // defaultCountryCode: _initialCountryData?.countryCode,
+                                            //   )
+                                            // ],
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )),
+
+                              // Password Field
+
+                              // Text(countryCode),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Password*"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Padding(
                                     padding: const EdgeInsets.only(
                                       left: 10,
                                     ),
@@ -508,218 +489,426 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                       autofillHints: const [
                                         AutofillHints.password
                                       ],
-                                      obscureText: _passwordVisible2,
-                                      controller: confirmPasswordController,
+                                      obscureText: _passwordVisible,
+                                      controller: passwordController,
                                       validator: (value) {
-                                        if (confirmPasswordController
-                                                    .text.length >
-                                                6 &&
-                                            passwordController.text != value) {
-                                          return "Password not Match";
+                                        RegExp regex = RegExp(r'^.{6,}$');
+                                        if (value!.isEmpty) {
+                                          return ("Password is required for login");
+                                        }
+                                        if (!regex.hasMatch(value)) {
+                                          return ("Please Enter Valid Password (Min. 6 Characters)");
                                         }
                                         return null;
                                       },
                                       decoration: InputDecoration(
                                           suffixIcon: IconButton(
-                                              icon: Icon(_passwordVisible2
+                                              icon: Icon(_passwordVisible
                                                   ? Icons.visibility_off
                                                   : Icons.visibility),
                                               onPressed: () {
                                                 setState(() {
-                                                  _passwordVisible2 =
-                                                      !_passwordVisible2;
+                                                  _passwordVisible =
+                                                      !_passwordVisible;
                                                 });
                                               }),
                                           suffixIconColor: Colors.black,
                                           border: InputBorder.none,
                                           hintText: "********"),
-                                    )),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(top: 20),
-                              child: Text("Refferal Code"),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade100,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: 10,
                                     ),
-                                    child: TextFormField(
-                                      controller: refferalCodeController,
-                                      autofillHints: const [
-                                        AutofillHints.password
-                                      ],
-                                      decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: "6 digit"),
+                                  ),
+                                ),
+                              ),
+
+                              // Confirm Paasword Field
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Confirm Password*"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: TextFormField(
+                                        autofillHints: const [
+                                          AutofillHints.password
+                                        ],
+                                        obscureText: _passwordVisible2,
+                                        controller: confirmPasswordController,
+                                        validator: (value) {
+                                          if (confirmPasswordController
+                                                      .text.length >
+                                                  6 &&
+                                              passwordController.text !=
+                                                  value) {
+                                            return "Password not Match";
+                                          }
+                                          return null;
+                                        },
+                                        decoration: InputDecoration(
+                                            suffixIcon: IconButton(
+                                                icon: Icon(_passwordVisible2
+                                                    ? Icons.visibility_off
+                                                    : Icons.visibility),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _passwordVisible2 =
+                                                        !_passwordVisible2;
+                                                  });
+                                                }),
+                                            suffixIconColor: Colors.black,
+                                            border: InputBorder.none,
+                                            hintText: "********"),
+                                      )),
+                                ),
+                              ),
+
+                              // referal Code Field
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Refferal Code"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: TextFormField(
+                                        controller: refferalCodeController,
+                                        autofillHints: const [
+                                          AutofillHints.password
+                                        ],
+                                        decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: "6 digit"),
+                                      )),
+                                ),
+                              ),
+
+                              //konw about DropDown Button
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text(
+                                    "How do you know about Marriyo matrimony ?"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: SizedBox(
+                                    height: 50,
+                                    child: DropdownButtonFormField(
+                                      decoration: InputDecoration(
+                                          hintText: 'Select',
+                                          hintStyle: const TextStyle(
+                                              color: Colors.grey),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(9),
+                                            borderSide: BorderSide(
+                                              color: Colors.grey.shade100,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(9),
+                                            borderSide: BorderSide(
+                                              width: 0,
+                                              color: Colors.grey.shade100,
+                                            ),
+                                          ),
+                                          fillColor: Colors.grey.shade100,
+                                          filled: true),
+                                      items: howDoYouKnow,
+                                      value: howDoYouKnowSelectedvalue,
+                                      onChanged: handlehowDoYouKnowValueChange,
                                     )),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 25),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  if (passwordController.text.isNotEmpty &&
-                                      confirmPasswordController
-                                          .text.isNotEmpty) {
-                                    if (passwordController.text ==
-                                        confirmPasswordController.text) {
-                                      signup("${ApiService.ipAddress}/signup/");
+
+                              if (howDoYouKnowSelectedvalue ==
+                                  'Social Media and Address') ...[
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Social Media and Address*"),
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 8),
+                                    child: Container(
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 10,
+                                          ),
+                                          child: TextFormField(
+                                            controller: socialMediaController,
+                                            decoration: const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText:
+                                                    "Enter your Social Media and Address"),
+                                          )),
+                                    ))
+                              ] else if (howDoYouKnowSelectedvalue ==
+                                  'reference') ...[
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("reference*"),
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 8),
+                                    child: Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 10,
+                                          ),
+                                          child: TextFormField(
+                                            controller: referenceController,
+                                            autofillHints: const [
+                                              AutofillHints.password
+                                            ],
+                                            decoration: const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "Enter your reference"),
+                                          )),
+                                    ))
+                              ] else if (howDoYouKnowSelectedvalue == 'Myself') ...[
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Social Media and Address*"),
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 8),
+                                    child: Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 10,
+                                          ),
+                                          child: TextFormField(
+                                            controller: socialMediaController,
+                                            decoration: const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText:
+                                                    "Social Media and Address"),
+                                          )),
+                                    )),
+                                const SizedBox(
+                                  height: 1,
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("reference*"),
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 8),
+                                    child: Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          borderRadius:
+                                              BorderRadius.circular(8)),
+                                      child: Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 10,
+                                          ),
+                                          child: TextFormField(
+                                            controller: referenceController,
+                                            autofillHints: const [
+                                              AutofillHints.password
+                                            ],
+                                            decoration: const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "reference"),
+                                          )),
+                                    ))
+                              ],
+
+                              // SignUp BUtton
+                              Padding(
+                                padding: const EdgeInsets.only(top: 25),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    if (passwordController.text.isNotEmpty &&
+                                        confirmPasswordController
+                                            .text.isNotEmpty) {
+                                      if (passwordController.text ==
+                                          confirmPasswordController.text) {
+                                        signup(
+                                            "${ApiService.ipAddress}/signup/");
+                                      } else {
+                                        Fluttertoast.showToast(
+                                          backgroundColor: Colors.green,
+                                          textColor: Colors.white,
+                                          msg: 'Password Not Match',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                        );
+                                      }
+
+                                      // await users.add({
+                                      //   "name": "kumar",
+                                      //   'age': 16
+                                      // }).then((value) => print("User Added"));
                                     } else {
+                                      // _showToast(
+                                      //     context, "Password not Match");
                                       Fluttertoast.showToast(
                                         backgroundColor: Colors.green,
                                         textColor: Colors.white,
-                                        msg: 'Password Not Match',
+                                        msg: 'Enter Password',
                                         toastLength: Toast.LENGTH_SHORT,
                                       );
                                     }
-
-                                    // await users.add({
-                                    //   "name": "kumar",
-                                    //   'age': 16
-                                    // }).then((value) => print("User Added"));
-                                  } else {
-                                    // _showToast(
-                                    //     context, "Password not Match");
-                                    Fluttertoast.showToast(
-                                      backgroundColor: Colors.green,
-                                      textColor: Colors.white,
-                                      msg: 'Enter Password',
-                                      toastLength: Toast.LENGTH_SHORT,
-                                    );
-                                  }
-                                  // Navigator.pushNamed(
-                                  //     context, AppRoutes.FourteenScreenscr);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      gradient: const LinearGradient(colors: [
-                                        Color.fromARGB(255, 25, 50, 192),
-                                        Color.fromARGB(255, 25, 50, 192),
-                                        // Colors.indigo,
-                                        Colors.purple,
-                                        Color.fromARGB(255, 219, 110, 238),
-                                      ]),
-                                      borderRadius: BorderRadius.circular(8)),
-                                  height: 50,
-                                  // width: 296,
-                                  child: const Center(
-                                      child: Text(
-                                    "Sign Up",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  )),
+                                    // Navigator.pushNamed(
+                                    //     context, AppRoutes.FourteenScreenscr);
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        gradient: const LinearGradient(colors: [
+                                          Color.fromARGB(255, 25, 50, 192),
+                                          Color.fromARGB(255, 25, 50, 192),
+                                          // Colors.indigo,
+                                          Colors.purple,
+                                          Color.fromARGB(255, 219, 110, 238),
+                                        ]),
+                                        borderRadius: BorderRadius.circular(8)),
+                                    height: 50,
+                                    // width: 296,
+                                    child: const Center(
+                                        child: Text(
+                                      "Sign Up",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
                                 ),
                               ),
-                            ),
 
-                            const Padding(
-                              padding: EdgeInsets.only(top: 10),
-                              child: Center(
-                                child: Text(
-                                  "Sign Up with",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                  // textAlign: TextAlign.end,
+                              const Padding(
+                                padding: EdgeInsets.only(top: 10),
+                                child: Center(
+                                  child: Text(
+                                    "Sign Up with",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                    // textAlign: TextAlign.end,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(12.0),
-                                        child: SvgPicture.asset(
-                                            'assets/images/img_icons8google1.svg'),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SvgPicture.asset(
-                                      // 'assets/images/img_facebook_deep_purple_a200.svg'),
-
-                                      'assets/images/img_floatingicon.svg',
-                                      height: 40,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(12.0),
-                                        child: SvgPicture.asset(
-                                            'assets/images/img_applefill.svg'),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Center(
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text(
-                                      "Have Account Already?",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                      // textAlign: TextAlign.end,
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: SvgPicture.asset(
+                                              'assets/images/img_icons8google1.svg'),
+                                        ),
+                                      ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.pushNamed(context,
-                                              AppRoutes.threeSigninScreen);
-                                        },
-                                        child: const SizedBox(
-                                          // color: Colors.white,
-                                          height: 30,
-                                          child: Center(
-                                            child: Text(
-                                              "Sign In",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Color.fromARGB(
-                                                      255, 69, 49, 245)),
-                                              // textAlign: TextAlign.end,
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: SvgPicture.asset(
+                                        // 'assets/images/img_facebook_deep_purple_a200.svg'),
+
+                                        'assets/images/img_floatingicon.svg',
+                                        height: 40,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: SvgPicture.asset(
+                                              'assets/images/img_applefill.svg'),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        "Have Account Already?",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                        // textAlign: TextAlign.end,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                AppRoutes.threeSigninScreen);
+                                          },
+                                          child: const SizedBox(
+                                            // color: Colors.white,
+                                            height: 30,
+                                            child: Center(
+                                              child: Text(
+                                                "Sign In",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromARGB(
+                                                        255, 69, 49, 245)),
+                                                // textAlign: TextAlign.end,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
