@@ -72,7 +72,7 @@ class _Id123456FiftyScreenState extends State<Id123456FiftyScreen> {
   @override
   void initState() {
     _getData();
-print(widget.userUidMaLi.toString());
+    print(widget.userUidMaLi.toString());
     super.initState();
   }
 
@@ -196,10 +196,11 @@ print(widget.userUidMaLi.toString());
                                         // getIndex(widget.userUidMaLi.toString()).toString(),
                                         // getIndex("JJ30LIE1RVQ"),
                                         // "test",
-                                      
+
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: DeviceSize.itemHeight / 15),
+                                            fontSize:
+                                                DeviceSize.itemHeight / 15),
                                       ),
                                     ),
                                   ),
@@ -210,23 +211,21 @@ print(widget.userUidMaLi.toString());
                                       // checkContains("uid").toString(),
                                       // "test",
                                       // StringUtils.capitalize(
-                                          _userModel![widget.userUidMaLi]
-                                              .birthCity
-                                              .toString(),
+                                      _userModel![widget.userUidMaLi]
+                                          .birthCity
+                                          .toString(),
                                       style: TextStyle(
                                         // fontWeight: FontWeight.bold,
                                         fontSize: DeviceSize.itemHeight / 15,
                                       ),
                                     ),
                                     Text(' , '),
-                                      Text(
-                                      
+                                    Text(
                                       // StringUtils.capitalize(
-                                          _userModel![widget.userUidMaLi]
-                                              .rCountry
-                                              .toString(),
+                                      _userModel![widget.userUidMaLi]
+                                          .rCountry
+                                          .toString(),
                                       style: TextStyle(
-                                       
                                         fontSize: DeviceSize.itemHeight / 15,
                                       ),
                                     ),
@@ -362,6 +361,10 @@ print(widget.userUidMaLi.toString());
                               backgroundColor: Colors.transparent,
                               child: Text(
                                 'Subscribe',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700),
                               )),
                         ],
                       ),
@@ -1010,9 +1013,10 @@ print(widget.userUidMaLi.toString());
                       imageWord3: "Life is full of Possibility",
                       imageWord4: "Online",
                       // listLength: _userModel!.length,
-                      listLength:widget.userUidMaLi,
+                      listLength: widget.userUidMaLi,
                       //  _userModel![widget.userUidMaLi].selfie.toString(),
-                      imageAddress: _userModel![widget.userUidMaLi].selfie.toString(),
+                      imageAddress:
+                          _userModel![widget.userUidMaLi].selfie.toString(),
                       listType: 'Related List',
                     ),
 
