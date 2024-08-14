@@ -222,7 +222,7 @@ class _Aed3100FourtySevenScreenState extends State<Aed3100FourtySevenScreen> {
                       color: ColorConstant.clCardgreyColor,
                     ),
                     title: Text(
-                      'Wallet',
+                      'Mwallet',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: ColorConstant.clCardgreyColor,

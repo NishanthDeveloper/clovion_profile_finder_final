@@ -134,18 +134,18 @@ class _requestedListViewState extends State<requestedListView> {
                         height: 25,
                         width: 70,
                         decoration: BoxDecoration(
-                            color: widget.status == "Accepted"
-                                ? Color.fromRGBO(242, 153, 74, 0.2)
-                                : Color.fromRGBO(123, 97, 255, 0.2),
+                            color: requested_List[index]['action'].toString() == 'accept'
+                                ? Color(0xff6FCF97).withOpacity(0.1):Color.fromRGBO(242, 153, 74, 0.2)
+                                 ,
                             borderRadius: BorderRadius.circular(8)),
                         child: Center(
                           child: Text(
-                            widget.status,
+                            requested_List[index]['action'] == 'accept' ? 'Accepted' : "Rejected",
                             style: TextStyle(
                               fontSize: 12,
-                              color: widget.status == "Accepted"
-                                  ? Color.fromRGBO(242, 153, 74, 1)
-                                  : Color.fromRGBO(123, 97, 255, 1),
+                              color: requested_List[index]['action'].toString() == 'accept'
+                                  ? Color(0xff27AE60)
+                                  :Color.fromRGBO(242, 153, 74, 1),
                             ),
                           ),
                         ),
@@ -185,8 +185,8 @@ class _requestedListViewState extends State<requestedListView> {
                                             width: 0.5,
                                           ),
                                           Image.asset('assets/images/hand.png'),
-                                          Text(
-                                            'Accepted',
+                                         Text(
+                                           requested_List[index]['action'] != 'empty' ? requested_List[index]['action'].toString().toUpperCase() : "Pending",
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 16,
