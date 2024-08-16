@@ -11,6 +11,9 @@ String userModelToJson(List<UserModel> data) =>
 json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UserModel {
+    String? doorNo;
+    int? pincode;
+    String? streetName;
     String uid;
     String? email;
     String? mobile;
@@ -130,6 +133,9 @@ class UserModel {
     String? website;
 
     UserModel({
+      this.streetName,
+      this.pincode,
+      this.doorNo,
          required this.uid,
          this.email,
          this.mobile,
@@ -250,7 +256,10 @@ class UserModel {
     });
 
     factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        doorNo: json["door_no"],
         uid: json["uid"],
+        streetName: json["street_name"],
+        pincode: json["pincode"],
         email: json["email"],
         mobile: json["mobile"],
         password: json["password"],
@@ -370,7 +379,10 @@ class UserModel {
     );
 
     Map<String, dynamic> toJson() => {
+      "door_no":doorNo,
         "uid": uid,
+        "pincode": pincode,
+        "street_name": streetName,
         "email": email,
         "mobile": mobile,
         "password": password,

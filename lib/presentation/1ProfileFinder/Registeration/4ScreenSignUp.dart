@@ -262,7 +262,12 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
       'email': emailController.text,
       'mobile': '+$countryCode ${mobileNoController.text}',
       'password': passwordController.text,
-      'referral_code': refferalCodeController.text
+      'referral_code': refferalCodeController.text,
+      'name': firstNameController.text,
+      'door_no':doorNumberController.text,
+      'street_name':streetNameController.text,
+      'address':addressController.text,
+      'pincode':pincodeController.text,
 
       // 'email': 'abc@gmail.com',
       // 'mobile': '9876543211',
@@ -398,9 +403,9 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               ),
 
                               // LastName TextField
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: const Text("Last Name*"),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Last Name*"),
                                 ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
@@ -433,9 +438,9 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               ),
 
                                // DoorNumber TextField
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: const Text("Door Number*"),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Door Number*"),
                                 ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
@@ -468,9 +473,9 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               ),
 
                               // Street Name TextField
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: const Text("Street Name*"),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Street Name*"),
                                 ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
@@ -502,9 +507,9 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                 ),
                               ),
                                // Address TextField
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: const Text("Address*"),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Address*"),
                                 ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
@@ -537,9 +542,9 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               ),
 
                                // Pincode TextField
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: const Text("Pincode*"),
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Pincode*"),
                                 ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
@@ -571,9 +576,9 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                 ),
                               ),
                               // Email Field
-                              Padding(
-                                padding: const EdgeInsets.only(top: 20),
-                                child: const Text("Emaill ID*"),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Emaill ID*"),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),

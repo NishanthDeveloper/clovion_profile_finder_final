@@ -27,6 +27,7 @@ import 'package:http/http.dart' as http;
 import '../MatchingList/1screen_advertisement.dart';
 import '../MatchingList/every_male_fourty_nine_screen/profiles_loading_screen.dart';
 import '../ReferAFriend/ReferAFriendFourtySevenScreen.dart';
+import 'Classes/screens/profile_tagline_screens.dart';
 
 class ProfileBottomNavigationScreen extends StatefulWidget {
   const ProfileBottomNavigationScreen({super.key});
@@ -82,7 +83,7 @@ class _ProfileBottomNavigationScreenState
     //  'Addon': const Text("Addon Screen"),  // Replace with actual screens
     'Happy Couples':  ImagesHappyCouples(),
     'Refer a Friend': ReferAFriendFourtySeven2Screen(),
-    'Profile Tagline':  ReferAFriendFourtySeven2Screen(),
+    'Profile Tagline':  ProfileTagLineScreen(),
     'Highlight Profile':  HighlightProfileFourtySixScreen(),
     'Profile Visibility':  ReferAFriendFourtySeven2Screen(),
     'Profile Manager':   AllProfileManagerScreen(),
