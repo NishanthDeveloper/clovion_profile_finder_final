@@ -7,7 +7,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:profile_finder/core/utils/color_constant.dart';
 import 'package:profile_finder/core/utils/size_utils.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/Id123456FiftyScreen.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Registeration/3ScreenSignin.dart';
+import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'dart:async';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchScreen extends StatefulWidget {
   final String uid;
@@ -28,6 +33,8 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     _searchController.addListener(_onSearchChanged);
+    loadUserId();
+ //   _loadFavouriteStatus();
   }
 
   @override
@@ -67,6 +74,386 @@ class _SearchScreenState extends State<SearchScreen> {
         _isLoading = false;
       });
       throw Exception('Failed to load data');
+    }
+  }
+  TextEditingController  _reasonController = TextEditingController();
+  final List<String> imgList = [
+    'assets/images/Rectangle 665.png',
+    'assets/images/Rectangle 665.png',
+    'assets/images/Rectangle 665.png',
+  ];
+  String? userId;
+  final _formKey = GlobalKey<FormState>();
+  bool _isFavourite = false;
+  Future<void> loadUserId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getString('uid2');
+      print(prefs.getString("uid2").toString());
+    });
+
+  }
+
+
+  void _loadFavouriteStatus(String requestingUser) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isFavourite = prefs.getBool('fav_${requestingUser}') ?? false;
+    });
+  }
+
+  void _saveFavouriteStatus(String requestingUser) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('fav_${requestingUser}', _isFavourite);
+  }
+
+  void favourites(String favId) async {
+    debugPrint(ThreeSigninScreen.userUidAccess);
+    debugPrint('fav Start + $favId');
+
+    var requestBody = {
+      'myfavorite_id': favId,
+    };
+    print('fav Processing');
+
+    try {
+      var responsefav = await http.post(
+        Uri.parse("http://51.20.61.70:3000/favorites/${ThreeSigninScreen.userUidAccess}"),
+        body: requestBody,
+      );
+
+      print('fav Processing');
+
+      debugPrint("statusCodeIs${responsefav.statusCode}");
+
+      if (responsefav.statusCode == 200) {
+        print(responsefav.body);
+        setState(() {
+          _isFavourite = true;
+        });
+        _saveFavouriteStatus(favId);
+        debugPrint("Fav successfully");
+      } else {
+        print("error");
+        print(responsefav.statusCode);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+  showReason(BuildContext context, String requestingUserId) {
+
+
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              // title: const Text('Add'),
+              content: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        controller: _reasonController,
+                        decoration: InputDecoration(
+                          labelText: 'Reason',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a reason';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      MyElevatedButton(
+                          height: 40,
+                          borderRadius: BorderRadius.circular(8),
+                          backgroundColor: Colors.transparent,
+                          onPressed: () {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              block(_reasonController.text, requestingUserId, userId.toString());
+
+                            }
+                          },
+                          child: const Text("Block",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),))
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        });
+  }
+
+
+  showAlerts(BuildContext context, String requestingUserId) {
+    bool _phone = false;
+    bool _whatsapp = false;
+    bool _address = false;
+    bool _horos = false;
+    bool _socLinks = false;
+
+    String requestedUid = '';
+    String requestedPhone = '';
+    String requestedWhatsapp = '';
+    String requestedAddress = '';
+    String requestedHoros = '';
+    String requestedSocialMedia = '';
+
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              // title: const Text('Add'),
+              content: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: _phone,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _phone = newValue!;
+                        });
+                      },
+                      title: const Text('Phone Number'),
+                    ),
+                    CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: _whatsapp,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _whatsapp = newValue!;
+                        });
+                      },
+                      title: const Text('Whatsapp Number'),
+                    ),
+                    CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: _address,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _address = newValue!;
+                        });
+                      },
+                      title: const Text(
+                          'home or office Physical address with the house name'),
+                    ),
+                    CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: _horos,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _horos = newValue!;
+                        });
+                      },
+                      title: const Text('Horoscope'),
+                    ),
+                    CheckboxListTile(
+                      // selected: ,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: _socLinks,
+                      onChanged: (bool? newValue) {
+                        setState(() {
+                          _socLinks = newValue!;
+                        });
+                      },
+                      title: const Text('Social Media links'),
+                    ),
+                    MyElevatedButton(
+                        height: 40,
+                        borderRadius: BorderRadius.circular(8),
+                        backgroundColor: Colors.transparent,
+                        onPressed: () {
+                          print("button call");
+                          requestButtonPressed(
+                            requestingUserId,
+
+                            requestedPhone = _phone ? 'on' : 'none',
+
+                            requestedWhatsapp = _whatsapp ? 'on' : 'none',
+
+                            requestedAddress = _address ? 'on' : 'none',
+
+                            requestedHoros = _horos ? 'on' : 'none',
+
+                            requestedSocialMedia = _socLinks ? 'on' : 'none',
+
+                            // "http://${ApiService.ipAddress}/requested_list/$userUid"
+                          );
+                        },
+                        child: const Text("Request",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),))
+                  ],
+                ),
+              ),
+            );
+          });
+        });
+  }
+
+  requestButtonPressed(
+      String requestedUid,
+      String requestedPhone,
+      String requestedWhatsapp,
+      String requestedAddress,
+      String requestedHoros,
+      String requestedSocialMedia,
+      ) {
+    // Define the request function
+    void request() async {
+      print("button calls2");
+
+      // Retrieve the user ID from SharedPreferences
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String userUid = preferences.getString("uid2").toString();
+      debugPrint(userUid);
+      print("User ID:${requestedUid.toString()}");
+      var requestBody = {
+        'received_uid': requestedUid,
+        'request_phone_number': requestedPhone,
+        'request_whatsapp_number': requestedWhatsapp,
+        'request_address': requestedAddress,
+        'request_horoscope': requestedHoros,
+        'request_social_media_link': requestedSocialMedia,
+
+      };
+
+      print('Request Processing');
+
+      try {
+        // Make the HTTP POST request
+        var response = await http.post(
+          Uri.parse('http://51.20.61.70:3000/requested_list/$userUid'),
+          body: requestBody,
+
+
+        );
+
+        print("statusCodeIs${response.statusCode}");
+
+        if (response.statusCode == 200) {
+          var json = jsonDecode(response.body);
+          print(response.body);
+          print(json);
+        } else {
+          print("error");
+          print(response.statusCode);
+        }
+      } catch (e) {
+        print("Request failed: $e");
+      }
+    }
+
+    // Call the request function to execute the HTTP request
+    request();
+  }
+
+
+  void profMore(context, String requestingUserId, String userUid, String listType) async {
+    showDialog(
+      context: context,
+      builder: (context) => Center(
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextButton(
+                child: listType == 'block'
+                    ? Text("Unblock this Profile")
+                    : Text("Block this Profile"),
+                onPressed: () async {
+                  await listType == 'block'
+                      ? unBlock(requestingUserId, userUid)
+                      : showReason(context,userUid);
+                },
+              ),
+              TextButton(
+                child: const Text("Hi"),
+                onPressed: () {},
+              ),
+              TextButton(
+                child: const Text("Request"),
+                onPressed: () {
+                  showAlerts(context,requestingUserId);
+                },
+              ),
+              TextButton(
+                child: const Text("Share"),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  int _current = 0;
+
+  block(String reason, String blockedId, String userUid1) async {
+    print("Block user id: $blockedId");
+    debugPrint('Block Start');
+
+    var requestBody = {
+      'reason': reason,
+      'blocked_id': blockedId,
+    };
+
+    var response1 = await http.post(
+      Uri.parse("http://51.20.61.70:3000/block/$userUid1"),
+      body: requestBody,
+    );
+
+    debugPrint("statusCodeIs${response1.statusCode}");
+
+    if (response1.statusCode == 200) {
+      print(response1.body);
+      debugPrint("Blocked successfully");
+      Navigator.pop(context);
+      setState(() {
+      });
+    } else {
+      print("error");
+      print(response1.statusCode);
+    }
+  }
+
+  static unBlock(String unBlockedId, String userUid1) async {
+    debugPrint('UnBlock Start');
+
+    var requestBody = {
+      'unblock': unBlockedId,
+    };
+
+    var responseUnb = await http.post(
+      Uri.parse("http://51.20.61.70:3000/block/$userUid1"),
+      body: requestBody,
+    );
+
+    debugPrint("statusCodeIs${responseUnb.statusCode}");
+
+    if (responseUnb.statusCode == 200) {
+      print(responseUnb.body);
+      debugPrint("Unblocked successfully");
+    } else {
+      print("error");
+      print(responseUnb.statusCode);
     }
   }
 
@@ -159,7 +546,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         borderRadius: BorderRadius.circular(10),
                                         child: GestureDetector(
                                           onTap: () {
-                                            //     Navigator.push(context, MaterialPageRoute(builder: (context)=>Id123456FiftyScreen(userUidMaLi:widget.index)));
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>Id123456FiftyScreen(userUidMaLi:0)));
                                           },
                                           child: CachedNetworkImage(
                                             height: 216,
@@ -177,7 +564,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                       child: Column(
                                         children: [
                                           GestureDetector(
-                                            onTap: () {},
+                                            onTap: () {
+                                              profMore(
+                                                  context,
+                                                  item['uid'].toString(),// Pass widget.userId here
+                                                  ThreeSigninScreen.userUidAccess,
+                                                  'New Reg');
+                                            },
                                             child: Container(
                                                 decoration: BoxDecoration(
                                                     borderRadius:
@@ -237,13 +630,22 @@ class _SearchScreenState extends State<SearchScreen> {
                                       bottom: 10,
                                       child: InkWell(
                                         onTap: () {
-                                          //favourites(widget.userId);
+                                          favourites(  item['uid'].toString());
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            color: Colors.grey,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                            color: _isFavourite ? null : Colors.grey,
+                                            gradient: _isFavourite
+                                                ? LinearGradient(
+                                              begin: const Alignment(-0.8, 1),
+                                              end: const Alignment(-0.5, -1),
+                                              colors: [
+                                                ColorConstant.indigo500,
+                                                ColorConstant.purpleA100,
+                                              ],
+                                            )
+                                                : null,
+                                            borderRadius: BorderRadius.circular(10),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),

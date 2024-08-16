@@ -14,6 +14,8 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/ClCustomWidgets2.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 
+import '../../../model_final/all_female_user_model.dart';
+
 class Id123456FiftyScreen extends StatefulWidget {
   int userUidMaLi;
 
@@ -66,12 +68,14 @@ class _Id123456FiftyScreenState extends State<Id123456FiftyScreen> {
   late final String userUid;
 
   static late List<UserModel>? _userModel = [];
+  static late List<User>? _userModels = [];
 
   // List _maleUsers
 
   @override
   void initState() {
     _getData();
+    //_getDatas();
     print(widget.userUidMaLi.toString());
     super.initState();
   }
@@ -117,6 +121,7 @@ class _Id123456FiftyScreenState extends State<Id123456FiftyScreen> {
     _dataFromListApi = out3.split(",");
     return _dataFromListApi;
   }
+
 
   void _getData() async {
     _userModel = (await ApiService().getUsers())!;

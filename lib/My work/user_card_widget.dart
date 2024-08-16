@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:profile_finder/My%20work/single_user_matching_list.dart';
 import 'package:profile_finder/core/utils/color_constant.dart';
 import 'package:profile_finder/core/utils/size_utils.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
@@ -431,7 +432,7 @@ print("User ID:${requestedUid.toString()}");
               borderRadius: BorderRadius.circular(10),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Id123456FiftyScreen(userUidMaLi:widget.index)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SingleUserMatchingList(userUidMaLi:widget.index, userId:  userId.toString(),)));
                 },
                 child: CachedNetworkImage(
                   height: 216,

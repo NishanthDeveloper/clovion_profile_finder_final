@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:profile_finder/model_final/modelAllUser.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 
+import '../../../model_final/all_female_user_model.dart';
+
 class ApiService {
 
   // static const String ipAddress = "192.168.1.4:8000";
@@ -48,6 +50,25 @@ class ApiService {
     }
     return model;
   }
+  Future<List<User>?> getUserss() async {
+    try {
+      var url = Uri.parse("http://51.20.61.70:3000/all_female_user_data/MWOJGKTCQ71");
+      var response = await http.get(url);
+      if (response.statusCode == 200) {
+        UserResponse userResponse = userResponseFromJson(response.body);
+
+        // Flatten the map into a single list of users
+        List<User> allUsers = userResponse.data.values.expand((users) => users).toList();
+        return allUsers;
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print("Error: $e");
+    }
+    return null;
+  }
+
 }
 
 // {
