@@ -55,6 +55,27 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
 
   TextEditingController referenceController = TextEditingController();
 
+  TextEditingController firstNameController = TextEditingController();
+
+  TextEditingController lastNameController = TextEditingController();
+
+  TextEditingController doorNumberController = TextEditingController();
+
+  TextEditingController streetNameController = TextEditingController();
+
+  TextEditingController addressController = TextEditingController();
+
+  TextEditingController pincodeController = TextEditingController();
+
+
+
+
+
+
+
+
+
+
   bool _passwordVisible = true;
 
   bool _passwordVisible2 = true;
@@ -241,7 +262,12 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
       'email': emailController.text,
       'mobile': '+$countryCode ${mobileNoController.text}',
       'password': passwordController.text,
-      'referral_code': refferalCodeController.text
+      'referral_code': refferalCodeController.text,
+      'name': firstNameController.text,
+      'door_no':doorNumberController.text,
+      'street_name':streetNameController.text,
+      'address':addressController.text,
+      'pincode':pincodeController.text,
 
       // 'email': 'abc@gmail.com',
       // 'mobile': '9876543211',
@@ -344,12 +370,220 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                 ),
                               ),
 
-                              // Email Field
-                              const Text("Emaill ID*"),
+                              // FirstName TextField
+                                const Text("First Name*"),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
-                                  height: 40,
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: TextFormField(
+                                        
+                                        controller: firstNameController,
+                                        validator: (value) {
+                                          
+                                          if (value!.isEmpty) {
+                                            return ("First Name can't be Empty");
+                                          }
+                                         
+                                          return null;
+                                        },
+                                        decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: "Enter Your First Name",
+                                            hintStyle: TextStyle(fontSize: 14)),
+                                      )),
+                                ),
+                              ),
+
+                              // LastName TextField
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Last Name*"),
+                                ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Container(
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: TextFormField(
+                                        
+                                        controller: lastNameController,
+                                        validator: (value) {
+                                          
+                                          if (value!.isEmpty) {
+                                            return ("Last Name can't be Empty");
+                                          }
+                                         
+                                          return null;
+                                        },
+                                        decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: "Enter Your Last Name ",
+                                            hintStyle: TextStyle(fontSize: 14)),
+                                      )),
+                                ),
+                              ),
+
+                               // DoorNumber TextField
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Door Number*"),
+                                ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Container(
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: TextFormField(
+                                        
+                                        controller: doorNumberController,
+                                        validator: (value) {
+                                          
+                                          if (value!.isEmpty) {
+                                            return ("Door Number can't be Empty");
+                                          }
+                                         
+                                          return null;
+                                        },
+                                        decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: "Enter Your Door Number ",
+                                            hintStyle: TextStyle(fontSize: 14)),
+                                      )),
+                                ),
+                              ),
+
+                              // Street Name TextField
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Street Name*"),
+                                ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Container(
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: TextFormField(
+                                        
+                                        controller: streetNameController,
+                                        validator: (value) {
+                                          
+                                          if (value!.isEmpty) {
+                                            return ("Street Name can't be Empty");
+                                          }
+                                         
+                                          return null;
+                                        },
+                                        decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: "Enter Your Street Name ",
+                                            hintStyle: TextStyle(fontSize: 14)),
+                                      )),
+                                ),
+                              ),
+                               // Address TextField
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Address*"),
+                                ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Container(
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: TextFormField(
+                                        
+                                        controller: addressController,
+                                        validator: (value) {
+                                          
+                                          if (value!.isEmpty) {
+                                            return ("Address can't be Empty");
+                                          }
+                                         
+                                          return null;
+                                        },
+                                        decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: "Enter Your Address",
+                                            hintStyle: TextStyle(fontSize: 14)),
+                                      )),
+                                ),
+                              ),
+
+                               // Pincode TextField
+                                const Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Pincode*"),
+                                ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Container(
+                                  height: 45,
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade100,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 10,
+                                      ),
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        controller: addressController,
+                                        validator: (value) {
+                                          
+                                          if (value!.isEmpty) {
+                                            return ("Pincode can't be Empty");
+                                          }
+                                         
+                                          return null;
+                                        },
+                                        decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: "Enter Your Pincode",
+                                            hintStyle: TextStyle(fontSize: 14)),
+                                      )),
+                                ),
+                              ),
+                              // Email Field
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Emaill ID*"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Container(
+                                  height: 45,
                                   decoration: BoxDecoration(
                                       color: Colors.grey.shade100,
                                       borderRadius: BorderRadius.circular(8)),
@@ -393,7 +627,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                       Expanded(
                                         flex: 2,
                                         child: Container(
-                                          height: 40,
+                                          height: 45,
                                           decoration: BoxDecoration(
                                               color: Colors.grey.shade100,
                                               borderRadius:
@@ -428,7 +662,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                       Expanded(
                                         flex: 4,
                                         child: Container(
-                                          height: 40,
+                                          height: 45,
                                           decoration: BoxDecoration(
                                               color: Colors.grey.shade100,
                                               borderRadius:
@@ -477,7 +711,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
-                                  height: 40,
+                                  height: 45,
                                   decoration: BoxDecoration(
                                       color: Colors.grey.shade100,
                                       borderRadius: BorderRadius.circular(8)),
@@ -528,7 +762,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
-                                  height: 40,
+                                  height: 45,
                                   decoration: BoxDecoration(
                                       color: Colors.grey.shade100,
                                       borderRadius: BorderRadius.circular(8)),
@@ -578,7 +812,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
-                                  height: 40,
+                                  height: 45,
                                   decoration: BoxDecoration(
                                       color: Colors.grey.shade100,
                                       borderRadius: BorderRadius.circular(8)),
@@ -607,7 +841,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: SizedBox(
-                                    height: 50,
+                                    height: 45,
                                     child: DropdownButtonFormField(
                                       decoration: InputDecoration(
                                           hintText: 'Select',
@@ -671,7 +905,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                 Padding(
                                     padding: const EdgeInsets.only(top: 8),
                                     child: Container(
-                                      height: 40,
+                                      height: 45,
                                       decoration: BoxDecoration(
                                           color: Colors.grey.shade100,
                                           borderRadius:
@@ -691,59 +925,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                           )),
                                     ))
                               ] else if (howDoYouKnowSelectedvalue == 'Myself') ...[
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 20),
-                                  child: Text("Social Media and Address*"),
-                                ),
-                                Padding(
-                                    padding: const EdgeInsets.only(top: 8),
-                                    child: Container(
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade100,
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                      child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 10,
-                                          ),
-                                          child: TextFormField(
-                                            controller: socialMediaController,
-                                            decoration: const InputDecoration(
-                                                border: InputBorder.none,
-                                                hintText:
-                                                    "Social Media and Address"),
-                                          )),
-                                    )),
-                                const SizedBox(
-                                  height: 1,
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 20),
-                                  child: Text("reference*"),
-                                ),
-                                Padding(
-                                    padding: const EdgeInsets.only(top: 8),
-                                    child: Container(
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade100,
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                      child: Padding(
-                                          padding: const EdgeInsets.only(
-                                            left: 10,
-                                          ),
-                                          child: TextFormField(
-                                            controller: referenceController,
-                                            autofillHints: const [
-                                              AutofillHints.password
-                                            ],
-                                            decoration: const InputDecoration(
-                                                border: InputBorder.none,
-                                                hintText: "reference"),
-                                          )),
-                                    ))
+                               
                               ],
 
                               // SignUp BUtton
