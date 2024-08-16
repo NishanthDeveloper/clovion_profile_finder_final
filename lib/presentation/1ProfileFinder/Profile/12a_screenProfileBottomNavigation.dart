@@ -27,7 +27,7 @@ import 'package:http/http.dart' as http;
 import '../MatchingList/1screen_advertisement.dart';
 import '../MatchingList/every_male_fourty_nine_screen/profiles_loading_screen.dart';
 import '../ReferAFriend/ReferAFriendFourtySevenScreen.dart';
-import 'Classes/screens/profile_tagline_screens.dart';
+import 'screens/profile_tagline_screens.dart';
 
 class ProfileBottomNavigationScreen extends StatefulWidget {
   const ProfileBottomNavigationScreen({super.key});

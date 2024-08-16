@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../../core/utils/color_constant.dart';
+import '../../../../core/utils/color_constant.dart';
 import 'package:http/http.dart' as http;
-import '../../../../../core/utils/size_utils.dart';
-import '../../../../../model_final/model_final.dart';
-import '../../../../../widgets/CustomWidgetsCl/CustomClAll.dart';
-import '../../../../../widgets/CustomWidgetsCl/CustomWidgets.dart';
-import '../../../MatchingList/1screen_advertisement.dart';
+import '../../../../core/utils/size_utils.dart';
+import '../../../../model_final/model_final.dart';
+import '../../../../widgets/CustomWidgetsCl/CustomClAll.dart';
+import '../../../../widgets/CustomWidgetsCl/CustomWidgets.dart';
+import '../../MatchingList/1screen_advertisement.dart';
 
 class ProfileTagLineScreen extends StatefulWidget {
   const ProfileTagLineScreen({super.key});
@@ -41,7 +41,7 @@ class _ProfileTagLineScreenState extends State<ProfileTagLineScreen> {
 
     final url =
         Uri.parse("http://${ApiService.ipAddress}/about_candidate/$uidUser");
-    final request = http.MultipartRequest('POST', url);
+    final request = http.MultipartRequest('PUT', url);
     //  request.files
     //     .add(await http.MultipartFile.fromPath('files', "headsizeFile!.path"));
     // request.fields['about_candidate_value'] = "aboutMee";
@@ -55,7 +55,7 @@ class _ProfileTagLineScreenState extends State<ProfileTagLineScreen> {
 
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
-          msg: "About Yourself Updated Successfully...!",
+          msg: "Profile Tag Line Updated Successfully...!",
           backgroundColor: ColorConstant.deepPurpleA200,
           textColor: Colors.white,
           toastLength: Toast.LENGTH_SHORT,
@@ -139,7 +139,7 @@ class _ProfileTagLineScreenState extends State<ProfileTagLineScreen> {
                                       // : Colors.transparent,
                                       borderRadius: BorderRadius.circular(8)),
                                   child: TextFormField(
-                                    initialValue: _users.aboutCandidate,
+                                    initialValue: _users.profileTag,
                                     style: const TextStyle(
                                       fontSize: 15,
                                     ),
