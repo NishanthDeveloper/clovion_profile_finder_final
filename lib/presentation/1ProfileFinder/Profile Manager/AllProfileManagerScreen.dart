@@ -518,6 +518,7 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
   // }
 
   List<AllPmDataModel> _AllpmData = [];
+
   //
   Future<String?> _fetchAllPmData() async {
     print("_fetchAllPmData function start");
@@ -633,6 +634,7 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
 
   late String _profile_finder_id;
   static List<PmMyClientsModel> _pmMyClientsList = [];
+
   //  static List<_pmMyClientsListTestModel> __pmMyClientsList1 = [];
   List my_manager = [];
 
@@ -718,16 +720,15 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
+                //    Text(myManagerList.length.toString()),
 
-                Text(myManagerList.length.toString()),
-
-  Center(
-    child: const Text(
-                  'Profile Managers',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                Center(
+                  child: const Text(
+                    'Profile Managers',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
                 ),
-  ),
-  D10HCustomClSizedBoxWidget(),
+                D10HCustomClSizedBoxWidget(),
                 TextField(
                   decoration: InputDecoration(
                       prefixIcon: Padding(
@@ -793,11 +794,11 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
                         child: MyElevatedButton(
                           onPressed: () {
                             _fetchMyManagerList().whenComplete(() {
-                             _allPiInvListfilter();
+                              _allPiInvListfilter();
                               myInvestigatorFilter();
                               allIvestigatorExceptMyFilter();
                               findLengthOfExceptMyInvest();
-                              });
+                            });
                             setState(() {
                               displayInvestigator = false;
                             });
@@ -868,9 +869,8 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
                                           name: _AllpmData[index]
                                               .firstName
                                               .toString(),
-                                              place: _AllpmData[index]
-                                              .uid
-                                              .toString(),
+                                          place:
+                                              _AllpmData[index].uid.toString(),
                                           // place:
                                           //     '${_AllpmData[index].officeCity.toString()},  ${_AllpmData[index].officeCountry.toString()}',
 
@@ -948,7 +948,8 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
                                                 MaterialPageRoute(
                                                     builder: (context) {
                                               return PmCloseDealScreen(
-                                                 profile_manager_id_close_deal: private_investigator_id_my_inv,
+                                                profile_manager_id_close_deal:
+                                                    private_investigator_id_my_inv,
                                               );
                                             }));
                                           },
@@ -964,16 +965,15 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
                                                 myManagerList[index]
                                                     .profilePicture
                                                     .toString(),
-                                            name:myManagerList[index]
+                                            name: myManagerList[index]
                                                 .firstName
                                                 .toString(),
                                             // place:
                                             //     '${myManagerList[index].officeCity} ${myManagerList[index].officeCountry}',
-                                             place:
-                                                myManagerList[index].uid .toString(),
-                                           
-                                            
-                                            
+                                            place: myManagerList[index]
+                                                .uid
+                                                .toString(),
+
                                             percentage: 55,
                                           ),
                                         ),
