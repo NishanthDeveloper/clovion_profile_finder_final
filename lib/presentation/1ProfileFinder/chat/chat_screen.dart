@@ -1,13 +1,30 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  String? messageContent;
+  String? messageType;
+  ChatScreen({
+    Key? key,
+    this.messageContent,
+    this.messageType,
+  }) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  List<ChatScreen> messages = [
+    ChatScreen(messageContent: "Hello, Will", messageType: "receiver"),
+    ChatScreen(messageContent: "How have you been?", messageType: "receiver"),
+    ChatScreen(
+        messageContent: "Hey Kriss, I am doing fine dude. wbu?",
+        messageType: "sender"),
+    ChatScreen(messageContent: "ehhhh, doing OK.", messageType: "receiver"),
+    ChatScreen(
+        messageContent: "Is there any thing wrong?", messageType: "sender"),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,35 +44,57 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: 3,
+              reverse: true,
+              itemCount: messages.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                return SizedBox(
-                  height: 120,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12),
+                bool isResceiver = messages[index].messageType == "receiver";
+                return Container(
+                  padding:
+                      EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                  child: Align(
+                    alignment:
+                        (isResceiver ? Alignment.topLeft : Alignment.topRight),
                     child: Row(
+                      mainAxisAlignment: isResceiver
+                          ? MainAxisAlignment.start
+                          : MainAxisAlignment.end,
                       children: [
-                        const CircleAvatar(
-                          radius: 28,
-                          backgroundImage: AssetImage(
-                              "assets/images/portrait-young-handsome-man-buttoning-his-jacket 1.png"),
-                        ),
+                        if (isResceiver) ...[
+                          const CircleAvatar(
+                            radius: 26,
+                            backgroundImage: AssetImage(
+                                "assets/images/portrait-young-handsome-man-buttoning-his-jacket 1.png"),
+                          ),
+                        ],
                         const SizedBox(
                           width: 14,
                         ),
                         Container(
-                          height: 45,
-                          width: 65,
                           decoration: BoxDecoration(
-                              color: const Color(0xff7B61FF),
-                              borderRadius: BorderRadius.circular(30)),
-                          child: const Center(
-                            child: Text(
-                              "Hello",
-                              style: TextStyle(color: Colors.white),
-                            ),
+                            borderRadius: BorderRadius.circular(20),
+                            color: isResceiver
+                                ? const Color.fromARGB(255, 238, 238, 238)
+                                : Color.fromARGB(255, 123, 97, 255),
                           ),
-                        )
+                          padding: EdgeInsets.all(16),
+                          child: Text(
+                            messages[index].messageContent as String,
+                            style: TextStyle(fontSize: 15,color: isResceiver?Colors.black:Colors.white),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 14,
+                        ),
+                        if (!isResceiver) ...[
+                          const CircleAvatar(
+                            radius: 26,
+                            backgroundImage: AssetImage(
+                                "assets/images/portrait-young-handsome-man-buttoning-his-jacket 1.png"),
+                          ),
+                        ],
                       ],
                     ),
                   ),
