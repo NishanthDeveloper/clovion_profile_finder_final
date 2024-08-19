@@ -41,7 +41,7 @@ class _ProfileTagLineScreenState extends State<ProfileTagLineScreen> {
 
     final url =
         Uri.parse("http://${ApiService.ipAddress}/about_candidate/$uidUser");
-    final request = http.MultipartRequest('POST', url);
+    final request = http.MultipartRequest('PUT', url);
     //  request.files
     //     .add(await http.MultipartFile.fromPath('files', "headsizeFile!.path"));
     // request.fields['about_candidate_value'] = "aboutMee";
@@ -139,7 +139,8 @@ class _ProfileTagLineScreenState extends State<ProfileTagLineScreen> {
                                       // : Colors.transparent,
                                       borderRadius: BorderRadius.circular(8)),
                                   child: TextFormField(
-                                    initialValue: _users.profileTag,
+                                    initialValue: _users.profileTag
+                                    ,
                                     style: const TextStyle(
                                       fontSize: 15,
                                     ),
