@@ -270,6 +270,7 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
   }
 
   static List<PmMyClientsModel> _pmMyClientsList = [];
+
   //  static List<_pmMyClientsListTestModel> __pmMyClientsList1 = [];
 
   _fetchPmMyClients() async {
@@ -309,12 +310,14 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
     print('_pmMyClientsList ${_pmMyClientsList[0]}');
     print(_pmMyClientsList[0].email);
   }
+
   //
 
   bool isLoading1 = true;
   bool loadingMyData = true;
 
   List<AllPmDataModel> _AllpmData = [];
+
   //
   Future<String?> _fetchAllPmData() async {
     print("_fetchAllPmData function start");
@@ -376,10 +379,7 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
 
   myInvestigatorFilter() {
     for (var i = 0; i < myManagerList.length; i++) {
-
-         myManagersUidList.add(        
-          myManagerList[i].uid.toString());
-
+      myManagersUidList.add(myManagerList[i].uid.toString());
     }
   }
 
@@ -444,9 +444,8 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
               // Text(myManagerList[0].uid.toString()),
               // Text(userList[0].uid.toString()   ),
 
-              Text(myManagersUidList.length.toString()),    
-              Text(myManagersUidList.toString()),    
-              
+              Text(myManagersUidList.length.toString()),
+              Text(myManagersUidList.toString()),
 
               loadingMyData
                   ? const Center(child: SpinKitWave(color: Colors.blue))
@@ -479,7 +478,8 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
                                         child: Image.asset(
-                                          'assets/images/img_rectangle690.png', //cover pic
+                                          'assets/images/img_rectangle690.png',
+                                          //cover pic
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -525,18 +525,9 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
                                           Text("${userList[0].officeCity}"),
                                           Text(",  "),
                                           Text("${userList[0].officeCountry}"),
-
-
                                         ],
                                       ),
-
-                                      Text(        userList[0].uid.   toString()),     
-
-
-
-
-
-
+                                      Text(userList[0].uid.toString()),
                                       Text('Payment of Investigator'),
                                       Text(
                                         '₹ 1200',
@@ -561,13 +552,11 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
 
                                           // myManagerList
                                           //         .contains(userList[0].uid)
-                                          //     ? 
+                                          //     ?
 
                                           myManagersUidList
                                                   .contains(userList[0].uid)
-                                              ?                                              
-                                              
-                                              Navigator.push(
+                                              ? Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) {

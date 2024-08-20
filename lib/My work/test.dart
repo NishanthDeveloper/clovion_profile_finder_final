@@ -142,8 +142,8 @@ class _MatchingListPageState extends State<MatchingListPage> {
   }
 
   Future<List> fetchAdProviderData() async {
-    final response =
-        await http.get(Uri.parse('http://51.20.61.70:3000/all_provider_ads/$userId'));
+    final response = await http
+        .get(Uri.parse('http://51.20.61.70:3000/all_provider_ads/$userId'));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
       return jsonData is List ? jsonData : [jsonData];
@@ -276,8 +276,13 @@ class _MatchingListPageState extends State<MatchingListPage> {
                           width: DeviceSize.itemWidth * 1.5,
                           height: 50,
                           child: TextField(
-                            onTap:(){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchScreen(uid: userId.toString(),)));
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SearchScreen(
+                                            uid: userId.toString(),
+                                          )));
                             },
                             decoration: InputDecoration(
                                 prefixIcon: Padding(
@@ -495,7 +500,8 @@ class _MatchingListPageState extends State<MatchingListPage> {
                                           '',
                                       address:
                                           users[userIndex]['address'] ?? '',
-                                      subfield: users[userIndex]['profile_tag'] ?? '',
+                                      subfield:
+                                          users[userIndex]['profile_tag'] ?? '',
                                       index: index,
                                     ),
                                   );
@@ -699,8 +705,9 @@ class _MatchingListPageState extends State<MatchingListPage> {
                                       address: relatedList[userIndex]
                                               ['address'] ??
                                           '',
-                                      subfield:
-                                          relatedList[userIndex]['profile_tag'] ?? '',
+                                      subfield: relatedList[userIndex]
+                                              ['profile_tag'] ??
+                                          '',
                                       index: index,
                                     ),
                                   );

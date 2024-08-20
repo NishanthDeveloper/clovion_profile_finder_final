@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -237,81 +238,81 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
   // }
 
   void signup() async {
-    print('Sign up method');
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.clear();
+    try {
+      print('Sign up method');
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.clear();
 
-    var headers = {
-      // 'Content-Type': 'application/json',
-      'Context-Type': 'application/json',
-    };
+      var headers = {
+        'Content-Type': 'application/json',
+        'Context-Type': 'application/json',
+      };
 
-    var requestBody = {
-      // 'email': 'umsrn333@gmail.com',
-      // 'mobile': 9876543210,
-      // 'password': "12345",
-      // 'password2': "12345",
-      // 'code': "",
+      var requestBody = {
+        'email': emailController.text,
+        'mobile': '+$countryCode ${mobileNoController.text}',
+        'password': passwordController.text,
+        'referral_code': refferalCodeController.text,
+        'name': firstNameController.text,
+        'door_no': doorNumberController.text,
+        'street_name': streetNameController.text,
+        'address': addressController.text,
+        'pincode': pincodeController.text,
 
-      // 'email': emailController.text,
-      // 'mobile': mobileNoController.text,
-      // 'password': passwordController.text,
-      // 'password2': confirmPasswordController.text,
-      // 'code': refferalCodeController.text
+      };
 
-      'email': emailController.text,
-      'mobile': '+$countryCode ${mobileNoController.text}',
-      'password': passwordController.text,
-      'referral_code': refferalCodeController.text,
-      'name': firstNameController.text,
-      'door_no':doorNumberController.text,
-      'street_name':streetNameController.text,
-      'address':addressController.text,
-      'pincode':pincodeController.text,
-
-      // 'email': 'abc@gmail.com',
-      // 'mobile': '9876543211',
-      // 'password': '123456',
-      // 'referral_code': '123123',
-    };
-
-    // print(mobileNoController.text.runtimeType);
-
-    var response = await http.post(
-      Uri.parse('http://${ApiService.ipAddress}/signup/'),
-      // Uri.parse('http://10.0.2.2:8000/signup/'),
-
-      headers: headers,
-      // body: jsonEncode(requestBody),
-      body: requestBody,
-    );
-
-    // http://10.0.2.2:8000/
-
-    if (response.statusCode == 200) {
-      setState(() {
-        userUid = response.body;
-        userUidclean = userUid.substring(1, userUid.length - 1);
-        preferences.setString("uid2", userUidclean.toString());
-        preferences.setString("userEmail", emailController.text);
-      });
-      // Navigator.pushNamed(context, AppRoutes.iphone1313ProSixScreen);
-      // ignore: use_build_context_synchronously
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return FiveOtpEnteringScreen(
-            emailid: emailController.text,
-            timerr: 3,
-            userUidafterOtp: userUidclean,
-          );
-        }),
+      var response = await http.post(
+        Uri.parse('http://${ApiService.ipAddress}/signup/'),
+        headers: headers,
+        body: jsonEncode(requestBody), // Encoding the body to JSON
       );
-    } else {
-      userUidclean =
-          emailController.text.substring(2, emailController.text.length - 2);
+
+      if (response.statusCode == 200) {
+        setState(() {
+          userUid = response.body;
+          userUidclean = userUid.substring(1, userUid.length - 1);
+          preferences.setString("uid2", userUidclean.toString());
+          preferences.setString("userEmail", emailController.text);
+        });
+        // ignore: use_build_context_synchronously
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return FiveOtpEnteringScreen(
+              emailid: emailController.text,
+              timerr: 3,
+              userUidafterOtp: userUidclean,
+            );
+          }),
+        );
+      } else {
+        print('Failed to sign up: ${response.statusCode}');
+        userUidclean =
+            emailController.text.substring(2, emailController.text.length - 2);
+      }
+    } catch (e) {
+      print('An error occurred during signup: $e');
+      // You can also show a dialog or a snackbar to inform the user about the error
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Something went wrong. Please try again later.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
+
 
   @override
   void initState() {

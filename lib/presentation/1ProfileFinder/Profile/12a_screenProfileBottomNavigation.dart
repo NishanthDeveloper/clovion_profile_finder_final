@@ -47,8 +47,8 @@ class _ProfileBottomNavigationScreenState
     MatchingListPage(),
     //EveryMaleFourtyNineScreen(),
     // MatchingListNavigationFourtyEightScreen(),
-
-    ProfilesLoading(),
+    ImagesHappyCouples(),
+   // ProfilesLoading(),
     ChatHomeScreen(),
     // const ImagesHappyCouples(),
     // const ChatFiftyThreeScreen(),

@@ -66,7 +66,7 @@ class _SuccessStoryThirtyFiveScreenState
               //  LinearGradient(colors: [ColorConstant.clLightBlue, Colors.pink, Colors.white]),
               // height: 20,
               width: 80,
-              child: const Text('+Add'),
+              child: const Text('+Add',style: TextStyle(color: Colors.white),),
             ),
           ),
         ],
