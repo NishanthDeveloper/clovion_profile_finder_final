@@ -44,7 +44,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
         Uri.parse("http://${ApiService.ipAddress}/about_candidate/$uidUser");
     final request = http.MultipartRequest('POST', url);
     request.fields['primary_phone_number'] = _phoneNumber;
-    request.fields['primary_email'] = _email;
+    request.fields['email'] = _email;
     request.fields['address'] = _address;
     request.fields['contact_father_city'] = _city;
     request.fields['contact_father_street'] = _street;
@@ -55,6 +55,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
       final response = await http.Response.fromStream(send);
       print(response.statusCode);
       print(response.body);
+      print(_users.primaryPhoneNumber);
 
       if (response.statusCode == 200) {
         Fluttertoast.showToast(
@@ -105,24 +106,24 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: ColorConstant.whiteA700,
-        appBar:  ClAppbarLeadArrowBackSuffNo(
+        appBar:  const ClAppbarLeadArrowBackSuffNo(
           title: '',),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         title,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 22),
                       ),
-                      D10HCustomClSizedBoxWidget(),
+                      const D10HCustomClSizedBoxWidget(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -131,8 +132,8 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Address*"),
-                                    SizedBox(
+                                    const Text("Address*"),
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     Container(
@@ -143,7 +144,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                               BorderRadius.circular(8)),
                                       child: TextFormField(
                                         initialValue: _users.address,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 15,
                                         ),
                                         onChanged: (value) {
@@ -151,7 +152,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                             _address = value;
                                           });
                                         },
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.all(10),
                                           border: InputBorder.none,
                                         ),
@@ -164,13 +165,13 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                   style: const TextStyle(
                                       fontSize: 15, color: Colors.black),
                                 ),
-                          D10HCustomClSizedBoxWidget(),
+                          const D10HCustomClSizedBoxWidget(),
                           buttonClicked
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Street*"),
-                                    SizedBox(
+                                    const Text("Street*"),
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     Container(
@@ -182,7 +183,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                       child: TextFormField(
                                         initialValue:
                                             _users.contactFatherStreet,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 15,
                                         ),
                                         onChanged: (value) {
@@ -190,7 +191,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                             _street = value;
                                           });
                                         },
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.all(10),
                                           border: InputBorder.none,
                                         ),
@@ -203,13 +204,13 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                   style: const TextStyle(
                                       fontSize: 15, color: Colors.black),
                                 ),
-                          D10HCustomClSizedBoxWidget(),
+                          const D10HCustomClSizedBoxWidget(),
                           buttonClicked
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Country*"),
-                                    SizedBox(
+                                    const Text("Country*"),
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     Container(
@@ -221,7 +222,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                       child: TextFormField(
                                         initialValue:
                                             _users.contactFatherCountry,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 15,
                                         ),
                                         onChanged: (value) {
@@ -229,7 +230,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                             _country = value;
                                           });
                                         },
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.all(10),
                                           border: InputBorder.none,
                                         ),
@@ -242,14 +243,14 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                   style: const TextStyle(
                                       fontSize: 15, color: Colors.black),
                                 ),
-                          D10HCustomClSizedBoxWidget(),
+                          const D10HCustomClSizedBoxWidget(),
 
                           buttonClicked
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("City*"),
-                                    SizedBox(
+                                    const Text("City*"),
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     Container(
@@ -259,8 +260,8 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                           borderRadius:
                                               BorderRadius.circular(8)),
                                       child: TextFormField(
-                                        initialValue: _users.primaryPhoneNumber,
-                                        style: TextStyle(
+                                        initialValue: _users.contactFatherCity,
+                                        style: const TextStyle(
                                           fontSize: 15,
                                         ),
                                         onChanged: (value) {
@@ -268,7 +269,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                             _city = value;
                                           });
                                         },
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.all(10),
                                           border: InputBorder.none,
                                         ),
@@ -277,18 +278,18 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                   ],
                                 )
                               : Text(
-                                  _users.primaryPhoneNumber.toString(),
+                                  _users.contactFatherCity.toString(),
                                   style: const TextStyle(
                                       fontSize: 15, color: Colors.black),
                                 ),
-                          D10HCustomClSizedBoxWidget(),
+                          const D10HCustomClSizedBoxWidget(),
 
                           buttonClicked
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("PhoneNumber"),
-                                    SizedBox(
+                                    const Text("PhoneNumber"),
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     Container(
@@ -384,13 +385,13 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                   style: const TextStyle(
                                       fontSize: 15, color: Colors.black),
                                 ),
-                          D10HCustomClSizedBoxWidget(),
+                          const D10HCustomClSizedBoxWidget(),
                           buttonClicked
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Email"),
-                                    SizedBox(
+                                    const Text("Email"),
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     Container(
@@ -401,7 +402,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                               BorderRadius.circular(8)),
                                       child: TextFormField(
                                         initialValue: _users.primaryEmail,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 15,
                                         ),
                                         onChanged: (value) {
@@ -409,7 +410,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                             _email = value;
                                           });
                                         },
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.all(10),
                                           border: InputBorder.none,
                                         ),
@@ -422,10 +423,10 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
                                   style: const TextStyle(
                                       fontSize: 15, color: Colors.black),
                                 ),
-                          D10HCustomClSizedBoxWidget(),
+                          const D10HCustomClSizedBoxWidget(),
 
                           // widget.buttonclicked ? SizedBox() : Divider(),
-                          D10HCustomClSizedBoxWidget(
+                          const D10HCustomClSizedBoxWidget(
                             height: 50,
                           ),
                         ],

@@ -841,7 +841,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: SizedBox(
-                                    height: 45,
+                                    height: 54,
                                     child: DropdownButtonFormField(
                                       decoration: InputDecoration(
                                           hintText: 'Select',
