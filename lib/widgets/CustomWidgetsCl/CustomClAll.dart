@@ -17,55 +17,83 @@ import 'package:http/http.dart' as http;
 import '../../model_final/blockedProfByMe1.dart';
 import '../../model_final/blocked_users_by_me.dart';
 import '../../model_final/model_all_male_7.dart';
+import '../../model_final/model_final.dart';
+import '../../presentation/1ProfileFinder/Account Settings/Aed3100FourtySevenScreen.dart';
+import '../../presentation/1ProfileFinder/Account Settings/widgets/requested_list_widget.dart';
+import '../../presentation/1ProfileFinder/HappyCouplesUI/imagesHappyCouples.dart';
+import '../../presentation/1ProfileFinder/HighlightProfile/HighlightProfileFourtySixScreen.dart';
 import '../../presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import '../../presentation/1ProfileFinder/MatchingList/every_male_fourty_nine_screen/EveryMaleFourtyNineScreen.dart';
+import '../../presentation/1ProfileFinder/PrivateInvestigator/1_AllInvestigatorThirtyEightScreen.dart';
+import '../../presentation/1ProfileFinder/Profile Manager/AllProfileManagerScreen.dart';
+import '../../presentation/1ProfileFinder/Profile/screens/profile_tagline_screens.dart';
+import '../../presentation/1ProfileFinder/ReferAFriend/ReferAFriendFourtySevenScreen.dart';
 
-class ClAppbarLeadGridSuffHeart extends StatelessWidget
+class ClAppbarLeadGridSuffHeart extends StatefulWidget
     implements PreferredSizeWidget {
-  // final String? testingNextPage;
-  final Widget testingNextPage;
 
-  const ClAppbarLeadGridSuffHeart({super.key, required this.testingNextPage});
+  final Widget testingNextPage;
+    final contex;
+
+   ClAppbarLeadGridSuffHeart({super.key, required this.testingNextPage, this.contex });
+
   @override
+  State<ClAppbarLeadGridSuffHeart> createState() => _ClAppbarLeadGridSuffHeartState();
+  
+  @override
+  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _ClAppbarLeadGridSuffHeartState extends State<ClAppbarLeadGridSuffHeart> {
+ 
+
+
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.transparent,
-      leading: GestureDetector(
-        onTap: (() {
-          Drawer;
-        }),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: SvgPicture.asset(
-            'assets/images/img_grid.svg',
-          ),
-        ),
+    return  AppBar(
+        backgroundColor: Colors.transparent,
+        leading: Builder(
+        builder: (context) {
+          return InkWell(
+            onTap: () {
+              Scaffold.of(context).openDrawer(); // Opens the drawer when tapped
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: SvgPicture.asset(
+                'assets/images/img_grid.svg',
+              ),
+            ),
+          );
+        },
       ),
-      // leadingWidth: DeviceSize.itemWidth /2.7067,
-      leadingWidth: 45,
-      actions: [
-        InkWell(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return testingNextPage;
-            }));
-          },
-          child: Row(
-            children: [
-              SvgPicture.asset('assets/images/img_heartline.svg'),
-              SvgPicture.asset('assets/images/img_notification.svg'),
-              const SizedBox(
-                width: 20,
-              )
-            ],
-          ),
-        )
-      ],
-      elevation: 0,
-    );
+        // leadingWidth: DeviceSize.itemWidth /2.7067,
+        leadingWidth: 45,
+        actions: [
+          InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return widget.testingNextPage;
+              }));
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset('assets/images/img_heartline.svg'),
+                SvgPicture.asset('assets/images/img_notification.svg'),
+                const SizedBox(
+                  width: 20,
+                )
+              ],
+            ),
+          )
+        ],
+        elevation: 0,
+      );
+        
+    
+    
   }
 }
 

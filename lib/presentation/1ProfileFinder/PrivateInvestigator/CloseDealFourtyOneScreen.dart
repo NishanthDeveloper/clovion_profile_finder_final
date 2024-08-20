@@ -256,7 +256,7 @@ class _CloseDealFourtyOneScreenState extends State<CloseDealFourtyOneScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ClAppbarLeadGridSuffHeart(
+      appBar:  ClAppbarLeadGridSuffHeart(
           testingNextPage: AnswerFourtyTwoScreen()),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

@@ -335,7 +335,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
   Widget build(BuildContext context) {
     //  return Scaffold();
     return Scaffold(
-      appBar: const ClAppbarLeadGridSuffHeart(
+      appBar:  ClAppbarLeadGridSuffHeart(
           testingNextPage: AnswerFourtyTwoScreen()),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

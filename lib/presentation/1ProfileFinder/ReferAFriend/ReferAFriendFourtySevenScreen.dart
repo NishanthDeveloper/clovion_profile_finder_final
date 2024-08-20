@@ -11,7 +11,7 @@ class ReferAFriendFourtySeven2Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ClAppbarLeadGridSuffHeart(
+      appBar:  ClAppbarLeadGridSuffHeart(
           testingNextPage: ReferAFriendFourtySeven2Screen()),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

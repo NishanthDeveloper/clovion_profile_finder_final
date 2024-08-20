@@ -21,7 +21,7 @@ class _PmCloseAndRateScreenState extends State<PmCloseAndRateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ClAppbarLeadGridSuffHeart(
+      appBar:  ClAppbarLeadGridSuffHeart(
         testingNextPage:  WriteYourQuestionFourtyFiveScreen(private_investicator_id_ques: '',)),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

@@ -22,6 +22,10 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import '../../../My work/wishlist.dart';
+import '../Account Settings/Aed3100FourtySevenScreen.dart';
+import '../Account Settings/widgets/requested_list_widget.dart';
+import '../HappyCouplesUI/imagesHappyCouples.dart';
 /*
 class PrivateInvestigator {
   final String profile_finder_id;
@@ -47,6 +51,11 @@ class PrivateInvestigator {
 //     final allPmDataModel = allPmDataModelFromJson(jsonString);
 
 import 'dart:convert';
+
+import '../HighlightProfile/HighlightProfileFourtySixScreen.dart';
+import '../PrivateInvestigator/1_AllInvestigatorThirtyEightScreen.dart';
+import '../Profile/screens/profile_tagline_screens.dart';
+import '../ReferAFriend/ReferAFriendFourtySevenScreen.dart';
 
 List<AllPmDataModel> allPmDataModelFromJson(String str) =>
     List<AllPmDataModel>.from(
@@ -377,6 +386,8 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
   static int myInvLength = 0;
   late String nameOfBrideGroom;
 
+  
+
   void getData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     userUid = preferences.getString("uid2").toString();
@@ -701,13 +712,283 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
 
     // myManagerList();
   }
+   
+      // List of dropdown items
+  final List<String> dropdownItems = [
+    'Addon',
+    'Happy Couples',
+    'Refer a Friend',
+    'Profile Tagline',
+    'Highlight Profile',
+    'Profile Visibility',
+    'Profile Manager',
+    'Private Investigator',
+    'Complaints'
+  ];
+
+  // Set initial value to "Addon"
+  String? selectedValue = 'Addon';
+
+  // Navigation Map
+  final Map<String, Widget> _navigationMap = {
+    //  'Addon': const Text("Addon Screen"),  // Replace with actual screens
+    'Happy Couples': ImagesHappyCouples(),
+    'Refer a Friend': ReferAFriendFourtySeven2Screen(),
+    'Profile Tagline': ProfileTagLineScreen(),
+    'Highlight Profile': HighlightProfileFourtySixScreen(),
+    'Profile Visibility': ReferAFriendFourtySeven2Screen(),
+    'Profile Manager': AllProfileManagerScreen(),
+    'Private Investigator': AllInvestigatorThirtyEightScreen(),
+    'Complaints': HighlightProfileFourtySixScreen(),
+  };
+  
+
 
   @override
   Widget build(BuildContext context) {
     // return Scaffold();
     return Scaffold(
-      appBar: const ClAppbarLeadGridSuffHeart(
-          testingNextPage: TaskCompleteThirtyNineScreen()),
+      appBar:  ClAppbarLeadGridSuffHeart(
+        contex:  Builder(
+        builder: (context) {
+          return InkWell(
+            onTap: () {
+              Scaffold.of(context).openDrawer(); // Opens the drawer when tapped
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: SvgPicture.asset(
+                'assets/images/img_grid.svg',
+              ),
+            ),
+          );
+        },
+      ),
+          testingNextPage: WishlistPage()),
+          drawer: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: const Alignment(1, -1),
+            end: const Alignment(-1, 1),
+            colors: [
+              ColorConstant.lightIndigoGradientCl,
+              ColorConstant.darkIndigogradientCl,
+            ],
+            // transform: GradientRotation(0.15),
+          ),
+        ),
+        child: Drawer(
+          backgroundColor: Colors.transparent,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ListView(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 30,
+                    ),
+                    CircleAvatar(
+                      radius: 57,
+                      backgroundImage:
+                          NetworkImage(_users.profilePicture.toString()),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 24,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Color(0xffF4F2FF),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: Center(
+                                child: Text(
+                                  _users.uid.toString() == "null"
+                                      ? "ID"
+                                      : _users.uid.toString(),
+                                  style: const TextStyle(
+                                      color: Color(0xff6E717A),
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                            height: 5,
+                          ),
+                          Text(
+                            _users.name.toString() == "null"
+                                ? "Name"
+                                : _users.name.toString(),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 10),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                            height: 5,
+                          ),
+                          Text(
+                            _users.email.toString() == "null"
+                                ? "Email"
+                                : _users.email.toString(),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 10),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+               
+                SizedBox(
+                  height: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return RequestedListWidget();
+                          }),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "Requested Lists",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                 
+                    SizedBox(
+                      width: 260,
+                      child: DropdownButton<String>(
+                        value: selectedValue,
+                        icon: const Icon(
+                          Icons.arrow_downward,
+                          color: Colors.white,
+                        ),
+                        elevation: 16,
+                        dropdownColor: Colors.black54,
+                        style: const TextStyle(color: Colors.white),
+                        underline: Container(
+                          height: 0,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedValue = newValue!;
+                            if (_navigationMap.containsKey(newValue)) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      _navigationMap[newValue]!,
+                                ),
+                              );
+                            }
+                          });
+                        },
+                        items: dropdownItems
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return Aed3100FourtySevenScreen();
+                          }),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "Account Settings",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        "",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        "Logout",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        "",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SvgPicture.asset("assets/images/fb.svg"),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            SvgPicture.asset("assets/images/youtube.svg"),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            SvgPicture.asset("assets/images/twitter.svg"),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            SvgPicture.asset("assets/images/Vector (4).svg"),
+                          ],
+                        )),
+                  ],
+                ),
+
+                // ],)
+              ],
+            ),
+            //DrawerHeader
+          ),
+        ),
+      ),
+          
       body: Container(
         width: double.maxFinite,
         height: double.maxFinite,

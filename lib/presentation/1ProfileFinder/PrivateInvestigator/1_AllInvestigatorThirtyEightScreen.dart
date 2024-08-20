@@ -528,7 +528,7 @@ class _AllInvestigatorThirtyEightScreenState
     // }
     // }
     return Scaffold(
-      appBar: const ClAppbarLeadGridSuffHeart(
+      appBar:  ClAppbarLeadGridSuffHeart(
           testingNextPage: TaskCompleteThirtyNineScreen()),
       body: Container(
         width: double.maxFinite,
