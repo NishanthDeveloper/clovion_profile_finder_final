@@ -38,7 +38,7 @@ class _SecurityWidgetState extends State<SecurityWidget> {
     var requestBody = {'pass_reset': userEmail};
 
     final responsepass = await http.post(
-      Uri.parse('http://${ApiServices.ipAddress}/pm_password_reset/$userId'),
+      Uri.parse('http://${ApiServices.ipAddress}/profilefinder_password_reset/$userId'),
       body: requestBody,
     );
     print(responsepass.statusCode);
@@ -87,7 +87,9 @@ class _SecurityWidgetState extends State<SecurityWidget> {
                             fontSize: DeviceSize.itemWidth / 11.688),
                       ),
                       MyElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          resetPassword(context);
+                        },
                         borderRadius: BorderRadius.circular(8),
                         backgroundColor: ColorConstant.deepPurpleA200,
                         child: Text(

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:profile_finder/My%20work/matching_list_page.dart';
 import 'package:profile_finder/My%20work/test.dart';
+import 'package:profile_finder/My%20work/wishlist.dart';
 import 'package:profile_finder/core/utils/image_constant.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Account%20Settings/Aed3100FourtySevenScreen.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Account%20Settings/widgets/notification.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Account%20Settings/widgets/requested_list_widget.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/HappyCouplesUI/AddThirtyFourScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/HappyCouplesUI/HappyCouplesPackagesThirtySixScreen.dart';
@@ -82,14 +84,14 @@ class _ProfileBottomNavigationScreenState
   // Navigation Map
   final Map<String, Widget> _navigationMap = {
     //  'Addon': const Text("Addon Screen"),  // Replace with actual screens
-    'Happy Couples':  ImagesHappyCouples(),
+    'Happy Couples': ImagesHappyCouples(),
     'Refer a Friend': ReferAFriendFourtySeven2Screen(),
-    'Profile Tagline':  ProfileTagLineScreen(),
-    'Highlight Profile':  HighlightProfileFourtySixScreen(),
-    'Profile Visibility':  ReferAFriendFourtySeven2Screen(),
-    'Profile Manager':   AllProfileManagerScreen(),
+    'Profile Tagline': ProfileTagLineScreen(),
+    'Highlight Profile': HighlightProfileFourtySixScreen(),
+    'Profile Visibility': ReferAFriendFourtySeven2Screen(),
+    'Profile Manager': AllProfileManagerScreen(),
     'Private Investigator': AllInvestigatorThirtyEightScreen(),
-    'Complaints':  HighlightProfileFourtySixScreen(),
+    'Complaints': HighlightProfileFourtySixScreen(),
   };
 
   late String userUid;
@@ -185,8 +187,24 @@ class _ProfileBottomNavigationScreenState
                   },
                   child: Row(
                     children: [
-                      SvgPicture.asset('assets/images/img_heartline.svg'),
-                      SvgPicture.asset('assets/images/img_notification.svg'),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WishlistPage()));
+                          },
+                          child: SvgPicture.asset(
+                              'assets/images/img_heartline.svg')),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => NotificationPage()));
+                          },
+                          child: SvgPicture.asset(
+                              'assets/images/img_notification.svg')),
                       const SizedBox(
                         width: 20,
                       )
@@ -404,7 +422,7 @@ class _ProfileBottomNavigationScreenState
                         ),
                       ),
                     ),
-                  /*
+                    /*
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -511,24 +529,8 @@ class _ProfileBottomNavigationScreenState
                       ),
                     ),
                    */
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return Aed3100FourtySevenScreen();
-                          }),
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          "Account Settings",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                   /*
+
+                    /*
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -551,10 +553,12 @@ class _ProfileBottomNavigationScreenState
                       width: 260,
                       child: DropdownButton<String>(
                         value: selectedValue,
-                        icon: const Icon(Icons.arrow_downward,color: Colors.white,),
+                        icon: const Icon(
+                          Icons.arrow_downward,
+                          color: Colors.white,
+                        ),
                         elevation: 16,
                         dropdownColor: Colors.black54,
-
                         style: const TextStyle(color: Colors.white),
                         underline: Container(
                           height: 0,
@@ -567,7 +571,8 @@ class _ProfileBottomNavigationScreenState
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => _navigationMap[newValue]!,
+                                  builder: (context) =>
+                                      _navigationMap[newValue]!,
                                 ),
                               );
                             }
@@ -577,9 +582,29 @@ class _ProfileBottomNavigationScreenState
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: Text(value,style: TextStyle(color: Colors.white),),
+                            child: Text(
+                              value,
+                              style: TextStyle(color: Colors.white),
+                            ),
                           );
                         }).toList(),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return Aed3100FourtySevenScreen();
+                          }),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "Account Settings",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                     const Padding(
@@ -589,7 +614,6 @@ class _ProfileBottomNavigationScreenState
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: Text(
@@ -624,7 +648,6 @@ class _ProfileBottomNavigationScreenState
                             SvgPicture.asset("assets/images/Vector (4).svg"),
                           ],
                         )),
-
                   ],
                 ),
 

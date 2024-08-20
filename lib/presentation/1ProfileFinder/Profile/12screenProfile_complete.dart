@@ -179,11 +179,11 @@ class _FourteenProfileCompletenessState
                               valueColor:
                                   const AlwaysStoppedAnimation(Colors.green),
                               backgroundColor: Colors.grey.shade400,
-                              value: 0.75,
+                              value: 100,
                             ),
                           ),
                         ),
-                        const Text("80%")
+                        const Text("100%")
                       ],
                     ),
                     Padding(
