@@ -40,7 +40,7 @@ class _ComplexionTwentySixScreenState extends State<ComplexionTwentySixScreen> {
     print("uid for Update $_uidUser ");
 
     final url =
-        Uri.parse("http://${ApiService.ipAddress}/about_candidate/JJ30LIE1RVQ");
+        Uri.parse("http://${ApiService.ipAddress}/about_candidate/$_uidUser");
     final request = http.MultipartRequest('POST', url);
 
     for (String item in _myNonInterestSelected) {
@@ -73,7 +73,7 @@ class _ComplexionTwentySixScreenState extends State<ComplexionTwentySixScreen> {
 
     _uidUser = preferences.getString("uid2").toString();
     final response = await http
-        .get(Uri.parse("http://${ApiService.ipAddress}/alldata/JJ30LIE1RVQ"));
+        .get(Uri.parse("http://${ApiService.ipAddress}/alldata/$_uidUser"));
     var json = await jsonDecode(response.body);
 
     print("statusCodeIs ${response.statusCode}");
@@ -360,7 +360,7 @@ class _ComplexionTwentySixScreenState extends State<ComplexionTwentySixScreen> {
                   backgroundColor: Colors.transparent,
                   width: double.maxFinite,
                   child: Text(
-                    _editButtonClicked ? "Update" : "Edit",
+                    _editButtonClicked ? "Update" : "Edit",style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],

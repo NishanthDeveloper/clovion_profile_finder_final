@@ -54,7 +54,7 @@ class _TwentyFamilyDetailsState extends State<TwentyFamilyDetails> {
     print("uid for Update $uidUser ");
 
     final url =
-        Uri.parse("http://${ApiService.ipAddress}/about_candidate/JJ30LIE1RVQ");
+        Uri.parse("http://${ApiService.ipAddress}/about_candidate/$uidUser");
     final request = http.MultipartRequest('POST', url);
     setState(() {
       request.fields['father_name'] =
@@ -112,7 +112,7 @@ class _TwentyFamilyDetailsState extends State<TwentyFamilyDetails> {
 
     uidUser = preferences.getString("uid2").toString();
     final response = await http
-        .get(Uri.parse("http://${ApiService.ipAddress}/alldata/JJ30LIE1RVQ"));
+        .get(Uri.parse("http://${ApiService.ipAddress}/alldata/$uidUser"));
     var json = await jsonDecode(response.body);
 
     print("statusCodeIs ${response.statusCode}");
@@ -293,7 +293,7 @@ class _TwentyFamilyDetailsState extends State<TwentyFamilyDetails> {
             borderRadius: BorderRadius.circular(10),
             backgroundColor: Colors.transparent,
             child: Text(
-              _buttonClicked ? "Update" : "Edit",
+              _buttonClicked ? "Update" : "Edit",style: TextStyle(color: Colors.white),
             ),
           ),
         ));

@@ -177,7 +177,7 @@ class _SixteenCurrentStatusState extends State<SixteenCurrentStatus> {
             borderRadius: BorderRadius.circular(10),
             backgroundColor: Colors.transparent,
             child: Text(
-              buttonClicked ? "Update" : "Edit",
+              buttonClicked ? "Update" : "Edit",style: TextStyle(color: Colors.white),
             ),
           ),
         ));

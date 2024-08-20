@@ -449,7 +449,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
             borderRadius: BorderRadius.circular(10),
             backgroundColor: Colors.transparent,
             child: Text(
-              buttonClicked ? "Update" : "Edit",
+              buttonClicked ? "Update" : "Edit",style:TextStyle(color: Colors.white)
             ),
           ),
         ));

@@ -106,7 +106,7 @@ class _HeadSizeTwentyEightScreenState extends State<HeadSizeTwentyEightScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Head Size(Selfieeeeee)",
+                      "Head Size(Selfie)",
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
