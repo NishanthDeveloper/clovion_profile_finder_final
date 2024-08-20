@@ -213,8 +213,9 @@ class _TwentyFamilyDetailsState extends State<TwentyFamilyDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: ColorConstant.whiteA700,
-        appBar: ClAppbarLeadGridSuffHeart(
-            testingNextPage: SeventeenContactDetails()),
+        appBar: ClAppbarLeadArrowBackSuffNo(
+          title: '',
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -293,7 +294,8 @@ class _TwentyFamilyDetailsState extends State<TwentyFamilyDetails> {
             borderRadius: BorderRadius.circular(10),
             backgroundColor: Colors.transparent,
             child: Text(
-              _buttonClicked ? "Update" : "Edit",style: TextStyle(color: Colors.white),
+              _buttonClicked ? "Update" : "Edit",
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ));

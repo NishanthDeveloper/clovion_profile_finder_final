@@ -245,8 +245,9 @@ class _TwentyTwoEducationState extends State<TwentyTwoEducation> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: ColorConstant.whiteA700,
-        appBar: ClAppbarLeadGridSuffHeart(
-            testingNextPage: SeventeenContactDetails()),
+        appBar:  ClAppbarLeadArrowBackSuffNo(
+          
+          title: '',),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),

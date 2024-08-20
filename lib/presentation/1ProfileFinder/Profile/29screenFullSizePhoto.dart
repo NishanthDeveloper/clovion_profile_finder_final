@@ -12,6 +12,8 @@ import 'package:profile_finder/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../widgets/CustomWidgetsCl/CustomClAll.dart';
+
 class FullSizePhotoTwentyNineScreen extends StatefulWidget {
   const FullSizePhotoTwentyNineScreen({super.key});
 
@@ -63,36 +65,9 @@ class _FullSizePhotoTwentyNineScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.whiteA700,
-      appBar: AppBar(
-        backgroundColor: ColorConstant.whiteA700,
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: ColorConstant.black900,
-              size: 16,
-            )),
-        actions: [
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(
-                  context, AppRoutes.FamilyGroupThirtyScreenscr);
-            },
-            child: Row(
-              children: [
-                SvgPicture.asset('assets/images/img_heartline.svg'),
-                SvgPicture.asset('assets/images/img_notification.svg'),
-                SizedBox(
-                  width: 20,
-                )
-              ],
-            ),
-          )
-        ],
-        elevation: 0,
-      ),
+      appBar:  ClAppbarLeadArrowBackSuffNo(
+          
+          title: '',),
       body: isLoading == true
           ? Center(child: CircularProgressIndicator())
           : Padding(

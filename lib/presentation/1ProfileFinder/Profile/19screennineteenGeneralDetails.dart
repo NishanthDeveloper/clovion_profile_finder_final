@@ -175,6 +175,7 @@ class _NineteenGeneralDetailsState extends State<NineteenGeneralDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConstant.whiteA700,
          appBar:  ClAppbarLeadArrowBackSuffNo(
           title: '',),
         body: isLoadingGetData

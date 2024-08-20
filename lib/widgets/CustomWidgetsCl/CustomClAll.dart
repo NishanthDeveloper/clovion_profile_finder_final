@@ -133,7 +133,7 @@ class ClAppbarLeadArrowBackSuffNo extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       // backgroundColor: ColorConstant.whiteA700,
-      backgroundColor: Colors.transparent,
+      backgroundColor: ColorConstant.whiteA700,
       leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
