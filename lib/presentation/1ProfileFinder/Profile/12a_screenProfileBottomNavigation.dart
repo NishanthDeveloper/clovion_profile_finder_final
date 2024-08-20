@@ -182,7 +182,7 @@ class _ProfileBottomNavigationScreenState
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return  WhishList();
+                      return  WishlistPage();
                     }));
                   },
                   child: Row(
