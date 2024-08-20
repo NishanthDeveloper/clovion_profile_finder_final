@@ -28,6 +28,7 @@ import '../MatchingList/1screen_advertisement.dart';
 import '../MatchingList/every_male_fourty_nine_screen/profiles_loading_screen.dart';
 import '../ReferAFriend/ReferAFriendFourtySevenScreen.dart';
 import 'screens/profile_tagline_screens.dart';
+import 'screens/whishlist.dart';
 
 class ProfileBottomNavigationScreen extends StatefulWidget {
   const ProfileBottomNavigationScreen({super.key});
@@ -179,7 +180,7 @@ class _ProfileBottomNavigationScreenState
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return const FourteenProfileCompleteness();
+                      return  WhishList();
                     }));
                   },
                   child: Row(

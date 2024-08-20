@@ -44,7 +44,7 @@ class _SeventeenContactDetailsState extends State<SeventeenContactDetails> {
         Uri.parse("http://${ApiService.ipAddress}/about_candidate/$uidUser");
     final request = http.MultipartRequest('POST', url);
     request.fields['primary_phone_number'] = _phoneNumber;
-    request.fields['email'] = _email;
+    request.fields['primary_email'] = _email;
     request.fields['address'] = _address;
     request.fields['contact_father_city'] = _city;
     request.fields['contact_father_street'] = _street;
