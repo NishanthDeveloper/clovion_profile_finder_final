@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,7 @@ import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/1screen_
 import 'package:profile_finder/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import '5screenOtpEntering.dart';
 
 class FourSignUpScreen extends StatefulWidget {
@@ -28,6 +30,8 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
   ];
 
   String? valueChoose;
+  List<String> hiringManager = [];
+   String? selectedHiringManager;
 
   final List<String> _dropdownItemList = ["Item One", "Item Two", "Item Three"];
 
@@ -126,6 +130,19 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
     setState(() {
       howDoYouKnowSelectedvalue = newValue;
     });
+  }
+
+    Future<void>hiringManagerUid() async {
+    var url = "http://${ApiServices.ipAddress}/all_pm_data/";
+    var response = await http.get(Uri.parse(url));
+    var allData = jsonDecode(response.body);
+    print(allData);
+    for(var i=0; i<allData.length;i++){
+      setState(() {
+        hiringManager.add(allData[i]['uid']);
+      });
+    }
+
   }
 
   // Future register() async {
@@ -268,6 +285,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
       'street_name':streetNameController.text,
       'address':addressController.text,
       'pincode':pincodeController.text,
+      'my_manager': selectedHiringManager.toString(),
 
       // 'email': 'abc@gmail.com',
       // 'mobile': '9876543211',
@@ -317,6 +335,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
   void initState() {
     countryCode = '+91';
     howDoYouKnowSelectedvalue = howDoYouKnow[2].value;
+    hiringManagerUid();
     super.initState();
   }
 
@@ -803,12 +822,23 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                       )),
                                 ),
                               ),
+                              const SizedBox(height: 10.0),
+                              
+                               WidgetTitleAndDropdown(
+                  DdbTitle: "Hiring Manager*",
+                  DdbHint: "Select",
+                  DbdItems: hiringManager,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedHiringManager = newValue!;
+                      print(selectedHiringManager);
+                    });
+                    // uploadAboutMe("Physical Status", dropdownValue.toString());
+                  },
+                ),
 
                               // referal Code Field
-                              const Padding(
-                                padding: EdgeInsets.only(top: 20),
-                                child: Text("Refferal Code"),
-                              ),
+                              Text("Refferal Code"),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
