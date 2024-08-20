@@ -335,7 +335,7 @@ class _NineteenGeneralDetailsState extends State<NineteenGeneralDetails> {
             borderRadius: BorderRadius.circular(10),
             backgroundColor: Colors.transparent,
             child: Text(
-              buttomClicked ? "Update" : "Edit",
+              buttomClicked ? "Update" : "Edit",style: TextStyle(color: Colors.white),
             ),
           ),
         ));

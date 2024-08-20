@@ -40,7 +40,7 @@ class _TwentyFiveMyNonInterestState extends State<TwentyFiveMyNonInterest> {
     _uidUser = preferences.getString("uid2").toString();
 
     final url =
-        Uri.parse("http://${ApiService.ipAddress}/about_candidate/JJ30LIE1RVQ");
+        Uri.parse("http://${ApiService.ipAddress}/about_candidate/$_uidUser");
     final request = http.MultipartRequest('POST', url);
 
     for (String item in _myNonInterestSelected) {
@@ -71,7 +71,7 @@ class _TwentyFiveMyNonInterestState extends State<TwentyFiveMyNonInterest> {
 
     _uidUser = preferences.getString("uid2").toString();
     final response = await http
-        .get(Uri.parse("http://${ApiService.ipAddress}/alldata/JJ30LIE1RVQ"));
+        .get(Uri.parse("http://${ApiService.ipAddress}/alldata/$_uidUser"));
     var json = await jsonDecode(response.body);
 
     Map<String, dynamic> des = jsonDecode(response.body);
@@ -361,7 +361,7 @@ class _TwentyFiveMyNonInterestState extends State<TwentyFiveMyNonInterest> {
                   backgroundColor: Colors.transparent,
                   width: double.maxFinite,
                   child: Text(
-                    _editButtonClicked ? "Update" : "Edit",
+                    _editButtonClicked ? "Update" : "Edit",style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],

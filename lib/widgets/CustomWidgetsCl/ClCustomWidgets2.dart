@@ -586,7 +586,7 @@ class BottomSingleButtomWidgetCustomCl extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           backgroundColor: Colors.transparent,
           child: Text(
-            title1,
+            title1,style: TextStyle(color: Colors.white),
           )),
     );
   }

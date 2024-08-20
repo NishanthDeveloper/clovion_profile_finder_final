@@ -40,7 +40,7 @@ class _EighteenContactDetailsState extends State<EighteenContactDetails> {
     print("uid for Update $uidUser ");
 
     final url =
-        Uri.parse("http://${ApiService.ipAddress}/about_candidate/JJ30LIE1RVQ");
+        Uri.parse("http://${ApiService.ipAddress}/about_candidate/$uidUser");
     final request = http.MultipartRequest('POST', url);
     request.fields['contact_phone'] = _phoneNumber.toString();
     request.fields['contact_email'] = _email.toString();
@@ -74,7 +74,7 @@ class _EighteenContactDetailsState extends State<EighteenContactDetails> {
 
     uidUser = preferences.getString("uid2").toString();
     final response = await http
-        .get(Uri.parse("http://${ApiService.ipAddress}/alldata/JJ30LIE1RVQ"));
+        .get(Uri.parse("http://${ApiService.ipAddress}/alldata/$uidUser"));
     var json = jsonDecode(response.body);
 
     print("statusCodeIs ${response.statusCode}");
@@ -299,7 +299,7 @@ class _EighteenContactDetailsState extends State<EighteenContactDetails> {
             borderRadius: BorderRadius.circular(10),
             backgroundColor: Colors.transparent,
             child: Text(
-              _buttonClicked ? "Update" : "Edit",
+              _buttonClicked ? "Update" : "Edit",style: TextStyle(color: Colors.white),
             ),
           ),
         ));
