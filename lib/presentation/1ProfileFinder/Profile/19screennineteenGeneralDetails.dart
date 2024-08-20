@@ -177,6 +177,7 @@ class _NineteenGeneralDetailsState extends State<NineteenGeneralDetails> {
     return Scaffold(
       backgroundColor: ColorConstant.whiteA700,
          appBar:  ClAppbarLeadArrowBackSuffNo(
+          
           title: '',),
         body: isLoadingGetData
             ? const Center(

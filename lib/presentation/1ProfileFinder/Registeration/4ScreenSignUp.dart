@@ -559,7 +559,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                       ),
                                       child: TextFormField(
                                         keyboardType: TextInputType.number,
-                                        controller: addressController,
+                                        controller: pincodeController,
                                         validator: (value) {
                                           
                                           if (value!.isEmpty) {

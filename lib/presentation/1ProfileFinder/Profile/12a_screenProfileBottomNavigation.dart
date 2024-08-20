@@ -178,38 +178,31 @@ class _ProfileBottomNavigationScreenState
                     child: const Text('+Add'),
                   ),
                 )
-              : InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return  WishlistPage();
-                    }));
-                  },
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => WishlistPage()));
-                          },
-                          child: SvgPicture.asset(
-                              'assets/images/img_heartline.svg')),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NotificationPage()));
-                          },
-                          child: SvgPicture.asset(
-                              'assets/images/img_notification.svg')),
-                      const SizedBox(
-                        width: 20,
-                      )
-                    ],
-                  ))
+              : Row(
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => WishlistPage()));
+                      },
+                      child: SvgPicture.asset(
+                          'assets/images/img_heartline.svg')),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NotificationPage()));
+                      },
+                      child: SvgPicture.asset(
+                          'assets/images/img_notification.svg')),
+                  const SizedBox(
+                    width: 20,
+                  )
+                ],
+              )
         ],
       ),
       drawer: Container(
