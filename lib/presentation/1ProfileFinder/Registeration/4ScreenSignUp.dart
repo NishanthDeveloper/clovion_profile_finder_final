@@ -236,7 +236,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
   //   }
   // }
 
-  void signup(String url) async {
+  void signup() async {
     print('Sign up method');
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();
@@ -938,8 +938,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                             .text.isNotEmpty) {
                                       if (passwordController.text ==
                                           confirmPasswordController.text) {
-                                        signup(
-                                            "${ApiService.ipAddress}/signup/");
+                                        signup();
                                       } else {
                                         Fluttertoast.showToast(
                                           backgroundColor: Colors.green,
