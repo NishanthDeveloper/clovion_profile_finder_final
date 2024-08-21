@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide CarouselController;
 import 'package:profile_finder/My%20work/add_widget.dart';
 import 'package:profile_finder/My%20work/user_card_widget.dart';
 import 'package:profile_finder/core/utils/color_constant.dart';
