@@ -20,6 +20,7 @@ import 'package:profile_finder/presentation/1ProfileFinder/Profile%20Manager/PmC
 import 'package:profile_finder/routes/app_routes.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
+import 'package:profile_finder/widgets/search_widget_pm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../My work/wishlist.dart';
@@ -1000,6 +1001,9 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
                 ),
                 D10HCustomClSizedBoxWidget(),
                 TextField(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>PMAllUserSearch()));
+                  },
                   decoration: InputDecoration(
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(15.0),
