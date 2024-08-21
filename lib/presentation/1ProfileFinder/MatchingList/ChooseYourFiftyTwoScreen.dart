@@ -6,6 +6,8 @@ import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/payment_
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class ChooseYourFiftyTwoScreen extends StatelessWidget {
   const ChooseYourFiftyTwoScreen({super.key});
 
@@ -28,6 +30,7 @@ class ChooseYourFiftyTwoScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         appBar:  ClAppbarLeadGridSuffHeart(
           testingNextPage: AddRefferenceFiftyThreeScreen(),
+          notificationPage: NotificationPage(),
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

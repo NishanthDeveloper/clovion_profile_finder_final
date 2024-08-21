@@ -18,6 +18,8 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../Account Settings/widgets/notification.dart';
+
 class PaymentOfInvestigatorFourtyScreen extends StatefulWidget {
   PaymentOfInvestigatorFourtyScreen(
       {super.key, required this.private_investicator_id});
@@ -302,6 +304,7 @@ String _profile_finder_id = '';
     // return Scaffold();
     return Scaffold(
       appBar: ClAppbarLeadGridSuffHeart(
+        notificationPage: NotificationPage(),
           testingNextPage: CloseDealFourtyOneScreen(
         private_investicator_id_close_deal: '',
       )),

@@ -3,6 +3,8 @@ import 'package:profile_finder/core/utils/size_utils.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/PaymentOfInvestigatorFourtyScreen.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class TaskCompleteThirtyNineScreen extends StatefulWidget {
   const TaskCompleteThirtyNineScreen({super.key});
 
@@ -14,7 +16,9 @@ class _TaskCompleteThirtyNineScreenState extends State<TaskCompleteThirtyNineScr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar:  ClAppbarLeadGridSuffHeart(testingNextPage:  PaymentOfInvestigatorFourtyScreen(private_investicator_id: '',)),
+     appBar:  ClAppbarLeadGridSuffHeart(
+      
+      notificationPage: NotificationPage(),testingNextPage:  PaymentOfInvestigatorFourtyScreen(private_investicator_id: '',)),
 
       body: SingleChildScrollView(
         child: Padding(padding: const EdgeInsets.symmetric(horizontal: 20),

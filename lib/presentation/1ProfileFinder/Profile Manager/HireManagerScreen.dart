@@ -28,6 +28,8 @@ import 'package:http/http.dart' as http;
 
 import 'dart:convert';
 
+import '../Account Settings/widgets/notification.dart';
+
 List<PmMyDataModel> pmMyDataModelFromJson(String str) =>
     List<PmMyDataModel>.from(
         json.decode(str).map((x) => PmMyDataModel.fromJson(x)));
@@ -57,6 +59,7 @@ class PmMyDataModel {
   String? createdDate;
   int? otp1;
   int? userOtp1;
+  String? complaints;
 
   PmMyDataModel({
     this.uid,
@@ -80,6 +83,7 @@ class PmMyDataModel {
     this.createdDate,
     this.otp1,
     this.userOtp1,
+    this.complaints,
   });
 
   factory PmMyDataModel.fromJson(Map<String, dynamic> json) => PmMyDataModel(
@@ -104,6 +108,7 @@ class PmMyDataModel {
         createdDate: json["created_date"],
         otp1: json["otp1"],
         userOtp1: json["user_otp1"],
+        complaints:json["complaints"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -128,6 +133,7 @@ class PmMyDataModel {
         "created_date": createdDate,
         "otp1": otp1,
         "user_otp1": userOtp1,
+        "complaints":complaints,
       };
 }
 
@@ -425,6 +431,7 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
     // return Scaffold();
     return Scaffold(
       appBar: ClAppbarLeadGridSuffHeart(
+        notificationPage: NotificationPage(),
           testingNextPage: CloseDealFourtyOneScreen(
         private_investicator_id_close_deal: '',
       )),
@@ -434,7 +441,7 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              Text(_profile_finder_email),
+              // Text(_profile_finder_email),
               const Text(
                 'Hire Manager',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -444,8 +451,8 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
               // Text(myManagerList[0].uid.toString()),
               // Text(userList[0].uid.toString()   ),
 
-              Text(myManagersUidList.length.toString()),
-              Text(myManagersUidList.toString()),
+              // Text(myManagersUidList.length.toString()),
+              // Text(myManagersUidList.toString()),
 
               loadingMyData
                   ? const Center(child: SpinKitWave(color: Colors.blue))
@@ -602,151 +609,151 @@ class _HireManagerScreenState extends State<HireManagerScreen> {
                         // Text(widget.profile_manager_id),
                         // Text(_pmMyClientsList[0].id.toString()),
                         // Text(_pmMyClientsList[0].email.toString()),
-                        Text(
-                          "Reviews",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: DeviceSize.itemWidth / 13,
-                              color: ColorConstant.clgreenAmountColor),
-                        ),
-                        SizedBox(height: DeviceSize.itemHeight / 15),
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/images/img_ticket.svg',
-                              height: 20,
-                            ),
-                            Text(
-                              "  4.2",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: DeviceSize.itemWidth / 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: DeviceSize.itemHeight / 15),
-                        ListTile(
-                          contentPadding: const EdgeInsets.all(10),
-                          title: Text(
-                            '60%',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: DeviceSize.itemWidth / 13,
-                            ),
-                          ),
-                          subtitle: const Text('Good Reviews'),
-                          leading: SvgPicture.asset(
-                            'assets/images/img_location.svg',
-                            height: 45,
-                          ),
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: ColorConstant.clgreyborderColor),
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10))),
-                        ),
-                        CustomClListtileWidget(
-                            profilePic: 'assets/images/img_ellipse88.png',
+                        // Text(
+                        //   "Reviews",
+                        //   style: TextStyle(
+                        //       fontWeight: FontWeight.bold,
+                        //       fontSize: DeviceSize.itemWidth / 13,
+                        //       color: ColorConstant.clgreenAmountColor),
+                        // ),
+                        // SizedBox(height: DeviceSize.itemHeight / 15),
+                        // Row(
+                        //   children: [
+                        //     SvgPicture.asset(
+                        //       'assets/images/img_ticket.svg',
+                        //       height: 20,
+                        //     ),
+                        //     Text(
+                        //       "  4.2",
+                        //       style: TextStyle(
+                        //         fontWeight: FontWeight.bold,
+                        //         fontSize: DeviceSize.itemWidth / 13,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // SizedBox(height: DeviceSize.itemHeight / 15),
+                        // ListTile(
+                        //   contentPadding: const EdgeInsets.all(10),
+                        //   title: Text(
+                        //     '60%',
+                        //     style: TextStyle(
+                        //       fontWeight: FontWeight.bold,
+                        //       fontSize: DeviceSize.itemWidth / 13,
+                        //     ),
+                        //   ),
+                        //   subtitle: const Text('Good Reviews'),
+                        //   leading: SvgPicture.asset(
+                        //     'assets/images/img_location.svg',
+                        //     height: 45,
+                        //   ),
+                        //   shape: RoundedRectangleBorder(
+                        //       side: BorderSide(
+                        //           color: ColorConstant.clgreyborderColor),
+                        //       borderRadius: const BorderRadius.only(
+                        //           topLeft: Radius.circular(10),
+                        //           topRight: Radius.circular(10))),
+                        // ),
+                        // CustomClListtileWidget(
+                        //     profilePic: 'assets/images/img_ellipse88.png',
 
-                            // C:\Flutter projects\Saran\Official\Marriyo\Marriyo_17_May\marriyo_17_may\assets\images\img_ellipse88.png
-                            title: "Jane Cooper",
-                            subtitleImage: 'assets/images/img_ticket.svg',
-                            subTitle:
-                                "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
-                        CustomClListtileWidget(
-                            profilePic: 'assets/images/img_ellipse89.png',
-                            title: "Darrel Steward",
-                            subtitleImage: 'assets/images/img_ticket.svg',
-                            subTitle:
-                                "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
-                        CustomClListtileWidget(
-                            profilePic: 'assets/images/img_ellipse89_53x53.png',
-                            title: "Kristin Watson",
-                            subtitleImage: 'assets/images/img_ticket.svg',
-                            subTitle:
-                                "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
-                        CustomClListtileWidget(
-                            profilePic: 'assets/images/img_ellipse89_1.png',
-                            title: "Brooklyn Simmons",
-                            subtitleImage: 'assets/images/img_ticket.svg',
-                            subTitle:
-                                "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
-                        CustomClListtileWidget(
-                          profilePic: 'assets/images/img_ellipse89_2.png',
-                          title: "Cody Fisher",
-                          subtitleImage: 'assets/images/img_ticket.svg',
-                          subTitle:
-                              "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job.",
-                          borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10)),
-                        ),
-                        SizedBox(height: DeviceSize.itemHeight / 15),
-                        ListTile(
-                          // minLeadingWidth: 5,
-                          // horizontalTitleGap: 100,
-                          contentPadding: const EdgeInsets.all(10),
-                          title: Text(
-                            '40%',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: DeviceSize.itemWidth / 13,
-                            ),
-                          ),
-                          subtitle: const Text('Bad Reviews'),
-                          leading: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              SvgPicture.asset(
-                                'assets/images/img_group_red_400.svg',
-                                height: 50,
-                              ),
-                            ],
-                          ),
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: ColorConstant.clgreyborderColor),
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10))),
-                        ),
-                        CustomClListtileWidget(
-                            profilePic: 'assets/images/img_ellipse88_53x53.png',
-                            title: "Cody Fisher",
-                            subtitleImage: 'assets/images/img_ticket.svg',
-                            subTitle:
-                                "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
-                        CustomClListtileWidget(
-                            profilePic: 'assets/images/img_ellipse89_3.png',
-                            title: "Brooklyn Simmons",
-                            subtitleImage: 'assets/images/img_ticket.svg',
-                            subTitle:
-                                "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
-                        CustomClListtileWidget(
-                            profilePic: 'assets/images/img_ellipse89_4.png',
-                            title: "Brooklyn Simmons",
-                            subtitleImage: 'assets/images/img_ticket.svg',
-                            subTitle:
-                                "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
-                        CustomClListtileWidget(
-                            profilePic: 'assets/images/img_ellipse89_5.png',
-                            title: "Brooklyn Simmons",
-                            subtitleImage: 'assets/images/img_ticket.svg',
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                            ),
-                            subTitle:
-                                "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
-                        SizedBox(
-                          height: DeviceSize.itemHeight / 2,
-                        ),
+                        //     // C:\Flutter projects\Saran\Official\Marriyo\Marriyo_17_May\marriyo_17_may\assets\images\img_ellipse88.png
+                        //     title: "Jane Cooper",
+                        //     subtitleImage: 'assets/images/img_ticket.svg',
+                        //     subTitle:
+                        //         "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
+                        // CustomClListtileWidget(
+                        //     profilePic: 'assets/images/img_ellipse89.png',
+                        //     title: "Darrel Steward",
+                        //     subtitleImage: 'assets/images/img_ticket.svg',
+                        //     subTitle:
+                        //         "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
+                        // CustomClListtileWidget(
+                        //     profilePic: 'assets/images/img_ellipse89_53x53.png',
+                        //     title: "Kristin Watson",
+                        //     subtitleImage: 'assets/images/img_ticket.svg',
+                        //     subTitle:
+                        //         "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
+                        // CustomClListtileWidget(
+                        //     profilePic: 'assets/images/img_ellipse89_1.png',
+                        //     title: "Brooklyn Simmons",
+                        //     subtitleImage: 'assets/images/img_ticket.svg',
+                        //     subTitle:
+                        //         "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
+                        // CustomClListtileWidget(
+                        //   profilePic: 'assets/images/img_ellipse89_2.png',
+                        //   title: "Cody Fisher",
+                        //   subtitleImage: 'assets/images/img_ticket.svg',
+                        //   subTitle:
+                        //       "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job.",
+                        //   borderRadius: const BorderRadius.only(
+                        //       bottomLeft: Radius.circular(10),
+                        //       bottomRight: Radius.circular(10)),
+                        // ),
+                        // SizedBox(height: DeviceSize.itemHeight / 15),
+                        // ListTile(
+                        //   // minLeadingWidth: 5,
+                        //   // horizontalTitleGap: 100,
+                        //   contentPadding: const EdgeInsets.all(10),
+                        //   title: Text(
+                        //     '40%',
+                        //     style: TextStyle(
+                        //       fontWeight: FontWeight.bold,
+                        //       fontSize: DeviceSize.itemWidth / 13,
+                        //     ),
+                        //   ),
+                        //   subtitle: const Text('Bad Reviews'),
+                        //   leading: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.start,
+                        //     mainAxisSize: MainAxisSize.min,
+                        //     children: [
+                        //       const SizedBox(
+                        //         width: 5,
+                        //       ),
+                        //       SvgPicture.asset(
+                        //         'assets/images/img_group_red_400.svg',
+                        //         height: 50,
+                        //       ),
+                        //     ],
+                        //   ),
+                        //   shape: RoundedRectangleBorder(
+                        //       side: BorderSide(
+                        //           color: ColorConstant.clgreyborderColor),
+                        //       borderRadius: const BorderRadius.only(
+                        //           topLeft: Radius.circular(10),
+                        //           topRight: Radius.circular(10))),
+                        // ),
+                        // CustomClListtileWidget(
+                        //     profilePic: 'assets/images/img_ellipse88_53x53.png',
+                        //     title: "Cody Fisher",
+                        //     subtitleImage: 'assets/images/img_ticket.svg',
+                        //     subTitle:
+                        //         "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
+                        // CustomClListtileWidget(
+                        //     profilePic: 'assets/images/img_ellipse89_3.png',
+                        //     title: "Brooklyn Simmons",
+                        //     subtitleImage: 'assets/images/img_ticket.svg',
+                        //     subTitle:
+                        //         "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
+                        // CustomClListtileWidget(
+                        //     profilePic: 'assets/images/img_ellipse89_4.png',
+                        //     title: "Brooklyn Simmons",
+                        //     subtitleImage: 'assets/images/img_ticket.svg',
+                        //     subTitle:
+                        //         "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
+                        // CustomClListtileWidget(
+                        //     profilePic: 'assets/images/img_ellipse89_5.png',
+                        //     title: "Brooklyn Simmons",
+                        //     subtitleImage: 'assets/images/img_ticket.svg',
+                        //     borderRadius: const BorderRadius.only(
+                        //       bottomLeft: Radius.circular(10),
+                        //       bottomRight: Radius.circular(10),
+                        //     ),
+                        //     subTitle:
+                        //         "The investigator is very quick and collect all details what i request him. thanks lot for helping such a great job."),
+                        // SizedBox(
+                        //   height: DeviceSize.itemHeight / 2,
+                        // ),
                       ],
                     ),
             ],

@@ -15,6 +15,8 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class PfPiWriteYourQuestioncreen extends StatefulWidget {
   const PfPiWriteYourQuestioncreen(
       {super.key, required this.private_investigator_id_ques});
@@ -173,6 +175,7 @@ class _PfPiWriteYourQuestioncreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(
+        notificationPage: NotificationPage(),
           testingNextPage: HighlightProfileFourtySixScreen()),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

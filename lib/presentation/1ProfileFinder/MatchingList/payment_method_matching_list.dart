@@ -6,6 +6,8 @@ import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/AddReffe
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class PaymentMethodMatchingListScreen extends StatefulWidget {
   const PaymentMethodMatchingListScreen({super.key});
 
@@ -32,6 +34,7 @@ class _PaymentMethodMatchingListScreenState
           backgroundColor: Colors.transparent,
           appBar:  ClAppbarLeadGridSuffHeart(
             testingNextPage: AddRefferenceFiftyThreeScreen(),
+            notificationPage: NotificationPage(),
           ),
           // appBar: AppBar(
           //   backgroundColor: Colors.transparent,

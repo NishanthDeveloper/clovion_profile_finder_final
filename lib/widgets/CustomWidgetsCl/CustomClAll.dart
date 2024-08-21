@@ -31,30 +31,28 @@ import '../../presentation/1ProfileFinder/ReferAFriend/ReferAFriendFourtySevenSc
 
 class ClAppbarLeadGridSuffHeart extends StatefulWidget
     implements PreferredSizeWidget {
-
   final Widget testingNextPage;
-    final contex;
+  final Widget notificationPage;
+  final contex;
 
-   ClAppbarLeadGridSuffHeart({super.key, required this.testingNextPage, this.contex });
+  ClAppbarLeadGridSuffHeart(
+      {super.key, required this.testingNextPage, this.contex,required this.notificationPage});
 
   @override
-  State<ClAppbarLeadGridSuffHeart> createState() => _ClAppbarLeadGridSuffHeartState();
-  
+  State<ClAppbarLeadGridSuffHeart> createState() =>
+      _ClAppbarLeadGridSuffHeartState();
+
   @override
   // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _ClAppbarLeadGridSuffHeartState extends State<ClAppbarLeadGridSuffHeart> {
- 
-
-
-
   @override
   Widget build(BuildContext context) {
-    return  AppBar(
-        backgroundColor: Colors.transparent,
-        leading: Builder(
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      leading: Builder(
         builder: (context) {
           return InkWell(
             onTap: () {
@@ -69,31 +67,34 @@ class _ClAppbarLeadGridSuffHeartState extends State<ClAppbarLeadGridSuffHeart> {
           );
         },
       ),
-        // leadingWidth: DeviceSize.itemWidth /2.7067,
-        leadingWidth: 45,
-        actions: [
-          InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return widget.testingNextPage;
-              }));
-            },
-            child: Row(
-              children: [
-                SvgPicture.asset('assets/images/img_heartline.svg'),
-                SvgPicture.asset('assets/images/img_notification.svg'),
-                const SizedBox(
-                  width: 20,
-                )
-              ],
-            ),
-          )
-        ],
-        elevation: 0,
-      );
-        
-    
-    
+      // leadingWidth: DeviceSize.itemWidth /2.7067,
+      leadingWidth: 45,
+      actions: [
+        Row(
+          children: [
+            InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return widget.testingNextPage;
+                  }));
+                },
+                child: SvgPicture.asset('assets/images/img_heartline.svg')),
+
+            InkWell(
+               onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return widget.notificationPage;
+                  }));
+                },
+              child: SvgPicture.asset('assets/images/img_notification.svg')),
+            const SizedBox(
+              width: 20,
+            )
+          ],
+        )
+      ],
+      elevation: 0,
+    );
   }
 }
 
@@ -102,6 +103,7 @@ class ClAppbarLeadArrowBackSuffHeart extends StatelessWidget
   ClAppbarLeadArrowBackSuffHeart(
       {super.key,
       required this.testingNextPage,
+      this.titleText,
       this.leftIcon = const Icon(
         Icons.arrow_back_ios,
         color: Colors.black,
@@ -111,6 +113,7 @@ class ClAppbarLeadArrowBackSuffHeart extends StatelessWidget
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   final Widget testingNextPage;
   Widget leftIcon;
+  Widget? titleText;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -120,24 +123,25 @@ class ClAppbarLeadArrowBackSuffHeart extends StatelessWidget
         onTap: () => Navigator.pop(context),
         child: Center(child: leftIcon),
       ),
+      title: titleText,
       actions: [
-        InkWell(
-          onTap: () {
-            //  Navigator.pushNamed(context, testingNextPage);
+        Row(
+          children: [
+            InkWell(
+                onTap: () {
+                  //  Navigator.pushNamed(context, testingNextPage);
 
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return testingNextPage;
-            }));
-          },
-          child: Row(
-            children: [
-              SvgPicture.asset('assets/images/img_heartline.svg'),
-              SvgPicture.asset('assets/images/img_notification.svg'),
-              const SizedBox(
-                width: 20,
-              )
-            ],
-          ),
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return testingNextPage;
+                  }));
+                },
+                child: SvgPicture.asset('assets/images/img_heartline.svg')),
+            InkWell(
+                child: SvgPicture.asset('assets/images/img_notification.svg')),
+            const SizedBox(
+              width: 20,
+            )
+          ],
         )
       ],
       elevation: 0,
@@ -268,8 +272,9 @@ class ClProfilePictureWithCover extends StatefulWidget {
     required this.name,
     required this.place,
     required this.onPressed,
-     this.hire,
-    required this.elevatedButtonText, this.rating = 1,
+    this.hire,
+    required this.elevatedButtonText,
+    this.rating = 1,
 
     // required this.onPressed,
     // required this.buttonData,
@@ -284,7 +289,7 @@ class ClProfilePictureWithCover extends StatefulWidget {
   final VoidCallback? onPressed;
   final bool? hire;
   final String elevatedButtonText;
-  final double rating ;
+  final double rating;
 
   @override
   State<ClProfilePictureWithCover> createState() =>
@@ -301,7 +306,7 @@ class _ClProfilePictureWithCoverState extends State<ClProfilePictureWithCover> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.grey.shade300)),
-        height: widget.itemHeight * 2.5,
+        height: widget.itemHeight * 2.2,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -317,11 +322,9 @@ class _ClProfilePictureWithCoverState extends State<ClProfilePictureWithCover> {
                       color: Colors.orange,
                       image: DecorationImage(
                           image: NetworkImage(
-                              widget.profilePicturepath.toString(),
-                              
-                              ),
-                              fit: BoxFit.cover
-                              )),
+                            widget.profilePicturepath.toString(),
+                          ),
+                          fit: BoxFit.cover)),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.network(
@@ -363,9 +366,9 @@ class _ClProfilePictureWithCoverState extends State<ClProfilePictureWithCover> {
                   Text(
                     widget.name,
                     style: const TextStyle(
-                        color: Colors.black,
+                        color: Color.fromRGBO(43, 54, 116, 1),
                         fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                        fontSize: 23),
                   ),
                   Text(widget.place),
                   // SvgPicture.asset(
@@ -373,24 +376,22 @@ class _ClProfilePictureWithCoverState extends State<ClProfilePictureWithCover> {
                   //   height: 25,
                   // ),
 
-                   RatingBar.builder(
-                initialRating: widget.rating,
-                minRating: 1,
-                direction: Axis.horizontal,
-                // allowHalfRating: true,
-                itemCount: 5,
-                itemSize: 40,
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (rating) {
+                  //      RatingBar.builder(
+                  //   initialRating: widget.rating,
+                  //   minRating: 1,
+                  //   direction: Axis.horizontal,
+                  //   // allowHalfRating: true,
+                  //   itemCount: 5,
+                  //   itemSize: 40,
+                  //   itemBuilder: (context, _) => const Icon(
+                  //     Icons.star,
+                  //     color: Colors.amber,
+                  //   ),
+                  //   onRatingUpdate: (rating) {
 
-                  
-                 
-                },
-               ignoreGestures: true,
-              ),
+                  //   },
+                  //  ignoreGestures: true,
+                  // ),
                   MyElevatedButton(
                     onPressed: widget.onPressed,
                     // onPressed: onTapHirePi,
@@ -442,10 +443,10 @@ class ClProfilePictureWithCoverWithLinearPercentIndicator
     // super.key,
     // Key? key,
     required this.itemHeight,
-    required this.profilePicturepath ,
+    required this.profilePicturepath,
     required this.coverPicturepath,
-    required this.name ,
-    required this.place ,
+    required this.name,
+    required this.place,
     required this.percentage,
   });
 
@@ -464,7 +465,7 @@ class _ClProfilePictureWithCoverWithLinearPercentIndicatorState
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.grey.shade300)),
-        height: widget.itemHeight * 2.5,
+        height: widget.itemHeight * 1.9,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -512,33 +513,33 @@ class _ClProfilePictureWithCoverWithLinearPercentIndicatorState
                   Text(
                     widget.name,
                     style: const TextStyle(
-                        color: Colors.black,
+                        color: Color.fromRGBO(43, 54, 116, 1),
                         fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                        fontSize: 24),
                   ),
                   Text(widget.place),
-                  LinearPercentIndicator(
-                    backgroundColor: ColorConstant.clgreyfillColor,
-                    width: MediaQuery.of(context).size.width - 50,
-                    animation: true,
-                    lineHeight: 20.0,
-                    animationDuration: 2500,
-                    percent: widget.percentage * 0.01,
-                    // center: Text("${widget.percentage}%"),
-                    barRadius: const Radius.circular(10),
-                    progressColor: Colors.green,
-                  ),
-                  Row(
-                    children: [
-                      const Text(
-                        "Task Complete ",
-                      ),
-                      Text(
-                        '${widget.percentage}%',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
+                  // LinearPercentIndicator(
+                  //   backgroundColor: ColorConstant.clgreyfillColor,
+                  //   width: MediaQuery.of(context).size.width - 50,
+                  //   animation: true,
+                  //   lineHeight: 20.0,
+                  //   animationDuration: 2500,
+                  //   percent: widget.percentage * 0.01,
+                  //   // center: Text("${widget.percentage}%"),
+                  //   barRadius: const Radius.circular(10),
+                  //   progressColor: Colors.green,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     const Text(
+                  //       "Task Complete ",
+                  //     ),
+                  //     Text(
+                  //       '${widget.percentage}%',
+                  //       style: const TextStyle(fontWeight: FontWeight.bold),
+                  //     )
+                  //   ],
+                  // ),
                 ],
               ),
             ),
@@ -607,22 +608,25 @@ class CustomClListtileWidget extends StatelessWidget {
 }
 
 class CustomClCheckboxWithQuestionWidget extends StatefulWidget {
-   CustomClCheckboxWithQuestionWidget({
+  CustomClCheckboxWithQuestionWidget({
     super.key,
     required this.question,
-    required this.completed, required this.answer,
+    required this.completed,
+    required this.answer,
   });
 
   final String question;
   final String answer;
-  
+
   final bool completed;
 
   @override
-  State<CustomClCheckboxWithQuestionWidget> createState() => _CustomClCheckboxWithQuestionWidgetState();
+  State<CustomClCheckboxWithQuestionWidget> createState() =>
+      _CustomClCheckboxWithQuestionWidgetState();
 }
 
-class _CustomClCheckboxWithQuestionWidgetState extends State<CustomClCheckboxWithQuestionWidget> {
+class _CustomClCheckboxWithQuestionWidgetState
+    extends State<CustomClCheckboxWithQuestionWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -1899,15 +1903,10 @@ class _MatchingListImageHorizontalListViewState
   _getDataMatList() async {
     debugPrint('_getDataMatList start');
 
-     SharedPreferences preferences = await SharedPreferences.getInstance();
+    SharedPreferences preferences = await SharedPreferences.getInstance();
     userUid = preferences.getString("uid2").toString();
 
     final responseMatList = await http.get(Uri.parse(
-
-        
-
-
-
         "http://${ApiService.ipAddress}/all_male_user_data/$userUid"));
     var json = jsonDecode(responseMatList.body);
 
@@ -2374,9 +2373,7 @@ class _MatchingListImageHorizontalListViewState
                               style: const TextStyle(fontSize: 13)),
                     ],
                   )
-                : 
-                
-                Text(
+                : Text(
                     widget.leftBigTitle.toString(),
                     style: TextStyle(
                         color: ColorConstant.clFontDarkBlueColor,
@@ -2521,14 +2518,14 @@ class _MatchingListImageHorizontalListViewState
                                 Text(
                                   // widget.imageWord2,
 
-                                   widget.imageWord2.toString(),
+                                  widget.imageWord2.toString(),
                                   style: const TextStyle(
                                       fontSize: 10, color: Colors.black),
                                 ),
                                 Text(
                                   // widget.imageWord3,
 
-                                   widget.imageWord3.toString(),
+                                  widget.imageWord3.toString(),
                                   style: const TextStyle(
                                       fontSize: 10, color: Colors.black),
                                 ),

@@ -24,6 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../My work/wishlist.dart';
 import '../Account Settings/Aed3100FourtySevenScreen.dart';
+import '../Account Settings/widgets/notification.dart';
 import '../Account Settings/widgets/requested_list_widget.dart';
 import '../HappyCouplesUI/imagesHappyCouples.dart';
 /*
@@ -749,22 +750,10 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
     // return Scaffold();
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(
-        contex:  Builder(
-        builder: (context) {
-          return InkWell(
-            onTap: () {
-              Scaffold.of(context).openDrawer(); // Opens the drawer when tapped
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: SvgPicture.asset(
-                'assets/images/img_grid.svg',
-              ),
-            ),
-          );
-        },
-      ),
+          notificationPage: NotificationPage(),
           testingNextPage: WishlistPage()),
+          
+          // drawer
           drawer: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

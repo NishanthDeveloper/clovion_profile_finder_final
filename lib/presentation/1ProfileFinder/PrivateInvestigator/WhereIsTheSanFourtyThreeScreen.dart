@@ -13,6 +13,8 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class MyQuestionAndAnswer {
   static List<MyQuesAndAns1> privateInvestigatorCollection = []; 
   String profile_finder_id = ' ';
@@ -162,6 +164,7 @@ setState(() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ClAppbarLeadGridSuffHeart(
+        notificationPage: NotificationPage(),
           testingNextPage: CloseAndRateFourtyFourScreen(
         private_investicator_id: '',
       )),

@@ -6,6 +6,8 @@ import 'package:profile_finder/core/utils/size_utils.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/AddRefferenceFiftyThreeScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/MatchingListNavigationFourtyEightScreen.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
+
+import '../presentation/1ProfileFinder/Account Settings/widgets/notification.dart';
 class AddDisplayigWidget extends StatefulWidget {
   const AddDisplayigWidget({super.key});
 
@@ -17,7 +19,7 @@ class _AddDisplayigWidgetState extends State<AddDisplayigWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ClAppbarLeadGridSuffHeart(testingNextPage:MatchingListNavigationFourtyEightScreen(),),
+      appBar: ClAppbarLeadGridSuffHeart(testingNextPage:MatchingListNavigationFourtyEightScreen(),notificationPage: NotificationPage(),),
       body:   SafeArea(
           child: SingleChildScrollView(
             child: Column(

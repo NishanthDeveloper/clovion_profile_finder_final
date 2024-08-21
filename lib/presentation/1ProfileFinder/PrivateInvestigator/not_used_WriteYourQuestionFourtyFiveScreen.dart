@@ -15,6 +15,8 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class WriteYourQuestionFourtyFiveScreen extends StatefulWidget {
   const WriteYourQuestionFourtyFiveScreen({super.key, required this.private_investicator_id_ques});
 
@@ -80,7 +82,9 @@ TextEditingController questionControllerScreen = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar:  ClAppbarLeadGridSuffHeart(testingNextPage:  HighlightProfileFourtySixScreen()),
+       appBar:  ClAppbarLeadGridSuffHeart(
+        notificationPage: NotificationPage(),
+        testingNextPage:  HighlightProfileFourtySixScreen()),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(

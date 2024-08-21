@@ -4,6 +4,8 @@ import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/P
 import 'package:profile_finder/presentation/1ProfileFinder/Profile%20Manager/HireManagerScreen.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class TaskCompleteThirtyNineScreen extends StatefulWidget {
   const TaskCompleteThirtyNineScreen({super.key});
 
@@ -15,7 +17,9 @@ class _TaskCompleteThirtyNineScreenState extends State<TaskCompleteThirtyNineScr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar:  ClAppbarLeadGridSuffHeart(testingNextPage:  HireManagerScreen(profile_manager_id: '',)),
+     appBar:  ClAppbarLeadGridSuffHeart(
+      notificationPage: NotificationPage(),
+      testingNextPage:  HireManagerScreen(profile_manager_id: '',)),
 
       body: SingleChildScrollView(
         child: Padding(padding: const EdgeInsets.symmetric(horizontal: 20),

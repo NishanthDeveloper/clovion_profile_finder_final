@@ -5,6 +5,8 @@ import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/every_ma
 import 'package:profile_finder/presentation/1ProfileFinder/Profile/12screenProfile_complete.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class MatchingListNavigationFourtyEightScreen extends StatefulWidget {
   @override
   State<MatchingListNavigationFourtyEightScreen> createState() =>
@@ -33,7 +35,7 @@ class _MatchingListNavigationFourtyEightScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: ClAppbarLeadGridSuffHeart(testingNextPage:MatchingListNavigationFourtyEightScreen(),),
+      appBar: ClAppbarLeadGridSuffHeart(testingNextPage:MatchingListNavigationFourtyEightScreen(),notificationPage: NotificationPage(),),
       body: Center(
         child: _pages.elementAt(_selectedIndex),
       ),

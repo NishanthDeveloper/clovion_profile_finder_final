@@ -14,6 +14,8 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class WriteYourComplaintPfScreen extends StatefulWidget {
   const WriteYourComplaintPfScreen(
       {super.key, required this.profile_manager_id_ques});
@@ -119,6 +121,7 @@ class _WriteYourComplaintPfScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(
+        notificationPage: NotificationPage(),
           testingNextPage: HighlightProfileFourtySixScreen()),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

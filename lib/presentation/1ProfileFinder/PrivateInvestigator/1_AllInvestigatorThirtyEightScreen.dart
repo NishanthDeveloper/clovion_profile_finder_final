@@ -15,11 +15,14 @@ import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/C
 import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/PaymentOfInvestigatorFourtyScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/TaskCompleteThirtyNineScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/TestAllInvestigator.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Profile/screens/whishlist.dart';
 import 'package:profile_finder/routes/app_routes.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+import '../Account Settings/widgets/notification.dart';
 /*
 class PrivateInvestigator {
   final String profile_finder_id;
@@ -529,7 +532,8 @@ class _AllInvestigatorThirtyEightScreenState
     // }
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(
-          testingNextPage: TaskCompleteThirtyNineScreen()),
+        notificationPage: NotificationPage(),
+          testingNextPage: WhishList()),
       body: Container(
         width: double.maxFinite,
         height: double.maxFinite,
@@ -782,7 +786,7 @@ class _AllInvestigatorThirtyEightScreenState
                                                     .profilePicture
                                                     .toString(),
                                             name: myInvestigatorList[index]
-                                                .uid
+                                                .firstName
                                                 .toString(),
                                             place:
                                                 '${myInvestigatorList[index].officeCity.toString()} , ${myInvestigatorList[index].officeCountry}',

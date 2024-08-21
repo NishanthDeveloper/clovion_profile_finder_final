@@ -4,13 +4,17 @@ import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/W
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class AnswerFourtyTwoScreen extends StatelessWidget {
   const AnswerFourtyTwoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar:  ClAppbarLeadGridSuffHeart(testingNextPage:  WhereIsTheSanFourtyThreeScreen(private_investicator_id: '',)),
+     appBar:  ClAppbarLeadGridSuffHeart(
+      notificationPage: NotificationPage(),
+      testingNextPage:  WhereIsTheSanFourtyThreeScreen(private_investicator_id: '',)),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(

@@ -13,6 +13,8 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../Account Settings/widgets/notification.dart';
+
 class CloseAndRateFourtyFourScreen extends StatefulWidget {
   CloseAndRateFourtyFourScreen(
       {super.key, required this.private_investicator_id});
@@ -99,6 +101,7 @@ class _CloseAndRateFourtyFourScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(
+        notificationPage: NotificationPage(),
           testingNextPage: WriteYourQuestionFourtyFiveScreen(
         private_investicator_id_ques: '',
       )),

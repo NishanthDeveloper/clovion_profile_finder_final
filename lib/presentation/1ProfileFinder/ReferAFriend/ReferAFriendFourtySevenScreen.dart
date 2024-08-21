@@ -5,6 +5,8 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class ReferAFriendFourtySeven2Screen extends StatelessWidget {
   const ReferAFriendFourtySeven2Screen({super.key});
 
@@ -12,6 +14,7 @@ class ReferAFriendFourtySeven2Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(
+        notificationPage: NotificationPage(),
           testingNextPage: ReferAFriendFourtySeven2Screen()),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

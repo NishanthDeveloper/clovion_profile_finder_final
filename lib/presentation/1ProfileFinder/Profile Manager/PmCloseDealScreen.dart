@@ -8,10 +8,12 @@ import 'package:profile_finder/core/utils/color_constant.dart';
 import 'package:profile_finder/core/utils/size_utils.dart';
 import 'package:profile_finder/model_final/profile_manager/pm_my_clients_1_model.dart';
 import 'package:profile_finder/model_final/profile_manager/pm_my_clients_model.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Account%20Settings/widgets/notification.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/AnswerFourtyTwoScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Profile%20Manager/HireManagerScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Profile%20Manager/WriteYourComplaintPfScreen.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Profile%20Manager/screens/view_answer_screens.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:http/http.dart' as http;
@@ -188,7 +190,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
 
   PmMyClients clients = PmMyClients();
 
-  PmMyClients _pmMyClientsList = PmMyClients();
+  PmMyClients pmMyClientsList = PmMyClients();
 
   _fetchPmMyClients() async {
     print('_fetchPmMyClients function start');
@@ -207,7 +209,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
       //  clients = pmMyClientsFromJson(jsonResponse);
 
       print(jsonResponse);
-      var json = pmMyClientsFromJson(jsonResponse);
+       clients = pmMyClientsFromJson(jsonResponse);
 
       // for (The42284Ohjsh7 client in clients.the42284Ohjsh7!) {
       //   print('Client ID: ${client.id}');
@@ -335,8 +337,8 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
   Widget build(BuildContext context) {
     //  return Scaffold();
     return Scaffold(
-      appBar:  ClAppbarLeadGridSuffHeart(
-          testingNextPage: AnswerFourtyTwoScreen()),
+      appBar:
+          ClAppbarLeadGridSuffHeart(testingNextPage: AnswerFourtyTwoScreen(), notificationPage: NotificationPage(),),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -366,202 +368,258 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
               // _isLoading
               //     ? const Center(child: SpinKitWave(color: Colors.blue))
               //     :
-                  
-                   Column(
-                      children: [
-                        // Text(dataListSeperated[0]['uid']),
-                        ClProfilePictureWithCover(
-                          itemHeight: DeviceSize.itemHeight,
-                          profilePicturepath:
-                              userList[0].profilePicture.toString(),
-                          coverPicturepath:
-                              userList[0].profilePicture.toString(),
-                          name: userList[0].uid ?? 'Ariene McCoy',
 
-                          place:
-                              "${userList[0].officeCity}${',  '}${userList[0].officeCountry}",
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Text(dataListSeperated[0]['uid']),
+                  ClProfilePictureWithCover(
+                    itemHeight: DeviceSize.itemHeight,
+                    profilePicturepath: userList[0].profilePicture.toString(),
+                    coverPicturepath: userList[0].profilePicture.toString(),
+                    name: userList[0].complaints ?? 'Ariene McCoy',
 
-                          onPressed: () async {},
-                          hire: false, elevatedButtonText: 'Close Deal & Rate',
-                          //  onTapHirePi: () {  },
-                        ),
+                    place:
+                        "${userList[0].officeCity}${',  '}${userList[0].officeCountry}",
 
-                        Container(
+                    onPressed: () async {},
+                    hire: false, elevatedButtonText: 'Close Deal & Rate',
+                    //  onTapHirePi: () {  },
+                  ),
+
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //       border: Border.all(
+                  //           color: ColorConstant.clgreyborderColor)),
+                  //   height: DeviceSize.itemHeight * 1.5,
+                  //   width: double.maxFinite,
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //     children: [
+                  //       const Text("Overall Task Stats"),
+                  //       // SizedBox(
+                  //       //   height: DeviceSize.itemHeight / 10,
+                  //       // ),
+                  //       CircularPercentIndicator(
+                  //         radius: 70,
+                  //         progressColor: Colors.green,
+                  //         lineWidth: 7,
+                  //         percent: 70 / 100,
+                  //         center: const Text(
+                  //           '70%',
+                  //           style: TextStyle(
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 20),
+                  //         ),
+                  //         footer: Padding(
+                  //           padding:
+                  //               const EdgeInsets.symmetric(vertical: 25),
+                  //           child: Container(
+                  //               decoration: BoxDecoration(
+                  //                   borderRadius:
+                  //                       BorderRadius.circular(10),
+                  //                   border: Border.all(
+                  //                       color: ColorConstant
+                  //                           .clPurpleBorderColor,
+                  //                       width: 2)),
+                  //               child: Padding(
+                  //                 padding: const EdgeInsets.all(8.0),
+                  //                 child: Text(
+                  //                   "Notify To Complete",
+                  //                   style: TextStyle(
+                  //                     color: ColorConstant.clPurple6,
+                  //                     // fontWeight: FontWeight.bold,
+                  //                     fontSize: 17,
+                  //                   ),
+                  //                 ),
+                  //               )),
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                  // const D10HCustomClSizedBoxWidget(),
+                  // Text(_pmMyClientsList.length.toString()),
+                  // Text(_pmMyClientsList[0].email.toString()),
+                  // Text(_pmMyClientsList[1].email.toString()),
+                  // Text(_pmMyClientsList[2].email.toString()),
+                  // Text(_pmMyClientsList[3].email.toString()),
+
+                  //  Text(dataListSeperated[0]['complaints']),
+
+                  // const Text(
+                  //   'Complaints',
+                  //   style: TextStyle(
+                  //     // fontFamily: "Inter",
+                  //     fontWeight: FontWeight.bold,
+                  //     // fontSize: 14,
+                  //   ),
+                  // ),
+
+                  // Text(dataListSeperated[0]['complaints'].toString()),
+
+                  // Text(dataListSeperated[0]['complaints']),
+                  // Text(dataListSeperated[0]['complaints_replay']),
+                  // Text(dataListSeperated[1]['complaints']),
+                  // Text(dataListSeperated[1]['complaints_replay']),
+
+                  // Text(_pmMyClientsList.length.toString()),
+
+                  // Text(_pmMyClientsList1[0].uid.toString()),
+
+                  // Text(widget. profile_manager_id_close_deal),
+
+                  // Text(_pmMyClientsList_1.the42284Ohjsh7![0].complaints.toString()),
+
+                  D10HCustomClSizedBoxWidget(),
+
+                  Text(
+                    "All questions",
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(43, 54, 116, 1)),
+                  ),
+
+                  D10HCustomClSizedBoxWidget(),
+                      D10HCustomClSizedBoxWidget(),
+
+                    _isLoading? Center(child: CircularProgressIndicator(),): userList.isEmpty ? Center(child: Text("No Data Found")):
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            "assets/images/check.png",
+                            height: 30,
+                            width: 30,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          SizedBox(
+                              width: 320,
+                              child: Text(
+                                "where is the San Sebastian home? and she completed here graduation?,}",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              )),
+                        ],
+                      ),
+                      D10HCustomClSizedBoxWidget(),
+                      D10HCustomClSizedBoxWidget(),
+
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PmViewanswerscreen()));
+                        },
+                        child: Container(
+                          height: 42,
+                          width: 140,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  color: ColorConstant.clgreyborderColor)),
-                          height: DeviceSize.itemHeight * 1.5,
-                          width: double.maxFinite,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Text("Overall Task Stats"),
-                              // SizedBox(
-                              //   height: DeviceSize.itemHeight / 10,
-                              // ),
-                              CircularPercentIndicator(
-                                radius: 70,
-                                progressColor: Colors.green,
-                                lineWidth: 7,
-                                percent: 70 / 100,
-                                center: const Text(
-                                  '70%',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                                footer: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 25),
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border: Border.all(
-                                              color: ColorConstant
-                                                  .clPurpleBorderColor,
-                                              width: 2)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "Notify To Complete",
-                                          style: TextStyle(
-                                            color: ColorConstant.clPurple6,
-                                            // fontWeight: FontWeight.bold,
-                                            fontSize: 17,
-                                          ),
-                                        ),
-                                      )),
-                                ),
-                              )
-                            ],
+                            border: Border.all(
+                                color: Color.fromRGBO(123, 97, 255, 1),
+                                width: 1),
+                            borderRadius: BorderRadius.circular(8),
                           ),
+                          child: Center(child: Text("View Answer",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Color.fromRGBO(123, 97, 255, 1),),)),
                         ),
-                        const D10HCustomClSizedBoxWidget(),
-                        // Text(_pmMyClientsList.length.toString()),
-                        // Text(_pmMyClientsList[0].email.toString()),
-                        // Text(_pmMyClientsList[1].email.toString()),
-                        // Text(_pmMyClientsList[2].email.toString()),
-                        // Text(_pmMyClientsList[3].email.toString()),
+                      )
+                    ],
+                  ),
 
-                        //  Text(dataListSeperated[0]['complaints']),
+                  // dataListSeperated[0]['complaints'].toString() == 'empty'
+                  //     ? Container(
+                  //         decoration: BoxDecoration(
+                  //             border: Border.all(
+                  //                 color: ColorConstant.deepPurpleA200),
+                  //             borderRadius: BorderRadius.circular(10)),
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.all(8.0),
+                  //           child: Text(
+                  //             'No Complaints Registered',
+                  //             style: TextStyle(
+                  //               color: ColorConstant.deepPurpleA200,
+                  //             ),
+                  //           ),
+                  //         ))
+                  //     : ListView.builder(
+                  //         controller: ScrollController(),
+                  //         //  debugPrint(_myInvestigators.qkokamx1Qqf![0].firstName.toString());
+                  //         // itemCount: MyQuestionAndAnswer.privateInvestigatorCollection.length,
+                  //         // itemCount: _pmMyClientsList.length,
+                  //         // itemCount: dataListSeperated[0]['complaints'].length,
+                  //         itemCount: dataListSeperated.length,
+                  //         shrinkWrap: true,
+                  //         itemBuilder: ((context, index) {
+                  //           return ListTile(
+                  //             leading: Text('${index + 1}'),
+                  //             title: Text(
+                  //               dataListSeperated[0]['complaints']
+                  //                   .toString(),
+                  //             ),
+                  //             subtitle: Text(
+                  //               dataListSeperated[0]['complaints_replay']
+                  //                           .toString() ==
+                  //                       'empty'
+                  //                   ? 'Not Replied'
+                  //                   : dataListSeperated[0]
+                  //                           ['complaints_replay']
+                  //                       .toString(),
+                  //               style: TextStyle(
+                  //                 color: ColorConstant.clPurpleFontColor,
+                  //                 // fontWeight: FontWeight.bold,
+                  //                 fontSize: 13,
+                  //               ),
+                  //             ),
+                  //             trailing: Container(
+                  //               decoration: BoxDecoration(
+                  //                   border: const Border.fromBorderSide(
+                  //                       BorderSide.none),
+                  //                   color: ColorConstant.whiteA700,
+                  //                   shape: BoxShape.circle),
+                  //               height: 20,
+                  //               width: 20,
+                  //               child: Checkbox(
+                  //                 // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
 
-                        const Text(
-                          'Complaints',
-                          style: TextStyle(
-                            // fontFamily: "Inter",
-                            fontWeight: FontWeight.bold,
-                            // fontSize: 14,
-                          ),
-                        ),
+                  //                 value: dataListSeperated[0]
+                  //                                 ['complaints_replay']
+                  //                             .toString() ==
+                  //                         'empty'
+                  //                     ? false
+                  //                     : true,
+                  //                 onChanged: (value) {},
+                  //                 //  side: BorderSide.none,
+                  //                 shape: const CircleBorder(
+                  //                     side: BorderSide.none),
+                  //                 side: const BorderSide(
+                  //                     color: Colors.green),
+                  //                 activeColor: Colors.green,
+                  //                 // checkColor: Colors.black,
+                  //               ),
+                  //             ),
 
-                        // Text(dataListSeperated[0]['complaints'].toString()),
+                  //             //  CustomClCheckboxWithQuestionWidget(
+                  //             //   question: _pmMyClientsList[index].complaints.toString(),
+                  //             //   // 'where is the San Sebastian home? and she completed here graduation?',
+                  //             //   completed: true,
+                  //             //   answer:
+                  //             //       _pmMyClientsList[index].complaintsReplay.toString(),
+                  //             // ),
+                  //           );
+                  //         }),
+                  //       ),
 
-                        // Text(dataListSeperated[0]['complaints']),
-                        // Text(dataListSeperated[0]['complaints_replay']),
-                        // Text(dataListSeperated[1]['complaints']),
-                        // Text(dataListSeperated[1]['complaints_replay']),
-
-                        // Text(_pmMyClientsList.length.toString()),
-
-                        // Text(_pmMyClientsList1[0].uid.toString()),
-
-                        // Text(widget. profile_manager_id_close_deal),
-
-                        // Text(_pmMyClientsList_1.the42284Ohjsh7![0].complaints.toString()),
-
-                        D10HCustomClSizedBoxWidget(),
-
-                        // dataListSeperated[0]['complaints'].toString() == 'empty'
-                        //     ? Container(
-                        //         decoration: BoxDecoration(
-                        //             border: Border.all(
-                        //                 color: ColorConstant.deepPurpleA200),
-                        //             borderRadius: BorderRadius.circular(10)),
-                        //         child: Padding(
-                        //           padding: const EdgeInsets.all(8.0),
-                        //           child: Text(
-                        //             'No Complaints Registered',
-                        //             style: TextStyle(
-                        //               color: ColorConstant.deepPurpleA200,
-                        //             ),
-                        //           ),
-                        //         ))
-                        //     : ListView.builder(
-                        //         controller: ScrollController(),
-                        //         //  debugPrint(_myInvestigators.qkokamx1Qqf![0].firstName.toString());
-                        //         // itemCount: MyQuestionAndAnswer.privateInvestigatorCollection.length,
-                        //         // itemCount: _pmMyClientsList.length,
-                        //         // itemCount: dataListSeperated[0]['complaints'].length,
-                        //         itemCount: dataListSeperated.length,
-                        //         shrinkWrap: true,
-                        //         itemBuilder: ((context, index) {
-                        //           return ListTile(
-                        //             leading: Text('${index + 1}'),
-                        //             title: Text(
-                        //               dataListSeperated[0]['complaints']
-                        //                   .toString(),
-                        //             ),
-                        //             subtitle: Text(
-                        //               dataListSeperated[0]['complaints_replay']
-                        //                           .toString() ==
-                        //                       'empty'
-                        //                   ? 'Not Replied'
-                        //                   : dataListSeperated[0]
-                        //                           ['complaints_replay']
-                        //                       .toString(),
-                        //               style: TextStyle(
-                        //                 color: ColorConstant.clPurpleFontColor,
-                        //                 // fontWeight: FontWeight.bold,
-                        //                 fontSize: 13,
-                        //               ),
-                        //             ),
-                        //             trailing: Container(
-                        //               decoration: BoxDecoration(
-                        //                   border: const Border.fromBorderSide(
-                        //                       BorderSide.none),
-                        //                   color: ColorConstant.whiteA700,
-                        //                   shape: BoxShape.circle),
-                        //               height: 20,
-                        //               width: 20,
-                        //               child: Checkbox(
-                        //                 // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-
-                        //                 value: dataListSeperated[0]
-                        //                                 ['complaints_replay']
-                        //                             .toString() ==
-                        //                         'empty'
-                        //                     ? false
-                        //                     : true,
-                        //                 onChanged: (value) {},
-                        //                 //  side: BorderSide.none,
-                        //                 shape: const CircleBorder(
-                        //                     side: BorderSide.none),
-                        //                 side: const BorderSide(
-                        //                     color: Colors.green),
-                        //                 activeColor: Colors.green,
-                        //                 // checkColor: Colors.black,
-                        //               ),
-                        //             ),
-
-                        //             //  CustomClCheckboxWithQuestionWidget(
-                        //             //   question: _pmMyClientsList[index].complaints.toString(),
-                        //             //   // 'where is the San Sebastian home? and she completed here graduation?',
-                        //             //   completed: true,
-                        //             //   answer:
-                        //             //       _pmMyClientsList[index].complaintsReplay.toString(),
-                        //             // ),
-                        //           );
-                        //         }),
-                        //       ),
-
-                        SizedBox(
-                          height: DeviceSize.itemHeight / 2,
-                        ),
-                      ],
-                    ),
+                  // SizedBox(
+                  //   height: DeviceSize.itemHeight / 2,
+                  // ),
+                ],
+              ),
             ],
           ),
         ),

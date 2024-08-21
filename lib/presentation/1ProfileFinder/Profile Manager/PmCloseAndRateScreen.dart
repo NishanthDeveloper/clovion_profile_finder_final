@@ -6,6 +6,8 @@ import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/n
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class PmCloseAndRateScreen extends StatefulWidget {
    PmCloseAndRateScreen({super.key, required this.private_investicator_id});
 
@@ -22,6 +24,7 @@ class _PmCloseAndRateScreenState extends State<PmCloseAndRateScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(
+        notificationPage: NotificationPage(),
         testingNextPage:  WriteYourQuestionFourtyFiveScreen(private_investicator_id_ques: '',)),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

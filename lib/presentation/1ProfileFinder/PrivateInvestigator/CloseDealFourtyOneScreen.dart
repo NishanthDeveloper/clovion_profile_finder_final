@@ -17,6 +17,8 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class CloseDealFourtyOneScreen extends StatefulWidget {
   CloseDealFourtyOneScreen(
       {super.key, required this.private_investicator_id_close_deal});
@@ -257,6 +259,7 @@ class _CloseDealFourtyOneScreenState extends State<CloseDealFourtyOneScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(
+        notificationPage: NotificationPage(),
           testingNextPage: AnswerFourtyTwoScreen()),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

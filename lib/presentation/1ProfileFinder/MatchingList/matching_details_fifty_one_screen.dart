@@ -5,6 +5,8 @@ import 'package:profile_finder/core/utils/size_utils.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/ChooseYourFiftyTwoScreen.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 
+import '../Account Settings/widgets/notification.dart';
+
 class MatchingDetailsFiftyOneScreen extends StatelessWidget {
   const MatchingDetailsFiftyOneScreen({super.key});
 
@@ -13,6 +15,7 @@ class MatchingDetailsFiftyOneScreen extends StatelessWidget {
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(
         testingNextPage: ChooseYourFiftyTwoScreen(),
+        notificationPage: NotificationPage(),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
