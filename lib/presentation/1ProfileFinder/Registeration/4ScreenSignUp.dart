@@ -31,7 +31,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
 
   String? valueChoose;
   List<String> hiringManager = [];
-   String? selectedHiringManager;
+  String? selectedHiringManager;
 
   final List<String> _dropdownItemList = ["Item One", "Item Two", "Item Three"];
 
@@ -70,15 +70,6 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
   TextEditingController addressController = TextEditingController();
 
   TextEditingController pincodeController = TextEditingController();
-
-
-
-
-
-
-
-
-
 
   bool _passwordVisible = true;
 
@@ -132,17 +123,16 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
     });
   }
 
-    Future<void>hiringManagerUid() async {
+  Future<void> hiringManagerUid() async {
     var url = "http://${ApiServices.ipAddress}/all_pm_data/";
     var response = await http.get(Uri.parse(url));
     var allData = jsonDecode(response.body);
     print(allData);
-    for(var i=0; i<allData.length;i++){
+    for (var i = 0; i < allData.length; i++) {
       setState(() {
         hiringManager.add(allData[i]['uid']);
       });
     }
-
   }
 
   // Future register() async {
@@ -281,10 +271,10 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
       'password': passwordController.text,
       'referral_code': refferalCodeController.text,
       'name': firstNameController.text,
-      'door_no':doorNumberController.text,
-      'street_name':streetNameController.text,
-      'address':addressController.text,
-      'pincode':pincodeController.text,
+      'door_no': doorNumberController.text,
+      'street_name': streetNameController.text,
+      'address': addressController.text,
+      'pincode': pincodeController.text,
       'my_manager': selectedHiringManager.toString(),
 
       // 'email': 'abc@gmail.com',
@@ -390,7 +380,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               ),
 
                               // FirstName TextField
-                                const Text("First Name*"),
+                              const Text("First Name*"),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
@@ -403,14 +393,12 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                         left: 10,
                                       ),
                                       child: TextFormField(
-                                        
                                         controller: firstNameController,
                                         validator: (value) {
-                                          
                                           if (value!.isEmpty) {
                                             return ("First Name can't be Empty");
                                           }
-                                         
+
                                           return null;
                                         },
                                         decoration: const InputDecoration(
@@ -422,10 +410,10 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               ),
 
                               // LastName TextField
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 20),
-                                  child: Text("Last Name*"),
-                                ),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Last Name*"),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
@@ -438,14 +426,12 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                         left: 10,
                                       ),
                                       child: TextFormField(
-                                        
                                         controller: lastNameController,
                                         validator: (value) {
-                                          
                                           if (value!.isEmpty) {
                                             return ("Last Name can't be Empty");
                                           }
-                                         
+
                                           return null;
                                         },
                                         decoration: const InputDecoration(
@@ -456,11 +442,11 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                 ),
                               ),
 
-                               // DoorNumber TextField
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 20),
-                                  child: Text("Door Number*"),
-                                ),
+                              // DoorNumber TextField
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Door Number*"),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
@@ -473,14 +459,12 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                         left: 10,
                                       ),
                                       child: TextFormField(
-                                        
                                         controller: doorNumberController,
                                         validator: (value) {
-                                          
                                           if (value!.isEmpty) {
                                             return ("Door Number can't be Empty");
                                           }
-                                         
+
                                           return null;
                                         },
                                         decoration: const InputDecoration(
@@ -492,10 +476,10 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                               ),
 
                               // Street Name TextField
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 20),
-                                  child: Text("Street Name*"),
-                                ),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Street Name*"),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
@@ -508,14 +492,12 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                         left: 10,
                                       ),
                                       child: TextFormField(
-                                        
                                         controller: streetNameController,
                                         validator: (value) {
-                                          
                                           if (value!.isEmpty) {
                                             return ("Street Name can't be Empty");
                                           }
-                                         
+
                                           return null;
                                         },
                                         decoration: const InputDecoration(
@@ -525,11 +507,11 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                       )),
                                 ),
                               ),
-                               // Address TextField
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 20),
-                                  child: Text("Address*"),
-                                ),
+                              // Address TextField
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Address*"),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
@@ -542,14 +524,12 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                         left: 10,
                                       ),
                                       child: TextFormField(
-                                        
                                         controller: addressController,
                                         validator: (value) {
-                                          
                                           if (value!.isEmpty) {
                                             return ("Address can't be Empty");
                                           }
-                                         
+
                                           return null;
                                         },
                                         decoration: const InputDecoration(
@@ -560,11 +540,11 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                 ),
                               ),
 
-                               // Pincode TextField
-                                const Padding(
-                                  padding: EdgeInsets.only(top: 20),
-                                  child: Text("Pincode*"),
-                                ),
+                              // Pincode TextField
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text("Pincode*"),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Container(
@@ -580,11 +560,10 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                         keyboardType: TextInputType.number,
                                         controller: pincodeController,
                                         validator: (value) {
-                                          
                                           if (value!.isEmpty) {
                                             return ("Pincode can't be Empty");
                                           }
-                                         
+
                                           return null;
                                         },
                                         decoration: const InputDecoration(
@@ -823,19 +802,20 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                 ),
                               ),
                               const SizedBox(height: 10.0),
-                              
-                               WidgetTitleAndDropdown(
-                  DdbTitle: "Hiring Manager*",
-                  DdbHint: "Select",
-                  DbdItems: hiringManager,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedHiringManager = newValue!;
-                      print(selectedHiringManager);
-                    });
-                    // uploadAboutMe("Physical Status", dropdownValue.toString());
-                  },
-                ),
+
+                              // Hiring manger
+                              WidgetTitleAndDropdown(
+                                DdbTitle: "Hiring Manager*",
+                                DdbHint: "Select",
+                                DbdItems: hiringManager,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedHiringManager = newValue!;
+                                    print(selectedHiringManager);
+                                  });
+                                  // uploadAboutMe("Physical Status", dropdownValue.toString());
+                                },
+                              ),
 
                               // referal Code Field
                               Text("Refferal Code"),
@@ -951,12 +931,12 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
                                             ],
                                             decoration: const InputDecoration(
                                                 border: InputBorder.none,
-                                                hintText: "Enter your reference"),
+                                                hintText:
+                                                    "Enter your reference"),
                                           )),
                                     ))
-                              ] else if (howDoYouKnowSelectedvalue == 'Myself') ...[
-                               
-                              ],
+                              ] else if (howDoYouKnowSelectedvalue == 'Myself')
+                                ...[],
 
                               // SignUp BUtton
                               Padding(

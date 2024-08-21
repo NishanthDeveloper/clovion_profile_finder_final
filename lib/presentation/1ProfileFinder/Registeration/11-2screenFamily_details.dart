@@ -137,16 +137,17 @@ class _Thirteen_Screen_Family_DetailsScreenState
     request.fields['current_status'] =
         preferences.getString("current_status_value").toString();
         */
+        
+        preferences.getString("family_status_value").toString();
+
 
         request.fields['family_status'] ='middle';
        
 
     request.fields['father_name'] = 'fatherr';
        
-    request.fields['father_country'] = 'india';  preferences.getString("family_status_value").toString();
-    request.fields['father_city'] = 'chennai'
-       
-    '';
+    request.fields['father_country'] = 'india';  
+    request.fields['father_city'] = 'chennai';
     request.fields['father_job'] ='doctor';
        
     request.fields['father_family_name'] = 'appa';

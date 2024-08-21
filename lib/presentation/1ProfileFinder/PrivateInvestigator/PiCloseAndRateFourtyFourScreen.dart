@@ -98,7 +98,7 @@ class _CloseAndRateFourtyFourScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ClAppbarLeadGridSuffHeart(
+      appBar:  ClAppbarLeadGridSuffHeart(
           testingNextPage: WriteYourQuestionFourtyFiveScreen(
         private_investicator_id_ques: '',
       )),

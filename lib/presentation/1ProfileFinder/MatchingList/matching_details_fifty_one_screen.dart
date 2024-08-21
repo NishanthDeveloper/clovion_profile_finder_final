@@ -11,7 +11,7 @@ class MatchingDetailsFiftyOneScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ClAppbarLeadGridSuffHeart(
+      appBar:  ClAppbarLeadGridSuffHeart(
         testingNextPage: ChooseYourFiftyTwoScreen(),
       ),
       body: SingleChildScrollView(

@@ -651,6 +651,8 @@ class _ProfileBottomNavigationScreenState
           ),
         ),
       ),
+
+      
       body: Center(
         child: _pagesProfile.elementAt(_selectedIndex), //New
       ),
