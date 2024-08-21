@@ -14,6 +14,7 @@ class ChatHomeScreen extends StatefulWidget {
 }
 
 class _ChatHomeScreenState extends State<ChatHomeScreen> {
+
   String? userId;
   List<dynamic> chatUser = [];
 
@@ -32,6 +33,8 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
 
     loadUserId();
   }
+
+
 
   Future<void> fetchRelatedList() async {
     final response = await http
@@ -60,7 +63,11 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return ChatScreen();
+                    return ChatScreen(
+                      usersID:chatUser[index]['uid'].toString() ,
+                      userName:  chatUser[index]['name'].toString(),
+                      userProfile:   chatUser[index]['profile_picture'].toString(),
+                    );
                   }),
                 ),
                 child: Container(

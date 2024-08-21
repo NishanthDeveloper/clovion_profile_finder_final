@@ -449,7 +449,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                     ),
                     SizedBox(height: DeviceSize.itemHeight / 10),
                     users.isEmpty
-                        ? Center(child: CircularProgressIndicator())
+                        ? Center(child: Text("No New Registerations For You",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),))
                         : SizedBox(
                             height: 250, // Set a fixed height for the ListView
                             child: ListView.builder(
@@ -509,6 +509,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                               },
                             ),
                           ),
+                    SizedBox(height: 10,),
                     Text(
                       "Favourites List",
                       style: TextStyle(
@@ -549,7 +550,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                     ),
                     SizedBox(height: DeviceSize.itemHeight / 10),
                     favoriteUsers.isEmpty
-                        ? Center(child: CircularProgressIndicator())
+                        ? Center(child: Text("No Favourites Available For You",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),))
                         : SizedBox(
                             height: 250, // Set a fixed height for the ListView
                             child: ListView.builder(
@@ -612,6 +613,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                               },
                             ),
                           ),
+                    SizedBox(height: 10,),
                     Text(
                       "Related List",
                       style: TextStyle(
@@ -652,7 +654,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                     ),
                     SizedBox(height: DeviceSize.itemHeight / 10),
                     relatedList.isEmpty
-                        ? Center(child: CircularProgressIndicator())
+                        ?Center(child: Text("No Related List For You",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),))
                         : SizedBox(
                             height: 250, // Set a fixed height for the ListView
                             child: ListView.builder(

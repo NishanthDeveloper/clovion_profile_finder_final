@@ -18,6 +18,7 @@ import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/T
 import 'package:profile_finder/routes/app_routes.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
+import 'package:profile_finder/widgets/search_widget_pi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 /*
@@ -554,6 +555,9 @@ class _AllInvestigatorThirtyEightScreenState
                 D10HCustomClSizedBoxWidget(),
 
                 TextField(
+                  onTap: (){
+                    Navigator.push(context,MaterialPageRoute(builder: (context)=>PIAllUserSearch()));
+                  },
                   decoration: InputDecoration(
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(15.0),
