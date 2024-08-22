@@ -21,14 +21,15 @@ import '../../../widgets/UploadDocument.dart';
 
 class TenFillTheFormScreen extends StatefulWidget {
   final String registerForWhomm;
-
-  const TenFillTheFormScreen({super.key, required this.registerForWhomm});
+  final Function? changePage;
+  const TenFillTheFormScreen({super.key, required this.registerForWhomm, this.changePage});
 
   @override
   State<TenFillTheFormScreen> createState() => _TenFillTheFormScreenState();
 }
 
 class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
+  PageController _pageController = PageController();
   String heading = "Fill The Form";
 
   String? dropdownValue;
@@ -149,38 +150,38 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
 
   String name = 'saran';
   String address = '55 B';
-  late String height;
-  late String weight;
-  late String marital;
-  late String gender;
-  
-  late String physical;
-  late String religion;
-  late String age;
-  late String birth_place;
-  late String birth_country;
-  late String birth_time;
-  late String birth_city;
-  late String origin;
-  late String r_country;
-  late String r_state;
-  late String r_status;
-  late String denomination;
-  late String blood_group;
-  late String temple_name;
-  late String temple_street;
-  late String temple_post_code;
-  late String temple_country;
-  late String temple_city;
-  late String temple_phone_number;
-  late String temple_diocese;
-  late String temple_local_admin;
-  late String emergency_name;
-  late String emergency_relation;
-  late String emergency_phone_number;
-  late String emergency_email;
-  late String emergency_marital_status;
-  late String occupations;
+   String height = '';
+   String weight = '';
+   String marital= '';
+   String gender= '';
+
+   String physical= '';
+   String religion= '';
+   String age= '';
+   String birth_place= '';
+   String birth_country= '';
+   String birth_time= '';
+   String birth_city= '';
+   String origin= '';
+   String r_country= '';
+   String r_state= '';
+   String r_status= '';
+   String denomination= '';
+   String blood_group= '';
+   String temple_name= '';
+   String temple_street= '';
+   String temple_post_code= '';
+   String temple_country= '';
+   String temple_city= '';
+   String temple_phone_number= '';
+   String temple_diocese= '';
+   String temple_local_admin= '';
+   String emergency_name= '';
+   String emergency_relation= '';
+   String emergency_phone_number= '';
+   String emergency_email= '';
+   String emergency_marital_status= '';
+   String occupations= '';
 
   @override
   void initState() {
@@ -291,7 +292,7 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
     request.fields['weight'] =
         // weight.toString();
         // '55';
-   
+
         weightOfApplController.text;
          request.fields['gender'] = gender;
     request.fields['marital'] = marital;
@@ -301,13 +302,14 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
     request.fields['birth_place'] = birth_place.toString();
     request.fields['birth_country'] = birth_country.toString();
     request.fields['birth_city'] = birth_city;
-    request.fields['birth_time'] = birth_time.toString();
+    request.fields['birth_time'] = '23:00';
     request.fields['origin'] = origin.toString();
     request.fields['r_country'] = r_country.toString();
     request.fields['r_state'] = r_state.toString();
     request.fields['r_status'] = r_status.toString();
     request.fields['denomination'] = denomination.toString();
     request.fields['blood_group'] = blood_group.toString();
+    request.fields['r_status'] = 'jgh';
     request.files
         .add(await http.MultipartFile.fromPath('id_card_2', filee!.path));
     request.fields['temple_name'] = temple_name;
@@ -404,10 +406,7 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   textFieldController: nameOfApplController,
                 ),
 
-                Text(marital.toString()),
-                Text(nameOfApplController.text),
-                Text(filee!.path.toString()),
-                Text(temple_diocese),
+
 
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
@@ -1034,7 +1033,7 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   child: TextButton(
                       onPressed: () {
                         print("Uploading Data to aws");
-
+                        widget.changePage;
                         uploadDataFilltheform();
 
                         // Navigator.pushNamed(
