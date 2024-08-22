@@ -424,7 +424,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text: '${ users.length.toString() ?? ''}  ' ,
+                            text: '${users.length.toString() ?? ''}  ',
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 10,
@@ -442,8 +442,12 @@ class _MatchingListPageState extends State<MatchingListPage> {
                           ),
                         ),
                         InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>NewRegistrationPage()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        NewRegistrationPage()));
                           },
                           child: Text(
                             "View all",
@@ -457,7 +461,12 @@ class _MatchingListPageState extends State<MatchingListPage> {
                     ),
                     SizedBox(height: DeviceSize.itemHeight / 10),
                     users.isEmpty
-                        ? Center(child: Text("No New Registerations For You",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),))
+                        ? Center(
+                            child: Text(
+                            "No New Registerations For You",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16),
+                          ))
                         : SizedBox(
                             height: 250, // Set a fixed height for the ListView
                             child: ListView.builder(
@@ -517,8 +526,12 @@ class _MatchingListPageState extends State<MatchingListPage> {
                               },
                             ),
                           ),
-                    SizedBox(height: 10,),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       "My Preference",
                       style: TextStyle(
@@ -531,7 +544,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text:  '${ relatedList.length.toString() ?? ''}  ' ,
+                            text: '${relatedList.length.toString() ?? ''}  ',
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 10,
@@ -539,7 +552,8 @@ class _MatchingListPageState extends State<MatchingListPage> {
                             ),
                             children: <TextSpan>[
                               TextSpan(
-                                text: 'Preference profiles are available for you',
+                                text:
+                                    'Preference profiles are available for you',
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     color: Color(0xff6E717A),
@@ -549,8 +563,13 @@ class _MatchingListPageState extends State<MatchingListPage> {
                           ),
                         ),
                         InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RelatedListPage(title: 'My Preference',)));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RelatedListPage(
+                                          title: 'My Preference',
+                                        )));
                           },
                           child: Text(
                             "View all",
@@ -564,69 +583,74 @@ class _MatchingListPageState extends State<MatchingListPage> {
                     ),
                     SizedBox(height: DeviceSize.itemHeight / 10),
                     relatedList.isEmpty
-                        ?Center(child: Text("No Preference For You",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),))
+                        ? Center(
+                            child: Text(
+                            "No Preference For You",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16),
+                          ))
                         : SizedBox(
-                      height: 250, // Set a fixed height for the ListView
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: relatedList.length + adData.length,
-                        itemBuilder: (context, index) {
-                          if (adData.isNotEmpty && (index + 1) % 3 == 0) {
-                            final adIndex = (index ~/ 3) %
-                                adData
-                                    .length; // Wrap around if more ads than slots
-                            final ad = adData[adIndex];
-                            final imageUrl = ad['distributor']
-                            ?['id_card'] ??
-                                ad['provider']?['id_card'] ??
-                                '';
+                            height: 250, // Set a fixed height for the ListView
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: relatedList.length + adData.length,
+                              itemBuilder: (context, index) {
+                                if (adData.isNotEmpty && (index + 1) % 3 == 0) {
+                                  final adIndex = (index ~/ 3) %
+                                      adData
+                                          .length; // Wrap around if more ads than slots
+                                  final ad = adData[adIndex];
+                                  final imageUrl = ad['distributor']
+                                          ?['id_card'] ??
+                                      ad['provider']?['id_card'] ??
+                                      '';
 
-                            return GestureDetector(
-                              onTap: () {
-                                print(
-                                    "Ad tapped at index $adIndex with data: $ad");
-                                showAdPopup(ad);
+                                  return GestureDetector(
+                                    onTap: () {
+                                      print(
+                                          "Ad tapped at index $adIndex with data: $ad");
+                                      showAdPopup(ad);
+                                    },
+                                    child: AddWidget(
+                                      imageUrl: imageUrl,
+                                      adData: ad,
+                                      postedAdIds: postedAdIds,
+                                    ),
+                                  );
+                                } else {
+                                  final userIndex = index -
+                                      (index ~/
+                                          3); // Adjust index to get the correct user
+                                  if (userIndex < 0 ||
+                                      userIndex >= relatedList.length) {
+                                    return SizedBox
+                                        .shrink(); // Return empty widget if index is out of bounds
+                                  }
+                                  return GestureDetector(
+                                    onTap: () {
+                                      print('User tapped at index $userIndex');
+                                      // Call your function or navigate to another screen here
+                                    },
+                                    child: UserCardWidget(
+                                      userId:
+                                          relatedList[userIndex]['uid'] ?? '',
+                                      imageUrl: relatedList[userIndex]
+                                              ['profile_picture'] ??
+                                          '',
+                                      address: relatedList[userIndex]
+                                              ['address'] ??
+                                          '',
+                                      subfield: relatedList[userIndex]
+                                              ['profile_tag'] ??
+                                          '',
+                                      index: index,
+                                    ),
+                                  );
+                                }
                               },
-                              child: AddWidget(
-                                imageUrl: imageUrl,
-                                adData: ad,
-                                postedAdIds: postedAdIds,
-                              ),
-                            );
-                          } else {
-                            final userIndex = index -
-                                (index ~/
-                                    3); // Adjust index to get the correct user
-                            if (userIndex < 0 ||
-                                userIndex >= relatedList.length) {
-                              return SizedBox
-                                  .shrink(); // Return empty widget if index is out of bounds
-                            }
-                            return GestureDetector(
-                              onTap: () {
-                                print('User tapped at index $userIndex');
-                                // Call your function or navigate to another screen here
-                              },
-                              child: UserCardWidget(
-                                userId:
-                                relatedList[userIndex]['uid'] ?? '',
-                                imageUrl: relatedList[userIndex]
-                                ['profile_picture'] ??
-                                    '',
-                                address: relatedList[userIndex]
-                                ['address'] ??
-                                    '',
-                                subfield: relatedList[userIndex]
-                                ['profile_tag'] ??
-                                    '',
-                                index: index,
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                    ),
+                            ),
+                          ),
                     Text(
                       "Favourites List",
                       style: TextStyle(
@@ -639,7 +663,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text:  '${ favoriteUsers.length.toString() ?? ''}  ' ,
+                            text: '${favoriteUsers.length.toString() ?? ''}  ',
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 10,
@@ -657,8 +681,11 @@ class _MatchingListPageState extends State<MatchingListPage> {
                           ),
                         ),
                         InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>WishlistPage()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WishlistPage()));
                           },
                           child: Text(
                             "View all",
@@ -672,7 +699,12 @@ class _MatchingListPageState extends State<MatchingListPage> {
                     ),
                     SizedBox(height: DeviceSize.itemHeight / 10),
                     favoriteUsers.isEmpty
-                        ? Center(child: Text("No Favourites Available For You",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),))
+                        ? Center(
+                            child: Text(
+                            "No Favourites Available For You",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16),
+                          ))
                         : SizedBox(
                             height: 250, // Set a fixed height for the ListView
                             child: ListView.builder(
@@ -735,7 +767,9 @@ class _MatchingListPageState extends State<MatchingListPage> {
                               },
                             ),
                           ),
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       "Related List",
                       style: TextStyle(
@@ -748,7 +782,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text:  '${ relatedList.length.toString() ?? ''}  ' ,
+                            text: '${relatedList.length.toString() ?? ''}  ',
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 10,
@@ -766,8 +800,13 @@ class _MatchingListPageState extends State<MatchingListPage> {
                           ),
                         ),
                         InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RelatedListPage(title: 'Related List',)));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RelatedListPage(
+                                          title: 'Related List',
+                                        )));
                           },
                           child: Text(
                             "View all",
@@ -781,7 +820,12 @@ class _MatchingListPageState extends State<MatchingListPage> {
                     ),
                     SizedBox(height: DeviceSize.itemHeight / 10),
                     relatedList.isEmpty
-                        ?Center(child: Text("No Related List For You",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),))
+                        ? Center(
+                            child: Text(
+                            "No Related List For You",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 16),
+                          ))
                         : SizedBox(
                             height: 250, // Set a fixed height for the ListView
                             child: ListView.builder(

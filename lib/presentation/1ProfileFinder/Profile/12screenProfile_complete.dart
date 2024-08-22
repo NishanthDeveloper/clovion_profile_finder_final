@@ -11,6 +11,7 @@ import 'package:profile_finder/presentation/1ProfileFinder/Registeration/3Screen
 import 'package:profile_finder/routes/app_routes.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //  class deviceSize {
 //   int deviceheight = MediaQuery.of(context).size.height,
@@ -108,9 +109,7 @@ class _FourteenProfileCompletenessState
       });
 
       debugPrint(_users.profilePicture);
-    }
-    
-     else {
+    } else {
       print("error");
       print(response.statusCode);
     }
@@ -155,7 +154,6 @@ class _FourteenProfileCompletenessState
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       // spacing: 10,
@@ -173,7 +171,6 @@ class _FourteenProfileCompletenessState
                           height: 10,
                           width: 170,
                           child: ClipRRect(
-                            
                             borderRadius: BorderRadius.circular(8),
                             child: LinearProgressIndicator(
                               valueColor:
@@ -203,30 +200,28 @@ class _FourteenProfileCompletenessState
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                     height: 100,
-
                                     decoration: const BoxDecoration(
                                         // borderRadius: BorderRadius.circular(10),
                                         shape: BoxShape.circle),
                                     child:
-                                    //  _users.profilePicture!.isEmpty
-                                    //     ? const Image(
-                                    //         image: AssetImage(
-                                    //             'assets/images/img_maskgroup.png'))
-                                    //     : 
+                                        //  _users.profilePicture!.isEmpty
+                                        //     ? const Image(
+                                        //         image: AssetImage(
+                                        //             'assets/images/img_maskgroup.png'))
+                                        //     :
                                         SizedBox(
-                                            // height: 100,
-                                            width: 100,
-                                            child: CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                  _users.profilePicture.toString(),
-                                                  ),
-                                              // child: Image.network( _users.profilePicture.toString(),),
-                                            ),
-                                          ),
+                                      // height: 100,
+                                      width: 100,
+                                      child: CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                          _users.profilePicture.toString(),
+                                        ),
+                                        // child: Image.network( _users.profilePicture.toString(),),
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 Expanded(
-
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 30),
                                     child: Container(
@@ -245,12 +240,11 @@ class _FourteenProfileCompletenessState
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-
-                                              Text(
-                                             _users.uid.toString() ,
-                                              style: const TextStyle(fontSize: 10),
+                                            Text(
+                                              _users.uid.toString(),
+                                              style:
+                                                  const TextStyle(fontSize: 10),
                                             ),
-
                                             Text(
                                               // "Thomas Miller",
                                               _users.name ?? "Update Name",
@@ -265,7 +259,9 @@ class _FourteenProfileCompletenessState
                                                 style: const TextStyle(
                                                   fontSize: 13,
                                                 )),
-                                            SizedBox(height: 5,),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -290,8 +286,14 @@ class _FourteenProfileCompletenessState
                                                       padding:
                                                           const EdgeInsets.all(
                                                               5),
-                                                      child: SvgPicture.asset(
-                                                          'assets/images/img_facebook_deep_purple_a200.svg'),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          _launchURL(
+                                                              'https://www.facebook.com/');
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                            'assets/images/img_facebook_deep_purple_a200.svg'),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -314,8 +316,14 @@ class _FourteenProfileCompletenessState
                                                       padding:
                                                           const EdgeInsets.all(
                                                               5),
-                                                      child: SvgPicture.asset(
-                                                          'assets/images/img_frame_deep_purple_a200.svg'),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          _launchURL(
+                                                              'https://in.linkedin.com/');
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                            'assets/images/img_frame_deep_purple_a200.svg'),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -338,8 +346,14 @@ class _FourteenProfileCompletenessState
                                                       padding:
                                                           const EdgeInsets.all(
                                                               5),
-                                                      child: SvgPicture.asset(
-                                                          'assets/images/img_frame_deep_purple_a200_14x14.svg'),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          _launchURL(
+                                                              'https://x.com/settings/download');
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                            'assets/images/img_frame_deep_purple_a200_14x14.svg'),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -362,8 +376,14 @@ class _FourteenProfileCompletenessState
                                                       padding:
                                                           const EdgeInsets.all(
                                                               5),
-                                                      child: SvgPicture.asset(
-                                                          'assets/images/img_frame_14x14.svg'),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          _launchURL(
+                                                              'https://www.instagram.com/');
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                            'assets/images/img_frame_14x14.svg'),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -386,8 +406,14 @@ class _FourteenProfileCompletenessState
                                                       padding:
                                                           const EdgeInsets.all(
                                                               5),
-                                                      child: SvgPicture.asset(
-                                                          'assets/images/img_clock.svg'),
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          _launchURL(
+                                                              'https://www.youtube.com/watch?v=Leyi8q_n2Fc');
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                            'assets/images/youtube.svg'),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -514,5 +540,13 @@ class _FourteenProfileCompletenessState
               ),
             ),
     );
+  }
+
+  Future<void> _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
