@@ -30,6 +30,7 @@ import '../MatchingList/1screen_advertisement.dart';
 import '../MatchingList/every_male_fourty_nine_screen/profiles_loading_screen.dart';
 import '../ReferAFriend/ReferAFriendFourtySevenScreen.dart';
 import 'screens/profile_tagline_screens.dart';
+import 'screens/saved_search_screen.dart';
 import 'screens/whishlist.dart';
 
 class ProfileBottomNavigationScreen extends StatefulWidget {
@@ -583,6 +584,24 @@ class _ProfileBottomNavigationScreenState
                         }).toList(),
                       ),
                     ),
+                    // Saved search
+                     GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return SavedSearchScreen();
+                          }),
+                        );
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "Saved search",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -600,6 +619,7 @@ class _ProfileBottomNavigationScreenState
                         ),
                       ),
                     ),
+                    
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: Text(

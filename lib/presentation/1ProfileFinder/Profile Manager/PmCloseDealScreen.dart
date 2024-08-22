@@ -209,7 +209,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
       //  clients = pmMyClientsFromJson(jsonResponse);
 
       print(jsonResponse);
-       clients = pmMyClientsFromJson(jsonResponse);
+      var clients = pmMyClientsFromJson(jsonResponse);
 
       // for (The42284Ohjsh7 client in clients.the42284Ohjsh7!) {
       //   print('Client ID: ${client.id}');
@@ -377,7 +377,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                     itemHeight: DeviceSize.itemHeight,
                     profilePicturepath: userList[0].profilePicture.toString(),
                     coverPicturepath: userList[0].profilePicture.toString(),
-                    name: userList[0].complaints ?? 'Ariene McCoy',
+                    name: userList[0].firstName ?? 'Ariene McCoy',
 
                     place:
                         "${userList[0].officeCity}${',  '}${userList[0].officeCountry}",
