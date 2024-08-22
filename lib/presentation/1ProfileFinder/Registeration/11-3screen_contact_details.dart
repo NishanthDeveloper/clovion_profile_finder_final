@@ -57,7 +57,7 @@ class _ThirteenScreenContactDetailsState
         Uri.parse("http://${ApiService.ipAddress}/contactdetails/$uidUser");
     final request = http.MultipartRequest('POST', url);
    
-   /*
+
     request.fields['contact_father_name'] =
         preferences.getString("contact_father_name").toString();
     request.fields['contact_father_street'] =
@@ -83,12 +83,13 @@ class _ThirteenScreenContactDetailsState
     request.fields['youtube'] = preferences.getString("youtube").toString();
     request.fields['twitter'] = preferences.getString("twitter").toString();
     request.fields['website'] = preferences.getString("website").toString();
-*/
 
+
+     /*
        request.fields['contact_father_name'] = 'fatherrr';
-      
+
     request.fields['contact_father_street'] = 'father street';
-       
+
     request.fields['contact_father_zipcode'] = '600001';
      request.fields['contact_father_country'] = 'america';
    request.fields['contact_father_city'] = 'new york';
@@ -103,6 +104,7 @@ class _ThirteenScreenContactDetailsState
     request.fields['youtube'] = 'yout.com';
     request.fields['twitter'] = 'twit.com';
     request.fields['website'] = 'web.com';
+      */
     if (preferences.getString("contact_father_name") == "null") {
       Fluttertoast.showToast(
         msg: "Kindly Upload All Data...!",

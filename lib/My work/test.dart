@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart' hide CarouselController;
 import 'package:profile_finder/My%20work/add_widget.dart';
+import 'package:profile_finder/My%20work/new_registration_view_all.dart';
+import 'package:profile_finder/My%20work/related_list_view_all.dart';
 import 'package:profile_finder/My%20work/user_card_widget.dart';
+import 'package:profile_finder/My%20work/wishlist.dart';
 import 'package:profile_finder/core/utils/color_constant.dart';
 import 'package:profile_finder/core/utils/size_utils.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Account%20Settings/widgets/search.dart';
@@ -421,7 +424,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text: '76 ',
+                            text: '${ users.length.toString() ?? ''}  ' ,
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 10,
@@ -438,12 +441,17 @@ class _MatchingListPageState extends State<MatchingListPage> {
                             ],
                           ),
                         ),
-                        Text(
-                          "View all",
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xff7B61FF)),
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>NewRegistrationPage()));
+                          },
+                          child: Text(
+                            "View all",
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xff7B61FF)),
+                          ),
                         )
                       ],
                     ),
@@ -510,6 +518,115 @@ class _MatchingListPageState extends State<MatchingListPage> {
                             ),
                           ),
                     SizedBox(height: 10,),
+                    SizedBox(height: 10,),
+                    Text(
+                      "My Preference",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xff2B3674)),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            text:  '${ relatedList.length.toString() ?? ''}  ' ,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 10,
+                              color: Color(0xFF7B61FF),
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Preference profiles are available for you',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xff6E717A),
+                                    fontSize: 10),
+                              ),
+                            ],
+                          ),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RelatedListPage(title: 'My Preference',)));
+                          },
+                          child: Text(
+                            "View all",
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xff7B61FF)),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: DeviceSize.itemHeight / 10),
+                    relatedList.isEmpty
+                        ?Center(child: Text("No Preference For You",style: TextStyle(fontWeight: FontWeight.w700,fontSize: 16),))
+                        : SizedBox(
+                      height: 250, // Set a fixed height for the ListView
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: relatedList.length + adData.length,
+                        itemBuilder: (context, index) {
+                          if (adData.isNotEmpty && (index + 1) % 3 == 0) {
+                            final adIndex = (index ~/ 3) %
+                                adData
+                                    .length; // Wrap around if more ads than slots
+                            final ad = adData[adIndex];
+                            final imageUrl = ad['distributor']
+                            ?['id_card'] ??
+                                ad['provider']?['id_card'] ??
+                                '';
+
+                            return GestureDetector(
+                              onTap: () {
+                                print(
+                                    "Ad tapped at index $adIndex with data: $ad");
+                                showAdPopup(ad);
+                              },
+                              child: AddWidget(
+                                imageUrl: imageUrl,
+                                adData: ad,
+                                postedAdIds: postedAdIds,
+                              ),
+                            );
+                          } else {
+                            final userIndex = index -
+                                (index ~/
+                                    3); // Adjust index to get the correct user
+                            if (userIndex < 0 ||
+                                userIndex >= relatedList.length) {
+                              return SizedBox
+                                  .shrink(); // Return empty widget if index is out of bounds
+                            }
+                            return GestureDetector(
+                              onTap: () {
+                                print('User tapped at index $userIndex');
+                                // Call your function or navigate to another screen here
+                              },
+                              child: UserCardWidget(
+                                userId:
+                                relatedList[userIndex]['uid'] ?? '',
+                                imageUrl: relatedList[userIndex]
+                                ['profile_picture'] ??
+                                    '',
+                                address: relatedList[userIndex]
+                                ['address'] ??
+                                    '',
+                                subfield: relatedList[userIndex]
+                                ['profile_tag'] ??
+                                    '',
+                                index: index,
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                    ),
                     Text(
                       "Favourites List",
                       style: TextStyle(
@@ -522,7 +639,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text: '76 ',
+                            text:  '${ favoriteUsers.length.toString() ?? ''}  ' ,
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 10,
@@ -539,12 +656,17 @@ class _MatchingListPageState extends State<MatchingListPage> {
                             ],
                           ),
                         ),
-                        Text(
-                          "View all",
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xff7B61FF)),
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>WishlistPage()));
+                          },
+                          child: Text(
+                            "View all",
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xff7B61FF)),
+                          ),
                         )
                       ],
                     ),
@@ -626,7 +748,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
                       children: [
                         RichText(
                           text: TextSpan(
-                            text: '76 ',
+                            text:  '${ relatedList.length.toString() ?? ''}  ' ,
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 10,
@@ -643,12 +765,17 @@ class _MatchingListPageState extends State<MatchingListPage> {
                             ],
                           ),
                         ),
-                        Text(
-                          "View all",
-                          style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xff7B61FF)),
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RelatedListPage(title: 'Related List',)));
+                          },
+                          child: Text(
+                            "View all",
+                            style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xff7B61FF)),
+                          ),
                         )
                       ],
                     ),

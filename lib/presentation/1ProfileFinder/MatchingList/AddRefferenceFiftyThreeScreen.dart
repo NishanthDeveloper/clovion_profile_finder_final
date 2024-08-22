@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:profile_finder/My%20work/user_card_widget.dart';
+import 'dart:convert';
 import 'package:profile_finder/core/utils/size_utils.dart';
+import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 
 class AddRefferenceFiftyThreeScreen extends StatefulWidget {
@@ -14,15 +18,14 @@ class _AddRefferenceFiftyThreeScreenState
     extends State<AddRefferenceFiftyThreeScreen> {
   List<String> Dbditems = ["Yes", "No"];
 
-  List<String> firstPriority = ["Fair", "Rich", "Education"];
+  late String maritalStatusPreff = "";
+  late String physicalStatusPreff = "";
+  late String familyStatusPreff = "";
+  late String ageGroupPreff = "";
+  late String higherEducationPreff = "";
 
-  late String maritalStatusPreff;
-  late String physicalStatusPreff;
-  late String familyStatusPreff;
-  late String ageGroupPreff;
-  late String higherEducationPreff;
-
-  late bool? workingPreff;
+  bool? workingNowYes = false;
+  bool? workingNowNo = false;
 
   List<String> maritalStatus = [
     "Unmarried",
@@ -41,49 +44,45 @@ class _AddRefferenceFiftyThreeScreenState
     "Big",
   ];
 
-  // List<String> _myInterest = [
-  //   "Music",
-  //   "Travel",
-  //   "Gaming",
-  //   "Reading",
-  //   "Photography",
-  //   "Writing",
-  //   "Paint or drawing"
-  //       "Singing",
-  //   "Dancer",
-  //   "Movies",
-  //   "Swimming",
-  //   "Artist",
-  // ];
+  // State variable to hold response data
+  dynamic responseData;
 
-  // List<String> _myNonInterest = [
-  //   "Music",
-  //   "Travel",
-  //   "Gaming",
-  //   "Reading",
-  //   "Photography",
-  //   "Writing",
-  //   "Paint or drawing",
-  //   "Singing",
-  //   "Dancer",
-  //   "Movies",
-  //   "Swimming",
-  //   "Artist",
-  // ];
+  Future<void> postPreference() async {
+    final url = Uri.parse('http://51.20.61.70:3000/my_preference/MWOJGKTCQ71');
 
-  // List<String> _complexion = [
-  //   "Dark",
-  //   "Medium",
-  //   "Moderate Fair",
-  //   "Fair",
-  //   "Very Fair",
-  // ];
+    final body = {
+      'marital_status': maritalStatusPreff,
+      'physical_mental_status': physicalStatusPreff,
+      'email': '',
+      'family_status': familyStatusPreff,
+      'age': ageGroupPreff,
+      'height': '',
+      'education': higherEducationPreff,
+      'Working': workingNowYes == true ? 'yes' : 'no'
+    };
 
-  // List<String> _foodTaste = [
-  //   "Sweet",
-  //   "Bitter",
-  //   "Umami",
-  // ];
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        print('Preference posted successfully');
+        // Decode the response and handle both Map and List cases
+        final decodedResponse = json.decode(response.body);
+        setState(() {
+          responseData = decodedResponse;
+        });
+      } else {
+        print('Failed to post preference: ${response.statusCode}');
+        print('Response: ${response.body}');
+      }
+    } catch (e) {
+      print('Error posting preference: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +111,7 @@ class _AddRefferenceFiftyThreeScreenState
                   ),
                   title: Center(
                     child: Text(
-                      'Add Prefference',
+                      'Add Preference',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
@@ -123,15 +122,6 @@ class _AddRefferenceFiftyThreeScreenState
                 SizedBox(
                   height: DeviceSize.itemHeight / 10,
                 ),
-                // WidgetTitleAndDropdown(
-                //     DdbTitle: 'First Priority Of Prefference*',
-                //     DdbHint: 'Select',
-                //     DbdItems: firstPriority,
-                //     onChanged: (value) {
-                //       setState(() {
-                //         firstPriorityPreff = value;
-                //       });
-                //     }),
                 WidgetTitleAndDropdown(
                     DdbTitle: 'Marital Status*',
                     DdbHint: 'Select',
@@ -150,11 +140,6 @@ class _AddRefferenceFiftyThreeScreenState
                         physicalStatusPreff = value;
                       });
                     }),
-                WidgetTitleAndDropdown(
-                    DdbTitle: 'Email*',
-                    DdbHint: 'Select',
-                    DbdItems: Dbditems,
-                    onChanged: (value) {}),
                 WidgetTitleAndDropdown(
                     DdbTitle: 'Family Status*',
                     DdbHint: 'Select',
@@ -189,30 +174,35 @@ class _AddRefferenceFiftyThreeScreenState
                       fontSize: DeviceSize.itemHeight / 13),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Expanded(
                       child: CheckboxListTile(
                         controlAffinity: ListTileControlAffinity.leading,
                         title: Text('Yes'),
-                        value: true,
-                        onChanged: ((value) {
+                        value: workingNowYes,
+                        onChanged: (value) {
                           setState(() {
-                            workingPreff = value;
+                            workingNowYes = value;
+                            if (value == true) {
+                              workingNowNo = false;
+                            }
                           });
-                        }),
+                        },
                       ),
                     ),
                     Expanded(
                       child: CheckboxListTile(
                         controlAffinity: ListTileControlAffinity.leading,
-                        title: Text('Non'),
-                        value: false,
-                        onChanged: ((value) {
+                        title: Text('No'),
+                        value: workingNowNo,
+                        onChanged: (value) {
                           setState(() {
-                            workingPreff = value;
+                            workingNowNo = value;
+                            if (value == true) {
+                              workingNowYes = false;
+                            }
                           });
-                        }),
+                        },
                       ),
                     ),
                   ],
@@ -220,300 +210,58 @@ class _AddRefferenceFiftyThreeScreenState
                 SizedBox(
                   height: DeviceSize.itemHeight / 10,
                 ),
-                // Text(
-                //   'Your Interest?',
-                //   style: TextStyle(
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: DeviceSize.itemHeight / 13),
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 100,
-                // ),
-                // Text(
-                //   'Choose the closest one from the List.',
-                //   style: TextStyle(
-                //       // fontWeight: FontWeight.bold,
-                //       fontSize: DeviceSize.itemHeight / 15),
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 10,
-                // ),
-                // TagSimpleFont15WidgetCustomCl(myInterest: _myInterest),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 10,
-                // ),
-                // Text(
-                //   'Non Interest?',
-                //   style: TextStyle(
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: DeviceSize.itemHeight / 13),
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 100,
-                // ),
-                // Text(
-                //   'Choose the closest one from the List.',
-                //   style: TextStyle(
-                //       // fontWeight: FontWeight.bold,
-                //       fontSize: DeviceSize.itemHeight / 15),
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 10,
-                // ),
-                // TagSimpleFont15WidgetCustomCl(myInterest: _myNonInterest),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 10,
-                // ),
-                // Text(
-                //   'Complexion',
-                //   style: TextStyle(
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: DeviceSize.itemHeight / 13),
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 100,
-                // ),
-                // Text(
-                //   'Choose the closest one from the List.',
-                //   style: TextStyle(
-                //       // fontWeight: FontWeight.bold,
-                //       fontSize: DeviceSize.itemHeight / 15),
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 10,
-                // ),
-                // TagSimpleFont15WidgetCustomCl(myInterest: _complexion),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 5,
-                // ),
-                // Text(
-                //   'Food Taste',
-                //   style: TextStyle(
-                //       fontWeight: FontWeight.bold,
-                //       fontSize: DeviceSize.itemHeight / 13),
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 100,
-                // ),
-                // Text(
-                //   'What is the opinion of your daily diet plan after marriage',
-                //   style: TextStyle(
-                //       // fontWeight: FontWeight.bold,
-                //       fontSize: DeviceSize.itemHeight / 15),
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 50,
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Row(
-                //       // mainAxisAlignment: MainAxisAlignment.values.first,
-                //       children: [
-                //         Radio(
-                //             value: true,
-                //             groupValue: true,
-                //             onChanged: (value) {}),
-                //         Text(
-                //           'Veg',
-                //           style: TextStyle(
-                //             color: Colors.black54,
-                //             letterSpacing: 0.7,
-                //             fontSize: DeviceSize.itemHeight / 13,
-                //             fontWeight: FontWeight.bold,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //     Row(
-                //       children: [
-                //         Radio(
-                //             value: true,
-                //             groupValue: true,
-                //             onChanged: (value) {}),
-                //         Text(
-                //           'Non-veg',
-                //           style: TextStyle(
-                //             color: Colors.black54,
-                //             letterSpacing: 0.7,
-                //             fontSize: DeviceSize.itemHeight / 13,
-                //             fontWeight: FontWeight.bold,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //     Row(
-                //       children: [
-                //         Radio(
-                //             value: true,
-                //             groupValue: true,
-                //             onChanged: (value) {}),
-                //         Text(
-                //           'Both',
-                //           style: TextStyle(
-                //             color: Colors.black54,
-                //             letterSpacing: 0.7,
-                //             fontSize: DeviceSize.itemHeight / 13,
-                //             fontWeight: FontWeight.bold,
-                //           ),
-                //         ),
-                //       ],
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 100,
-                // ),
-                // TagSimpleFont15WidgetCustomCl(myInterest: _foodTaste),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 10,
-                // ),
-                // Container(
-                //   height: DeviceSize.itemHeight / 1.8,
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(10),
-                //     // color: ColorConstant.clPurple05,
-                //     gradient: LinearGradient(
-                //       begin: Alignment(0, -1),
-                //       end: Alignment(0, 1),
-                //       colors: [
-                //         ColorConstant.clPurple05,
-                //         ColorConstant.clPurple05,
-                //         ColorConstant.whiteA700,
-                //       ],
-                //       // transform: GradientRotation(
-                //       //   0.15,
-                //       // ),
-                //     ),
-                //   ),
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(10),
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Text(
-                //           'Can you Able To Cook?',
-                //           style: TextStyle(
-                //               color: ColorConstant.clFontDarkBlueColor,
-                //               fontWeight: FontWeight.bold,
-                //               fontSize: DeviceSize.itemHeight / 15),
-                //         ),
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           children: [
-                //             Row(
-                //               children: [
-                //                 Radio(
-                //                     value: true,
-                //                     groupValue: true,
-                //                     onChanged: (value) {}),
-                //                 Text(
-                //                   'Yes',
-                //                   style: TextStyle(
-                //                     color: Colors.black,
-                //                     fontSize: DeviceSize.itemHeight / 13,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //             Row(
-                //               children: [
-                //                 Radio(
-                //                     value: true,
-                //                     groupValue: true,
-                //                     onChanged: (value) {}),
-                //                 Text(
-                //                   'Non',
-                //                   style: TextStyle(
-                //                     color: Colors.black,
-                //                     fontSize: DeviceSize.itemHeight / 13,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ],
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 10,
-                // ),
-                // Container(
-                //   height: DeviceSize.itemHeight / 1.8,
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(10),
-                //     // color: ColorConstant.clPurple05,
-                //     gradient: LinearGradient(
-                //       begin: Alignment(0, -1),
-                //       end: Alignment(0, 1),
-                //       colors: [
-                //         ColorConstant.clPurple05,
-                //         ColorConstant.clPurple05,
-                //         ColorConstant.whiteA700,
-                //       ],
-                //       // transform: GradientRotation(
-                //       //   0.15,
-                //       // ),
-                //     ),
-                //   ),
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(10),
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Text(
-                //           'Re You Willing To Marry Orphan?',
-                //           style: TextStyle(
-                //               color: ColorConstant.clFontDarkBlueColor,
-                //               fontWeight: FontWeight.bold,
-                //               fontSize: DeviceSize.itemHeight / 15),
-                //         ),
-                //         Row(
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           children: [
-                //             Row(
-                //               children: [
-                //                 Radio(
-                //                     value: true,
-                //                     groupValue: true,
-                //                     onChanged: (value) {}),
-                //                 Text(
-                //                   'Yes',
-                //                   style: TextStyle(
-                //                     color: Colors.black,
-                //                     fontSize: DeviceSize.itemHeight / 13,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //             Row(
-                //               children: [
-                //                 Radio(
-                //                     value: true,
-                //                     groupValue: true,
-                //                     onChanged: (value) {}),
-                //                 Text(
-                //                   'Non',
-                //                   style: TextStyle(
-                //                     color: Colors.black,
-                //                     fontSize: DeviceSize.itemHeight / 13,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //   ],
-                // ),
-                //   ],
-                // ),
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: DeviceSize.itemHeight / 4,
-                // ),
+                MyElevatedButton(
+                  onPressed: () {
+                    postPreference();
+                  },
+                  borderRadius: BorderRadius.circular(10),
+                  backgroundColor: Colors.transparent,
+                  width: double.maxFinite,
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                // Display the response data if available
+                if (responseData != null) ...[
+                  SizedBox(height: 20),
+                  Text('My Preference:',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                  if (responseData is List) ...[
+                    Container(
+                      height: 300, // Set a height for the ListView
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: (responseData as List).length,
+                        itemBuilder: (context, index) {
+                          final item = (responseData as List)[index];
+                          return UserCardWidget(
+                              userId: responseData[index]["uid"],
+                              imageUrl: responseData[index]['profile_picture'],
+                              address: responseData[index]['address'],
+                              subfield: responseData[index]['profile_tag'],
+                              index: index);
+                        },
+                      ),
+                    ),
+                  ] else if (responseData is Map) ...[
+                    Container(
+                      height: 300, // Set a height for the ListView
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: (responseData as Map).entries.length,
+                        itemBuilder: (context, index) {
+                          final entry =
+                              (responseData as Map).entries.elementAt(index);
+                          return ListTile(
+                            title: Text('${entry.key}: ${entry.value}'),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ],
               ]),
         ),
       ),

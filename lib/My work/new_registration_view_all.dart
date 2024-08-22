@@ -15,14 +15,14 @@ import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class WishlistPage extends StatefulWidget {
-  const WishlistPage({super.key});
+class NewRegistrationPage extends StatefulWidget {
+  const NewRegistrationPage({super.key});
 
   @override
-  State<WishlistPage> createState() => _WishlistPageState();
+  State<NewRegistrationPage> createState() => _NewRegistrationPageState();
 }
 
-class _WishlistPageState extends State<WishlistPage>  {
+class _NewRegistrationPageState extends State<NewRegistrationPage>  {
 
   int _current = 0;
   List<dynamic> users = [];
@@ -180,7 +180,7 @@ class _WishlistPageState extends State<WishlistPage>  {
     return Scaffold(
       appBar:  AppBar(
         title: Text(
-          "Favourite List",
+          "New Registration",
           style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
         ),
       ),
@@ -189,35 +189,32 @@ class _WishlistPageState extends State<WishlistPage>  {
         child: Column(
           children: [
 
-               GridView.builder(
-                 shrinkWrap: true,
-            itemCount: favoriteUsers.length,
-            itemBuilder: (context, index) {
+            GridView.builder(
+              shrinkWrap: true,
+              itemCount:users.length,
+              itemBuilder: (context, index) {
 
-              return UserCardWidget(
-                userId:
-                favoriteUsers[index]['uid'] ?? '',
-                imageUrl: favoriteUsers[index]
-                ['profile_picture'] ??
-                    '',
-                address: favoriteUsers[index]
-                ['address'] ??
-                    '',
-                subfield: favoriteUsers[index]
-                ['profile_tag'] ??
-                    '',
-                index: index,
-              );
-            },
-            gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Number of columns
-              crossAxisSpacing:
-              10.0, // Horizontal space between items
-              mainAxisSpacing:
-              10.0, // Vertical space between items
-            ),
-          )
+                return UserCardWidget(
+                  userId: users[index]['uid'] ?? '',
+                  imageUrl: users[index]
+                  ['profile_picture'] ??
+                      '',
+                  address:
+                  users[index]['address'] ?? '',
+                  subfield:
+                  users[index]['profile_tag'] ?? '',
+                  index: index,
+                );
+              },
+              gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Number of columns
+                crossAxisSpacing:
+                10.0, // Horizontal space between items
+                mainAxisSpacing:
+                10.0, // Vertical space between items
+              ),
+            )
 
           ],
         ),

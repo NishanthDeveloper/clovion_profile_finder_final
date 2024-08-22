@@ -108,7 +108,7 @@ class PmMyDataModel {
         createdDate: json["created_date"],
         otp1: json["otp1"],
         userOtp1: json["user_otp1"],
-        complaints:json["complaints"]
+        complaints:json["youtube"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -133,7 +133,7 @@ class PmMyDataModel {
         "created_date": createdDate,
         "otp1": otp1,
         "user_otp1": userOtp1,
-        "complaints":complaints,
+        "youtube":complaints,
       };
 }
 
