@@ -162,6 +162,7 @@ class _ThirteenScreenState extends State<ThirteenScreen> {
         // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           PageView(
+            // physics: NeverScrollableScrollPhysics(),
             controller: _pageController,
             children: [ TenFillTheFormScreen
             (changePage: () {
@@ -187,14 +188,11 @@ class _ThirteenScreenState extends State<ThirteenScreen> {
               child: Center(
                 child: SmoothPageIndicator(
                   controller: _pageController,
-                  count: 3,
+                  count: 4,
+                 
                   effect: const ExpandingDotsEffect(
                       dotHeight: 10, dotWidth: 10, activeDotColor: Colors.blue),
-                  onDotClicked: (index) {
-                    _pageController.animateToPage(index,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.bounceOut);
-                  },
+                 
                 ),
               ),
             ),

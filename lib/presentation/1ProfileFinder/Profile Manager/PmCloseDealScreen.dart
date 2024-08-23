@@ -535,12 +535,14 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                                   onTap: () {
                                     final question = jsonDecode(
                                         dataListSeperated[0]['complaints'])[0];
+                                         final answer = jsonDecode(
+                                        dataListSeperated[0]['complaints_replay'])[0];
                                     print(question);
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 PmViewanswerscreen(
-                                                  questions: question,
+                                                  questions: question == 'empty'  ? 'No Questions Right Now ' : question, answer: answer == 'empty' ? 'No Answer Right Now ' : answer,
                                                 )));
                                   },
                                   child: Container(

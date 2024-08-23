@@ -3,7 +3,9 @@ import 'dart:typed_data';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -214,11 +216,13 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
     }
   }
 
+// Controllers
 
   TextEditingController nameOfApplController = TextEditingController();
   TextEditingController addOfApplController = TextEditingController();
   TextEditingController weightOfApplController = TextEditingController();
   TextEditingController heightOfApplController = TextEditingController();
+  TextInputType keyboardType = TextInputType.number;
   
   
 
@@ -397,6 +401,7 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Name Field
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
                   textFieldTitle: "Name of Applicant*",
@@ -407,7 +412,7 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                 ),
 
 
-
+                // Enter Address
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
                   textFieldTitle: "Address of Applicant*",
@@ -416,6 +421,8 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   },
                   textFieldController: addOfApplController,
                 ),
+
+                // Enter Height
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
                   textFieldTitle: "Height*",
@@ -431,6 +438,8 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   textFieldController: heightOfApplController,
                 ),
 
+
+              // EnterWeight
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
                   textFieldTitle: "Weight in KGLB*",
@@ -443,6 +452,8 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   },
                   textFieldController: weightOfApplController,
                 ),
+
+                // Gender DropDown
                 WidgetTitleAndDropdown(
                   DdbTitle: "Gender*",
                   DdbHint: "Select",
@@ -454,6 +465,8 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                     });
                   },
                 ),
+
+                // DropDown Marital
                 WidgetTitleAndDropdown(
                   DdbTitle: "Marital Status*",
                   DdbHint: "Select",
@@ -465,6 +478,8 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                     });
                   },
                 ),
+
+                // DropDown PhsiycalStatus
                 WidgetTitleAndDropdown(
                   DdbTitle: "Physical Status*",
                   DdbHint: "Select",
@@ -476,6 +491,8 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                     });
                   },
                 ),
+
+                // DropDown Religions
                 WidgetTitleAndDropdown(
                   DdbTitle: "Religion*",
                   DdbHint: "Select",
@@ -489,7 +506,9 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                     saveToSharedPrefferences("religion", newValue);
                   },
                 ),
+                // Age
                 WidgetTitleAndTextfield(
+                  keybordType: keyboardType,
                   textFieldHint: 'Enter',
                   textFieldTitle: "Age*",
                   // textFieldController: controller[2],
@@ -501,15 +520,17 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                     saveToSharedPrefferences("age", newValue);
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Birth Place*",
-                  DdbHint: "Select",
-                  DbdItems: birthPlaceSts,
-                  onChanged: (String? newValue) {
+                WidgetTitleAndTextfield(
+                 
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Birth Place*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
                     setState(() {
-                      dropdownValue = newValue!;
                       birth_place = newValue;
                     });
+
+                    saveToSharedPrefferences("birth_place", newValue);
                   },
                 ),
                 WidgetTitleAndDropdown(
