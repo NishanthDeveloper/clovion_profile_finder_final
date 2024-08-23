@@ -37,7 +37,7 @@ class PfPiCloseDealScreen extends StatefulWidget {
 class _PfPiCloseDealScreenState extends State<PfPiCloseDealScreen> {
   static List<PiMyData> piMyData = [];
 
-  bool loadingPiMyDataFetchData = true;
+  // bool loadingPiMyDataFetchData = true;
 
   Future<void> _pi_my_data_fetchData() async {
     // late String private_investicator_id;
@@ -52,7 +52,7 @@ class _PfPiCloseDealScreenState extends State<PfPiCloseDealScreen> {
       setState(() {
         piMyData = jsonResponse.map((data) => PiMyData.fromJson(data)).toList();
 
-        loadingPiMyDataFetchData = false;
+        // loadingPiMyDataFetchData = false;
       });
 
       debugPrint(piMyData[0].profilePicture);
@@ -347,7 +347,8 @@ class _PfPiCloseDealScreenState extends State<PfPiCloseDealScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //  return Scaffold();
+    if(piMyData.isNotEmpty){
+      
     return Scaffold(
       appBar: ClAppbarLeadGridSuffHeart(
           notificationPage: NotificationPage(),
@@ -608,6 +609,10 @@ class _PfPiCloseDealScreenState extends State<PfPiCloseDealScreen> {
             )),
       ),
     );
+    }else{
+      return Scaffold(body: Center(child: CircularProgressIndicator()),);
+    }
+    //  return Scaffold();
   }
 }
 
