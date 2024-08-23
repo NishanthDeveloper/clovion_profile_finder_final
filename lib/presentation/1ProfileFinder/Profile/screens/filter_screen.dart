@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
@@ -19,6 +20,7 @@ class _FilterScreenState extends State<FilterScreen> {
   TextEditingController age = TextEditingController();
 
   String? genderSeletedValue;
+
   List<DropdownMenuItem<String>> get gender {
     return [
       const DropdownMenuItem(value: "Male", child: Text("Male")),
@@ -49,19 +51,26 @@ class _FilterScreenState extends State<FilterScreen> {
     });
   }
 
+
   dynamic responseData;
 
+  String profile_finder_id = '';
   Future<void> postPreference() async {
-    final url = Uri.parse('http://51.20.61.70:3000/saved_search/MWOJGKTCQ71');
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      profile_finder_id = preferences.getString("uid2").toString();
+    });
+    final url = Uri.parse('http://51.20.61.70:3000/saved_search/${profile_finder_id.toString()}');
 
     final body = {
       'tag': tagName.text,
-      'country': 'india',
+      'country': selectedCountry,
       'city': 'madurai',
-      'age': '10',
+      'age': age.text,
       'complexion': 'Medium',
-      'gender': 'Male',
-      'denomination': 'Hindu',
+      'gender': genderSeletedValue,
+      'denomination': denominationSeletedValue,
+
     };
 
     try {
@@ -133,6 +142,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+
                     InkWell(
                       onTap: () {
                         showCountryPicker(
@@ -172,6 +182,7 @@ class _FilterScreenState extends State<FilterScreen> {
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(child: selectedCountry.isEmpty ? Text("Country 🌍"):Text(selectedCountry)),
                       )
+
                     ),
                     Container(
                       height: 40,
@@ -326,6 +337,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       fontSize: 18,
                       color: const Color.fromRGBO(43, 54, 116, 1)),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: SizedBox(
@@ -344,10 +356,44 @@ class _FilterScreenState extends State<FilterScreen> {
                                 BorderSide(width: 0, color: Colors.black26),
                           ),
                         ),
-                        items: denomination,
-                        value: denominationSeletedValue,
+
+                        items: gender,
+                        value: genderSeletedValue,
                         onChanged: genderselectedValueChange,
                       )),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  "Denomination*",
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: const Color.fromRGBO(43, 54, 116, 1)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: SizedBox(
+                      height: 54,
+                      child: DropdownButtonFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Select',
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9),
+                            borderSide: BorderSide(color: Colors.black26),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9),
+                            borderSide:
+                                BorderSide(width: 0, color: Colors.black26),
+                          ),
+                        ),
+
+                        items: denomination,
+                        value: denominationSeletedValue,
+                        onChanged:denominationselectedValueChange,
+                     )),
                 ),
               ],
             ),
