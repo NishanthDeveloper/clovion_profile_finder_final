@@ -482,7 +482,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                   D10HCustomClSizedBoxWidget(),
                       D10HCustomClSizedBoxWidget(),
 
-                    _isLoading? Center(child: CircularProgressIndicator(),): dataListSeperated.isEmpty ? Center(child: Text("No Data Found")):
+                    _isLoading? Center(child: CircularProgressIndicator(),): userList.isEmpty ? Center(child: Text("No Data Found")):
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

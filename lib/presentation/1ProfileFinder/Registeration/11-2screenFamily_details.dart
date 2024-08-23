@@ -80,38 +80,107 @@ class _Thirteen_Screen_Family_DetailsScreenState
   //
   //
 
-  Future<void> uploadDataFamilyDetails() async {
+  Future uploadDataFamilyDetails() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    uidUser = preferences.getString("uid2") ?? '';
+    uidUser = preferences.getString("uid2").toString();
 
     print("uid is $uidUser ");
 
-    final url = Uri.parse("http://${ApiService.ipAddress}/familydetails/$uidUser");
+    final url =
+        Uri.parse("http://${ApiService.ipAddress}/familydetails/$uidUser");
     final request = http.MultipartRequest('POST', url);
 
-    // Retrieve values from SharedPreferences
-    request.fields['family_status'] = preferences.getString("family_status_value") ?? '';
-    request.fields['father_name'] = preferences.getString("father_name_value") ?? '';
-    request.fields['father_country'] = preferences.getString("father_country_value") ?? '';
-    request.fields['father_city'] = preferences.getString("father_city_value") ?? '';
-    request.fields['father_job'] = preferences.getString("father_job_value") ?? '';
-    request.fields['father_family_name'] = preferences.getString("father_family_name") ?? '';
-    request.fields['mother_name'] = preferences.getString("mother_name_value") ?? '';
-    request.fields['mother_country'] = preferences.getString("mother_country_value") ?? '';
-    request.fields['mother_city'] = preferences.getString("mother_city_value") ?? '';
-    request.fields['mother_job'] = preferences.getString("mother_job_value") ?? '';
-    request.fields['mother_family_name'] = preferences.getString("mother_family_name") ?? '';
-    request.fields['sibling_name'] = preferences.getString("sibling_name_value") ?? '';
-    request.fields['sibling_relation'] = preferences.getString("sibling_relation_value") ?? '';
-    request.fields['sibling_young_or_old'] = preferences.getString("sibling_young_or_old_value") ?? '';
-    request.fields['sibling_occupation'] = preferences.getString("sibling_occupation_value") ?? '';
-    request.fields['sibling_marital'] = preferences.getString("sibling_marital_value") ?? '';
-    request.fields['sibling_email'] = preferences.getString("sibling_email_value") ?? '';
-    request.fields['sibling_dob'] = preferences.getString("sibling_dob_value") ?? '';
-    request.fields['sibling_job'] = preferences.getString("sibling_job_value") ?? '';
-    request.fields['about_candidate'] = preferences.getString("about_candidate_value") ?? '';
-    request.fields['current_status'] = preferences.getString("current_status_value") ?? '';
+
+    request.fields['family_status'] =
+        preferences.getString("family_status_value").toString();
+
+    request.fields['father_name'] =
+        preferences.getString("family_status_value").toString();
+    request.fields['father_country'] =
+        preferences.getString("family_status_value").toString();
+    request.fields['father_city'] =
+        preferences.getString("father_city_value").toString();
+    '';
+    request.fields['father_job'] =
+        preferences.getString("father_job_value").toString();
+    request.fields['father_family_name'] =
+        preferences.getString("father_family_name").toString();
+    request.fields['mother_name'] =
+        preferences.getString("mother_name_value").toString();
+    request.fields['mother_country'] =
+        preferences.getString("mother_country_value").toString();
+    request.fields['mother_city'] =
+        preferences.getString("mother_city_value").toString();
+    request.fields['mother_job'] =
+        preferences.getString("mother_job_value").toString();
+    request.fields['mother_family_name'] =
+        preferences.getString("mother_family_name").toString();
+    request.fields['sibling_name'] =
+        preferences.getString("sibling_name_value").toString();
+    request.fields['sibling_relation'] =
+        preferences.getString("sibling_relation_value").toString();
+    request.fields['sibling_young_or_old'] =
+        preferences.getString("sibling_young_or_old_value").toString();
+    request.fields['sibling_occupation'] =
+        preferences.getString("sibling_occupation_value").toString();
+    request.fields['sibling_marital'] =
+        preferences.getString("sibling_marital_value").toString();
+    request.fields['sibling_email'] =
+        preferences.getString("sibling_email_value").toString();
+    request.fields['sibling_dob'] =
+        preferences.getString("sibling_dob_value").toString();
+    request.fields['sibling_job'] =
+        preferences.getString("sibling_job_value").toString();
+    request.fields['about_candidate'] =
+        preferences.getString("about_candidate_value").toString();
+    request.fields['current_status'] =
+        preferences.getString("current_status_value").toString();
+
+
+        preferences.getString("family_status_value").toString();
+
+
+      /*
+        request.fields['family_status'] ='middle';
+
+
+    request.fields['father_name'] = 'fatherr';
+
+    request.fields['father_country'] = 'india';
+    request.fields['father_city'] = 'chennai';
+    request.fields['father_job'] ='doctor';
+
+    request.fields['father_family_name'] = 'appa';
+
+    request.fields['mother_name'] = 'motherr';
+
+    request.fields['mother_country'] = 'malasiya';
+
+    request.fields['mother_city'] = 'hongknk';
+
+    request.fields['mother_job'] = 'teacher';
+
+    request.fields['mother_family_name'] = 'amma';
+
+    request.fields['sibling_name'] = 'siblingg';
+
+    request.fields['sibling_relation'] ='bro';
+
+    request.fields['sibling_young_or_old'] ='young';
+
+    request.fields['sibling_occupation'] = 'eng';
+
+    request.fields['sibling_marital'] = 'single';
+
+    request.fields['sibling_email'] = 'bro@gmail.com';
+         request.fields['sibling_dob'] = '05/06/2000';
+         request.fields['sibling_job'] = 'engg';
+         request.fields['about_candidate'] ='good';
+      request.fields['current_status'] = 'working';
+
+       */
+
 
     try {
       final send = await request.send();
@@ -119,18 +188,18 @@ class _Thirteen_Screen_Family_DetailsScreenState
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 200) {
+        // Navigator.pushNamed(context, AppRoutes.FourteenScreenscr);
         Fluttertoast.showToast(
-          msg: "Family Details Uploaded Successfully...!",
+          msg: "Family Deatails Uploaded Successfully...!",
           backgroundColor: ColorConstant.deepPurpleA200,
           textColor: Colors.white,
           toastLength: Toast.LENGTH_SHORT,
         );
       }
     } catch (e) {
-      print("Error While Uploading File: $e");
+      print("Error While UploadingFile$e");
     }
   }
-
 
 
     Users _users = Users();

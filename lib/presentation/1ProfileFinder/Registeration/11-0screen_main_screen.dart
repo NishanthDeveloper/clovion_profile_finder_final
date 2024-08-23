@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Registeration/10screenFillTheForm.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Registeration/11-1screen_primary_details.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Registeration/11-2screenFamily_details.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Registeration/11-3screen_contact_details.dart';
@@ -162,16 +163,17 @@ class _ThirteenScreenState extends State<ThirteenScreen> {
         children: [
           PageView(
             controller: _pageController,
-            children: [
-               ThirteenScreenPrimaryDetails(changePage: () { 
+            children: [ TenFillTheFormScreen
+            (changePage: () {
 
                  _pageController.animateToPage(2,
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.bounceOut);
 
-                },
+                }, registerForWhomm: '',
                 //  pageNo: null,
                 ),
+              ThirteenScreenPrimaryDetails(changePage:(){} ,),
               Thirteen_Screen_Family_DetailsScreen(),
               const ThirteenScreenContactDetails(),
             ],

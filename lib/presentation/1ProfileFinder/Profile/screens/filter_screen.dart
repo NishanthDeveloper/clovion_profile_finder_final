@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+=======
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+>>>>>>> d05ceee4569b6c026982e4d97e7b0c323a390b54
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
 
@@ -9,6 +16,7 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
+<<<<<<< HEAD
   TextEditingController tagName = TextEditingController();
   TextEditingController age = TextEditingController();
 
@@ -28,6 +36,46 @@ class _FilterScreenState extends State<FilterScreen> {
     });
   }
 
+=======
+  dynamic responseData;
+
+  Future<void> postPreference() async {
+    final url = Uri.parse('http://51.20.61.70:3000/saved_search/MWOJGKTCQ71');
+
+    final body = {
+      'tag':'tagtest',
+      'country': 'india',
+      'city': 'madurai',
+      'age': '10',
+      'complexion': 'Medium',
+      'gender': 'Male',
+      'denomination': 'Hindu',
+
+    };
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: body,
+      );
+
+      if (response.statusCode == 200) {
+        print('Preference posted successfully');
+        // Decode the response and handle both Map and List cases
+        final decodedResponse = json.decode(response.body);
+        setState(() {
+          responseData = decodedResponse;
+        });
+      } else {
+        print('Failed to post preference: ${response.statusCode}');
+        print('Response: ${response.body}');
+      }
+    } catch (e) {
+      print('Error posting preference: $e');
+    }
+  }
+>>>>>>> d05ceee4569b6c026982e4d97e7b0c323a390b54
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +87,7 @@ class _FilterScreenState extends State<FilterScreen> {
             },
             icon: Icon(Icons.arrow_back_ios)),
       ),
+<<<<<<< HEAD
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
@@ -292,6 +341,16 @@ class _FilterScreenState extends State<FilterScreen> {
             )
           ],
         ),
+=======
+      body: Column(
+        children: [
+          Center(
+            child: ElevatedButton(onPressed: (){
+              postPreference();
+            }, child: Text("Test")),
+          )
+        ],
+>>>>>>> d05ceee4569b6c026982e4d97e7b0c323a390b54
       ),
     );
   }

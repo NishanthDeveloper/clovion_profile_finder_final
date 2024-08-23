@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:profile_finder/core/utils/size_utils.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddRefferenceFiftyThreeScreen extends StatefulWidget {
   const AddRefferenceFiftyThreeScreen({super.key});
@@ -16,6 +17,25 @@ class AddRefferenceFiftyThreeScreen extends StatefulWidget {
 
 class _AddRefferenceFiftyThreeScreenState
     extends State<AddRefferenceFiftyThreeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    loadUserId();
+    super.initState();
+  }
+  String? userId;
+  List<dynamic> savedSearch = [];
+  Future<void> loadUserId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getString('uid2');
+      print(prefs.getString("uid2").toString());
+    });
+    if (userId != null) {
+   // postPreference();
+    }
+  }
+
   List<String> Dbditems = ["Yes", "No"];
 
   late String maritalStatusPreff = "";
@@ -48,8 +68,8 @@ class _AddRefferenceFiftyThreeScreenState
   dynamic responseData;
 
   Future<void> postPreference() async {
-    final url = Uri.parse('http://51.20.61.70:3000/my_preference/MWOJGKTCQ71');
-
+    final url = Uri.parse('http://51.20.61.70:3000/my_preference/${userId}');
+print("User id ${userId.toString()}");
     final body = {
       'marital_status': maritalStatusPreff,
       'physical_mental_status': physicalStatusPreff,

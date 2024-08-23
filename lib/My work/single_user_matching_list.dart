@@ -120,10 +120,12 @@ class _SingleUserMatchingListState extends State<SingleUserMatchingList> {
         physics: BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+
               Row(
                 children: [
                   Container(
@@ -132,7 +134,7 @@ class _SingleUserMatchingListState extends State<SingleUserMatchingList> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
-                        _userModel![widget.userUidMaLi].selfie.toString(),
+                        _userModel![widget.userUidMaLi].profilePicture.toString(),
                         fit: BoxFit.cover,
 
                         // 'assets/images/img_rectangle673.png'
