@@ -292,9 +292,9 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
     });
 
     final response = await http.get(Uri.parse(
-        "http://51.20.61.70:3000/alldata/APNBGKTCQ73"));
+        "http://${ApiServices.ipAddress}/alldata/${profile_finder_id.toString()}"));
     print(
-        "http://51.20.61.70:3000/alldata/APNBGKTCQ73");
+        "http://${ApiServices.ipAddress}/alldata/APNBGKTCQ73");
 
     print(response.statusCode);
     print(response.body);
