@@ -43,7 +43,7 @@ class _WriteYourComplaintPfScreenState
     // const profile_finder_id = "VHNK85TM5TV";
     // const my_private_investicator_id = "Y9M0YCN82YA";
     final url = Uri.parse(
-        "http://${ApiService.ipAddress}/my_complaints/$profile_finder_id");
+        "http://${ApiService.ipAddress}/alldata/$profile_finder_id");
     var request = http.MultipartRequest('POST', url);
     request.fields['my_manager'] =
         widget.profile_manager_id_ques; 
@@ -203,7 +203,9 @@ class _WriteYourComplaintPfScreenState
             Expanded(
               flex: 10,
               child: MyElevatedButtonWithBorderColor(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   borderRadius: BorderRadius.circular(10),
                   width: double.maxFinite,
                   backgroundColor: Colors.white,

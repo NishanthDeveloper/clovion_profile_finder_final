@@ -1,10 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import '../../../../My work/wishlist.dart';
 import '../../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 
 class PmViewanswerscreen extends StatelessWidget {
-  const PmViewanswerscreen({super.key});
+  String questions;
+
+   PmViewanswerscreen({
+    Key? key,
+    required this.questions,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,7 @@ class PmViewanswerscreen extends StatelessWidget {
             ),
             D10HCustomClSizedBoxWidget(),
             Text(
-              "Who is her best friend?",
+              questions,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
             D10HCustomClSizedBoxWidget(),

@@ -285,16 +285,16 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
   List<Map<String, dynamic>> dataList = [];
   List<Map<String, dynamic>> dataListSeperated = [];
 
-  fetchData() async {
+  Future<void>fetchData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       profile_finder_id = preferences.getString("uid2").toString();
     });
 
     final response = await http.get(Uri.parse(
-        "http://${ApiServices.ipAddress}/pm_my_clients/${widget.profile_manager_id_close_deal}"));
+        "http://51.20.61.70:3000/alldata/APNBGKTCQ73"));
     print(
-        "http://${ApiServices.ipAddress}/pm_my_clients/${widget.profile_manager_id_close_deal}");
+        "http://51.20.61.70:3000/alldata/APNBGKTCQ73}");
 
     print(response.statusCode);
 
@@ -302,20 +302,16 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
       final jsonoutput = jsonDecode(response.body);
       String key = jsonoutput.keys.first;
 
-      dataList = List<Map<String, dynamic>>.from(jsonoutput[key]);
-
-      //  seperating data based on uid
-      for (var i = 0; i < jsonoutput[key].length; i++) {
-        if (jsonoutput[key][i]['uid'] == profile_finder_id) {
-          dataListSeperated.add(jsonoutput[key][i]);
-        }
-      }
-
-      //
+       // Access the first element in the list
+    if (jsonoutput[key].isNotEmpty) {
+      dataListSeperated = [jsonoutput[key][0]];
 
       setState(() {
         _isLoading = false;
       });
+    } else {
+      throw Exception('No data found!');
+    }
 
       //   print(dataList.first['uid']);
     } else {
@@ -486,7 +482,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                   D10HCustomClSizedBoxWidget(),
                       D10HCustomClSizedBoxWidget(),
 
-                    _isLoading? Center(child: CircularProgressIndicator(),): userList.isEmpty ? Center(child: Text("No Data Found")):
+                    _isLoading? Center(child: CircularProgressIndicator(),): dataListSeperated.isEmpty ? Center(child: Text("No Data Found")):
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -504,7 +500,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                           SizedBox(
                               width: 320,
                               child: Text(
-                                "where is the San Sebastian home? and she completed here graduation?,}",
+                                dataListSeperated[0]['complaints'],
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w500),
                               )),
@@ -515,7 +511,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
 
                       InkWell(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PmViewanswerscreen()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PmViewanswerscreen(questions: '',)));
                         },
                         child: Container(
                           height: 42,
