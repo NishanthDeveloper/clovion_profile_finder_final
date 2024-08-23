@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Profile/screens/edit_filter.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Profile/screens/filter_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -168,28 +169,33 @@ fetchSavedSearch();
                                         fontSize: 20,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  Text("20 Profiles"),
+                                  Text("0 Profiles"),
                                   SizedBox(
                                     height: 8,
                                   ),
                                   Row(
                                     children: [
-                                      Container(
-                                        height: 35,
-                                        width: 65,
-                                        decoration: BoxDecoration(
-                                          color:
-                                              Color.fromRGBO(123, 97, 255, 0.2),
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            "EdIt",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w600,
-                                                color: Color.fromRGBO(
-                                                    123, 97, 255, 1)),
+                                      GestureDetector(
+                                        onTap:(){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditFilterScreen()));
+                    },
+                                        child: Container(
+                                          height: 35,
+                                          width: 65,
+                                          decoration: BoxDecoration(
+                                            color:
+                                                Color.fromRGBO(123, 97, 255, 0.2),
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "EdIt",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Color.fromRGBO(
+                                                      123, 97, 255, 1)),
+                                            ),
                                           ),
                                         ),
                                       ),

@@ -35,7 +35,21 @@ class _FilterScreenState extends State<FilterScreen> {
     });
   }
 
+  String? denominationSeletedValue;
 
+  List<DropdownMenuItem<String>> get denomination {
+    return [
+      const DropdownMenuItem(value: "Hindu", child: Text("Hindu")),
+      const DropdownMenuItem(value: "christian", child: Text("christian")),
+      const DropdownMenuItem(value: "Muslim", child: Text("Muslim")),
+    ];
+  }
+
+  void denominationselectedValueChange(String? newValue) {
+    setState(() {
+      denominationSeletedValue = newValue;
+    });
+  }
   dynamic responseData;
 
   Future<void> postPreference() async {
@@ -289,8 +303,8 @@ class _FilterScreenState extends State<FilterScreen> {
                                             ),
                                            
                                            ),
-                                        items: gender,
-                                        value: genderSeletedValue,
+                                        items: denomination,
+                                        value: denominationSeletedValue,
                                         onChanged: genderselectedValueChange,
                                       )),
                                 ),
@@ -323,20 +337,25 @@ class _FilterScreenState extends State<FilterScreen> {
                 child: Center(child: Text("Cancel",style: TextStyle(color: Colors.white),),),
               ),
             ),
-            Container(
-              height: 40,
-              width: 100,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  
-                  colors: [
-                      Color.fromRGBO(43, 68, 204, 1),
-                      Color.fromRGBO(228, 135, 243, 1),
-        
-                ]),
-                borderRadius: BorderRadius.circular(15)
+            InkWell(
+              onTap: (){
+                postPreference();
+              },
+              child: Container(
+                height: 40,
+                width: 100,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+
+                    colors: [
+                        Color.fromRGBO(43, 68, 204, 1),
+                        Color.fromRGBO(228, 135, 243, 1),
+
+                  ]),
+                  borderRadius: BorderRadius.circular(15)
+                ),
+                child: Center(child: Text("Save",style: TextStyle(color: Colors.white),),),
               ),
-              child: Center(child: Text("Save",style: TextStyle(color: Colors.white),),),
             )
           ],
         ),
