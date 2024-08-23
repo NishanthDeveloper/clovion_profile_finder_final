@@ -424,6 +424,7 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
 
                 // Enter Height
                 WidgetTitleAndTextfield(
+                  keybordType: keyboardType,
                   textFieldHint: 'Enter',
                   textFieldTitle: "Height*",
                   // textFieldController: controller[0] ,
@@ -441,6 +442,7 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
 
               // EnterWeight
                 WidgetTitleAndTextfield(
+                  keybordType: keyboardType,
                   textFieldHint: 'Enter',
                   textFieldTitle: "Weight in KGLB*",
                   // textFieldController: controller[1] ,

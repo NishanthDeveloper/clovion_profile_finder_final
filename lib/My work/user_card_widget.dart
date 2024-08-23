@@ -26,7 +26,8 @@ class UserCardWidget extends StatefulWidget {
     required this.userId,
     required this.imageUrl,
     required this.address,
-    required this.subfield, required this.index,
+    required this.subfield,
+    required this.index,
   });
 
   @override
@@ -34,7 +35,7 @@ class UserCardWidget extends StatefulWidget {
 }
 
 class _UserCardWidgetState extends State<UserCardWidget> {
-  TextEditingController  _reasonController = TextEditingController();
+  TextEditingController _reasonController = TextEditingController();
   final List<String> imgList = [
     'assets/images/Rectangle 665.png',
     'assets/images/Rectangle 665.png',
@@ -49,8 +50,8 @@ class _UserCardWidgetState extends State<UserCardWidget> {
       userId = prefs.getString('uid2');
       print(prefs.getString("uid2").toString());
     });
-
   }
+
   @override
   void initState() {
     super.initState();
@@ -81,7 +82,8 @@ class _UserCardWidgetState extends State<UserCardWidget> {
 
     try {
       var responsefav = await http.post(
-        Uri.parse("http://51.20.61.70:3000/favorites/${ThreeSigninScreen.userUidAccess}"),
+        Uri.parse(
+            "http://51.20.61.70:3000/favorites/${ThreeSigninScreen.userUidAccess}"),
         body: requestBody,
       );
 
@@ -104,9 +106,8 @@ class _UserCardWidgetState extends State<UserCardWidget> {
       debugPrint(e.toString());
     }
   }
- showReason(BuildContext context, String requestingUserId) {
 
-
+  showReason(BuildContext context, String requestingUserId) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -135,18 +136,25 @@ class _UserCardWidgetState extends State<UserCardWidget> {
                           return null;
                         },
                       ),
-                  SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       MyElevatedButton(
                           height: 40,
                           borderRadius: BorderRadius.circular(8),
                           backgroundColor: Colors.transparent,
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {
-                              block(_reasonController.text, widget.userId, userId.toString());
-
+                              block(_reasonController.text, widget.userId,
+                                  userId.toString());
                             }
                           },
-                          child: const Text("Block",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),))
+                          child: const Text(
+                            "Block",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ))
                     ],
                   ),
                 ),
@@ -156,8 +164,7 @@ class _UserCardWidgetState extends State<UserCardWidget> {
         });
   }
 
-
-   showAlerts(BuildContext context, String requestingUserId) {
+  showAlerts(BuildContext context, String requestingUserId) {
     bool _phone = false;
     bool _whatsapp = false;
     bool _address = false;
@@ -259,7 +266,11 @@ class _UserCardWidgetState extends State<UserCardWidget> {
                             // "http://${ApiService.ipAddress}/requested_list/$userUid"
                           );
                         },
-                        child: const Text("Request",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700),))
+                        child: const Text(
+                          "Request",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w700),
+                        ))
                   ],
                 ),
               ),
@@ -268,14 +279,14 @@ class _UserCardWidgetState extends State<UserCardWidget> {
         });
   }
 
-   requestButtonPressed(
-      String requestedUid,
-      String requestedPhone,
-      String requestedWhatsapp,
-      String requestedAddress,
-      String requestedHoros,
-      String requestedSocialMedia,
-      ) {
+  requestButtonPressed(
+    String requestedUid,
+    String requestedPhone,
+    String requestedWhatsapp,
+    String requestedAddress,
+    String requestedHoros,
+    String requestedSocialMedia,
+  ) {
     // Define the request function
     void request() async {
       print("button calls2");
@@ -284,7 +295,7 @@ class _UserCardWidgetState extends State<UserCardWidget> {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       String userUid = preferences.getString("uid2").toString();
       debugPrint(userUid);
-print("User ID:${requestedUid.toString()}");
+      print("User ID:${requestedUid.toString()}");
       var requestBody = {
         'received_uid': requestedUid,
         'request_phone_number': requestedPhone,
@@ -292,7 +303,6 @@ print("User ID:${requestedUid.toString()}");
         'request_address': requestedAddress,
         'request_horoscope': requestedHoros,
         'request_social_media_link': requestedSocialMedia,
-
       };
 
       print('Request Processing');
@@ -302,8 +312,6 @@ print("User ID:${requestedUid.toString()}");
         var response = await http.post(
           Uri.parse('http://51.20.61.70:3000/requested_list/$userUid'),
           body: requestBody,
-
-
         );
 
         print("statusCodeIs${response.statusCode}");
@@ -325,8 +333,8 @@ print("User ID:${requestedUid.toString()}");
     request();
   }
 
-
-  void profMore(context, String requestingUserId, String userUid, String listType) async {
+  void profMore(
+      context, String requestingUserId, String userUid, String listType) async {
     showDialog(
       context: context,
       builder: (context) => Center(
@@ -343,7 +351,7 @@ print("User ID:${requestedUid.toString()}");
                 onPressed: () async {
                   await listType == 'block'
                       ? unBlock(requestingUserId, userUid)
-                      : showReason(context,widget.userId);
+                      : showReason(context, widget.userId);
                 },
               ),
               TextButton(
@@ -353,7 +361,7 @@ print("User ID:${requestedUid.toString()}");
               TextButton(
                 child: const Text("Request"),
                 onPressed: () {
-                  showAlerts(context,widget.userId);
+                  showAlerts(context, widget.userId);
                 },
               ),
               TextButton(
@@ -366,6 +374,7 @@ print("User ID:${requestedUid.toString()}");
       ),
     );
   }
+  
 
   final CarouselController _controller = CarouselController();
   int _current = 0;
@@ -390,8 +399,7 @@ print("User ID:${requestedUid.toString()}");
       print(response1.body);
       debugPrint("Blocked successfully");
       Navigator.pop(context);
-      setState(() {
-      });
+      setState(() {});
     } else {
       print("error");
       print(response1.statusCode);
@@ -421,6 +429,10 @@ print("User ID:${requestedUid.toString()}");
     }
   }
 
+   bool _isLoading = false;
+
+   
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -432,7 +444,15 @@ print("User ID:${requestedUid.toString()}");
               borderRadius: BorderRadius.circular(10),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SingleUserMatchingList(userUidMaLi:widget.index, userId:  userId.toString(),)));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SingleUserMatchingList(
+                        userUidMaLi: widget.index,
+                        userId: userId.toString(),
+                      ),
+                    ),
+                  );
                 },
                 child: CachedNetworkImage(
                   height: 216,
@@ -507,13 +527,13 @@ print("User ID:${requestedUid.toString()}");
                   color: _isFavourite ? null : Colors.grey,
                   gradient: _isFavourite
                       ? LinearGradient(
-                    begin: const Alignment(-0.8, 1),
-                    end: const Alignment(-0.5, -1),
-                    colors: [
-                      ColorConstant.indigo500,
-                      ColorConstant.purpleA100,
-                    ],
-                  )
+                          begin: const Alignment(-0.8, 1),
+                          end: const Alignment(-0.5, -1),
+                          colors: [
+                            ColorConstant.indigo500,
+                            ColorConstant.purpleA100,
+                          ],
+                        )
                       : null,
                   borderRadius: BorderRadius.circular(10),
                 ),

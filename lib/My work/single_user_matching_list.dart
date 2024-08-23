@@ -27,9 +27,13 @@ class SingleUserMatchingList extends StatefulWidget {
 }
 
 class _SingleUserMatchingListState extends State<SingleUserMatchingList> {
+  
   static late List<UserModel>? _userModel = [];
+  
+  
   void _getData() async {
     _userModel = (await ApiService().getUsers())!;
+    print(_userModel!.length);
     // Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
   List<String> splitList(String _inputValue) {
@@ -112,7 +116,8 @@ class _SingleUserMatchingListState extends State<SingleUserMatchingList> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    if(SingleUser.isNotEmpty && widget.userUidMaLi < _userModel!.length){
+      return Scaffold(
       appBar: ClAppbarLeadArrowBackSuffHeart(
         testingNextPage: MatchingListNavigationFourtyEightScreen(),
       ),
@@ -989,5 +994,10 @@ class _SingleUserMatchingListState extends State<SingleUserMatchingList> {
         ),
       ),
     );
+    }else{
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator())
+      );
+    }
   }
 }
