@@ -294,27 +294,34 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
     final response = await http.get(Uri.parse(
         "http://51.20.61.70:3000/alldata/APNBGKTCQ73"));
     print(
-        "http://51.20.61.70:3000/alldata/APNBGKTCQ73}");
+        "http://51.20.61.70:3000/alldata/APNBGKTCQ73");
 
     print(response.statusCode);
+    print(response.body);
 
     if (response.statusCode == 200) {
       final jsonoutput = jsonDecode(response.body);
-      String key = jsonoutput.keys.first;
+      // String key = jsonoutput.keys.first;
 
+        dataListSeperated = [jsonoutput];
        // Access the first element in the list
-    if (jsonoutput[key].isNotEmpty) {
-      dataListSeperated = [jsonoutput[key][0]];
+    // if (jsonoutput[key].isNotEmpty) {
+    //   dataListSeperated = [jsonoutput[key][0]];
 
       setState(() {
         _isLoading = false;
       });
-    } else {
-      throw Exception('No data found!');
-    }
+    
+  // }
+    //else {
+      // throw Exception('No data found!');
+    // }
 
       //   print(dataList.first['uid']);
-    } else {
+                               final question = jsonDecode(dataListSeperated[0]['complaints'])[0];
+  print(question);
+    }
+     else {
       throw Exception('Unexpected Error Occured!');
     }
   }
@@ -482,7 +489,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                   D10HCustomClSizedBoxWidget(),
                       D10HCustomClSizedBoxWidget(),
 
-                    _isLoading? Center(child: CircularProgressIndicator(),): userList.isEmpty ? Center(child: Text("No Data Found")):
+                    _isLoading? Center(child: CircularProgressIndicator(),): dataListSeperated.isEmpty ? Center(child: Text("No Data Found")):
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -500,7 +507,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                           SizedBox(
                               width: 320,
                               child: Text(
-                                dataListSeperated[0]['complaints'],
+                                 jsonDecode(dataListSeperated[0]['complaints'])[0],
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w500),
                               )),
@@ -508,10 +515,12 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                       ),
                       D10HCustomClSizedBoxWidget(),
                       D10HCustomClSizedBoxWidget(),
-
+                        
                       InkWell(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PmViewanswerscreen(questions: '',)));
+                            final question = jsonDecode(dataListSeperated[0]['complaints'])[0];
+  print(question);
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PmViewanswerscreen(questions:  question,)));
                         },
                         child: Container(
                           height: 42,
