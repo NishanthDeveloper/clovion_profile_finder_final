@@ -19,8 +19,10 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
     // TODO: implement initState
     super.initState();
   }
+
   String? userId;
   List<dynamic> savedSearch = [];
+
   Future<void> loadUserId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -28,32 +30,42 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
       print(prefs.getString("uid2").toString());
     });
     if (userId != null) {
-fetchSavedSearch();
+      fetchSavedSearch();
     }
   }
 
   Future<void> fetchSavedSearch() async {
     try {
-      print("User ID for Favourites:${userId}");
-      final response = await http
-          .get(Uri.parse('http://51.20.61.70:3000/saved_search/${userId}'));
+      print("User ID for Favourites: $userId");
+
+      final response = await http.get(
+        Uri.parse('http://51.20.61.70:3000/saved_search/$userId'),
+      );
 
       if (response.statusCode == 200) {
         print("Status Code Ok");
+
         final data = json.decode(response.body);
-        setState(() {
-         savedSearch = (data[userId] as List);
-        });
+
+        if (data.containsKey(userId)) {
+          setState(() {
+            savedSearch = List<Map<String, dynamic>>.from(data[userId]);
+          });
+          print("Length of data: ${savedSearch.length}");
+        } else {
+          print("No data found for user ID: $userId");
+        }
+
       } else {
         print('Failed to load favorites: ${response.statusCode}');
         print('Response body: ${response.body}');
-        throw Exception('Failed to load favorites');
       }
     } catch (e) {
       print('Error fetching favorites: $e');
     }
-    print("Length of data ${savedSearch.length}");
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,12 +105,12 @@ fetchSavedSearch();
                 // filter Button
                 InkWell(
                   onTap: () {
-                     Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return FilterScreen();
-                          }),
-                        );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return FilterScreen();
+                      }),
+                    );
                   },
                   child: Container(
                     height: 38,
@@ -129,6 +141,10 @@ fetchSavedSearch();
               child: ListView.builder(
                   itemCount: savedSearch.length,
                   itemBuilder: (BuildContext context, int index) {
+                    final searchItem = savedSearch[index];
+                    final String filterdDataStr = searchItem['filterd_data'];
+                    final List<String> filterdDataList = List<String>.from(
+                        jsonDecode(filterdDataStr.replaceAll("'", "\"")));
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Container(
@@ -140,7 +156,8 @@ fetchSavedSearch();
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(left: 14, top: 17),
+                                padding:
+                                    const EdgeInsets.only(left: 14, top: 17),
                                 child: Container(
                                   height: 100,
                                   width: 95,
@@ -176,16 +193,21 @@ fetchSavedSearch();
                                   Row(
                                     children: [
                                       GestureDetector(
-                                        onTap:(){
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>EditFilterScreen()));
-                    },
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditFilterScreen()));
+                                        },
                                         child: Container(
                                           height: 35,
                                           width: 65,
                                           decoration: BoxDecoration(
-                                            color:
-                                                Color.fromRGBO(123, 97, 255, 0.2),
-                                            borderRadius: BorderRadius.circular(10),
+                                            color: Color.fromRGBO(
+                                                123, 97, 255, 0.2),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                           child: Center(
                                             child: Text(
@@ -202,31 +224,37 @@ fetchSavedSearch();
                                       SizedBox(
                                         width: 13,
                                       ),
-                                      Container(
-                                        height: 35,
-                                        width: 97,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Color.fromRGBO(
-                                                    123, 97, 255, 1),
-                                                width: 1),
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Text(
-                                              "View Profiles",
-                                              style: TextStyle(
+                                      GestureDetector(
+                                        onTap: () {
+
+                                        },
+                                        child: Container(
+                                          height: 35,
+                                          width: 97,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
                                                   color: Color.fromRGBO(
-                                                      123, 97, 255, 1)),
-                                            ),
-                                          ],
+                                                      123, 97, 255, 1),
+                                                  width: 1),
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Text(
+                                                "View Profiles",
+                                                style: TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        123, 97, 255, 1)),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       )
                                     ],
-                                  )
+                                  ),
+                             //     ...filterdDataList.map((item) => Text(' - $item')),
                                 ],
                               )
                             ],

@@ -280,21 +280,21 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
     // print('pmclientsTestBody ${(_pmMyClientsListTestModelFromJson(response.body))}');
     // print('pmclientsTestManager ${_pmMyClientsListTestModelFromJson(widget.profile_manager_id)}');
   }
+
   //
 
   List<Map<String, dynamic>> dataList = [];
   List<Map<String, dynamic>> dataListSeperated = [];
 
-  Future<void>fetchData() async {
+  Future<void> fetchData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       profile_finder_id = preferences.getString("uid2").toString();
     });
 
     final response = await http.get(Uri.parse(
-        "http://51.20.61.70:3000/alldata/APNBGKTCQ73"));
-    print(
-        "http://51.20.61.70:3000/alldata/APNBGKTCQ73");
+        "http://51.20.61.70:3000/alldata/${profile_finder_id.toString()}"));
+    print("http://51.20.61.70:3000/alldata/${profile_finder_id.toString()}");
 
     print(response.statusCode);
     print(response.body);
@@ -303,25 +303,24 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
       final jsonoutput = jsonDecode(response.body);
       // String key = jsonoutput.keys.first;
 
-        dataListSeperated = [jsonoutput];
-       // Access the first element in the list
-    // if (jsonoutput[key].isNotEmpty) {
-    //   dataListSeperated = [jsonoutput[key][0]];
+      dataListSeperated = [jsonoutput];
+      // Access the first element in the list
+      // if (jsonoutput[key].isNotEmpty) {
+      //   dataListSeperated = [jsonoutput[key][0]];
 
       setState(() {
         _isLoading = false;
       });
-    
-  // }
-    //else {
+
+      // }
+      //else {
       // throw Exception('No data found!');
-    // }
+      // }
 
       //   print(dataList.first['uid']);
-                               final question = jsonDecode(dataListSeperated[0]['complaints'])[0];
-  print(question);
-    }
-     else {
+      final question = jsonDecode(dataListSeperated[0]['complaints'])[0];
+      print(question);
+    } else {
       throw Exception('Unexpected Error Occured!');
     }
   }
@@ -340,8 +339,10 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
   Widget build(BuildContext context) {
     //  return Scaffold();
     return Scaffold(
-      appBar:
-          ClAppbarLeadGridSuffHeart(testingNextPage: AnswerFourtyTwoScreen(), notificationPage: NotificationPage(),),
+      appBar: ClAppbarLeadGridSuffHeart(
+        testingNextPage: AnswerFourtyTwoScreen(),
+        notificationPage: NotificationPage(),
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -386,7 +387,8 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                         "${userList[0].officeCity}${',  '}${userList[0].officeCountry}",
 
                     onPressed: () async {},
-                    hire: false, elevatedButtonText: 'Close Deal & Rate',
+                    hire: false,
+                    elevatedButtonText: 'Close Deal & Rate',
                     //  onTapHirePi: () {  },
                   ),
 
@@ -487,55 +489,80 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                   ),
 
                   D10HCustomClSizedBoxWidget(),
-                      D10HCustomClSizedBoxWidget(),
+                  D10HCustomClSizedBoxWidget(),
 
-                    _isLoading? Center(child: CircularProgressIndicator(),): dataListSeperated.isEmpty ? Center(child: Text("No Data Found")):
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            "assets/images/check.png",
-                            height: 30,
-                            width: 30,
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          SizedBox(
-                              width: 320,
-                              child: Text(
-                                 jsonDecode(dataListSeperated[0]['complaints'])[0],
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              )),
-                        ],
-                      ),
-                      D10HCustomClSizedBoxWidget(),
-                      D10HCustomClSizedBoxWidget(),
-                        
-                      InkWell(
-                        onTap: () {
-                            final question = jsonDecode(dataListSeperated[0]['complaints'])[0];
-  print(question);
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => PmViewanswerscreen(questions:  question,)));
-                        },
-                        child: Container(
-                          height: 42,
-                          width: 140,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Color.fromRGBO(123, 97, 255, 1),
-                                width: 1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Center(child: Text("View Answer",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Color.fromRGBO(123, 97, 255, 1),),)),
-                        ),
-                      )
-                    ],
-                  ),
+                  _isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : dataListSeperated.isEmpty
+                          ? Center(child: Text("No Data Found"))
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/check.png",
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    SizedBox(
+                                        width: 320,
+                                        child: Text(
+                                          jsonDecode(dataListSeperated[0]
+                                                      ['complaints'])[0] ==
+                                                  'empty'
+                                              ? 'No Questions Right Now '
+                                              : jsonDecode(dataListSeperated[0]
+                                                  ['complaints'])[0],
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                  ],
+                                ),
+                                D10HCustomClSizedBoxWidget(),
+                                D10HCustomClSizedBoxWidget(),
+                                InkWell(
+                                  onTap: () {
+                                    final question = jsonDecode(
+                                        dataListSeperated[0]['complaints'])[0];
+                                    print(question);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PmViewanswerscreen(
+                                                  questions: question,
+                                                )));
+                                  },
+                                  child: Container(
+                                    height: 42,
+                                    width: 140,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color:
+                                              Color.fromRGBO(123, 97, 255, 1),
+                                          width: 1),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      "View Answer",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color.fromRGBO(123, 97, 255, 1),
+                                      ),
+                                    )),
+                                  ),
+                                )
+                              ],
+                            ),
 
                   // dataListSeperated[0]['complaints'].toString() == 'empty'
                   //     ? Container(
