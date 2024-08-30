@@ -80,6 +80,8 @@ dependencies:
       url: https://github.com/sampaio96/flutter_carousel_slider.git
       ref: master
   flutter_launcher_icons: ^0.13.1
+  window_manager: ^0.4.2
+  web_socket_channel: ^3.0.1
   
 dev_dependencies:
   flutter_test:

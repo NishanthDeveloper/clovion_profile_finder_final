@@ -1,12 +1,12 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors, must_be_immutable
 import 'dart:convert';
+import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:profile_finder/model_final/model_final.dart';
-import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:web_socket_channel/status.dart' as status;
 
 class ChatScreen extends StatefulWidget {
   final String? messageContent;
@@ -33,11 +33,25 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController _messageFieldController = TextEditingController();
   String? userId;
   ScrollController _scrollController = ScrollController();
+  Timer? _timer;
+  WebSocketChannel? _channel;
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserId();
+    getData();
+    _startPolling();  // Use polling approach
+    // Uncomment the following line if you switch to WebSocket approach
+    // _connectWebSocket();  // For WebSocket approach
+  }
 
   @override
   void dispose() {
     _messageFieldController.dispose();
     _scrollController.dispose();
+    _timer?.cancel(); // Cancel the timer if using polling
+    _channel?.sink.close(status.goingAway); // Close WebSocket connection if using WebSocket
     super.dispose();
   }
 
@@ -77,25 +91,19 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> sendMessage() async {
-    // Trim the message to remove any leading/trailing whitespace
     final messageText = _messageFieldController.text.trim();
 
-    // Check if the message is empty
     if (messageText.isEmpty) {
       print('Message is empty. Not sending.');
       return;
     }
 
-    // Define the API endpoint
     final url = 'http://51.20.61.70:3000/chatting/${userId}/${widget.usersID}';
-
-    // Define the body of the POST request
     final body = {
       'sender': userId,
       'msg': messageText,
     };
 
-    // Make the POST request
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -104,7 +112,6 @@ class _ChatScreenState extends State<ChatScreen> {
       body: body,
     );
 
-    // Check the response status code
     if (response.statusCode == 200) {
       print('Message sent successfully');
       _messageFieldController.clear();
@@ -123,15 +130,12 @@ class _ChatScreenState extends State<ChatScreen> {
       if (response.statusCode == 200) {
         print("Status Code Ok");
         final data = json.decode(response.body);
-
-        // Parse the chat messages
         List<dynamic> messagesList = data;
         setState(() {
           chatMessages = messagesList;
         });
         print("Chat messages loaded successfully.${chatMessages.length}");
 
-        // Scroll to the bottom after messages are loaded
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _scrollController.animateTo(
             _scrollController.position.maxScrollExtent,
@@ -159,8 +163,7 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       nameOfBrideGroom = preferences.getString("nameOfBrideGroom").toString();
     });
-    final response = await http
-        .get(Uri.parse("http://${ApiService.ipAddress}/alldata/$userUid"));
+    final response = await http.get(Uri.parse("http://51.20.61.70:3000/alldata/$userUid"));
     var json = jsonDecode(response.body);
 
     print("statusCodeIs${response.statusCode}");
@@ -177,11 +180,31 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    loadUserId();
-    getData();
+  // Polling approach
+  void _startPolling() {
+    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
+      fetchChatData();
+    });
+  }
+
+  // WebSocket approach
+  void _connectWebSocket() {
+    final url = 'ws://51.20.61.70:3000/chat_ws/${userId}/${widget.usersID}';
+    _channel = WebSocketChannel.connect(Uri.parse(url));
+
+    _channel!.stream.listen((message) {
+      setState(() {
+        chatMessages.add(json.decode(message));
+      });
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      });
+    });
   }
 
   @override
@@ -247,8 +270,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         if (!isReceiver) ...[
                           CircleAvatar(
                             radius: 26,
-                            backgroundImage: NetworkImage(
-                                _users.profilePicture.toString()),
+                            backgroundImage: NetworkImage(_users.profilePicture.toString()),
                           ),
                         ],
                       ],
@@ -274,19 +296,16 @@ class _ChatScreenState extends State<ChatScreen> {
                 hintText: "Text Your Message Here...",
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(
-                    color: Color.fromRGBO(230, 226, 251, 1),
+                    color: Color.fromRGBO(230, 229, 229, 1),
                   ),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(50),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: const BorderSide(
-                    color: Color.fromRGBO(230, 226, 251, 1),
+                    color: Color.fromRGBO(123, 97, 255, 1),
                   ),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(50),
                 ),
-                filled: true,
-                fillColor: const Color.fromRGBO(230, 226, 251, 1),
-                focusColor: const Color.fromRGBO(230, 226, 251, 1),
               ),
             ),
           ),
