@@ -12,8 +12,11 @@ class WidgetTitleAndTextfield extends StatelessWidget {
   final dynamic onChanged;
   final Icon? suffixIcon;
   final String? initialValueExisitingCust;
+  final dynamic keybordType;
 
   TextEditingController? textFieldController = TextEditingController();
+  
+  
 
   WidgetTitleAndTextfield(
       {super.key,
@@ -22,7 +25,7 @@ class WidgetTitleAndTextfield extends StatelessWidget {
       required this.onChanged,  
       this.textFieldController, 
       this.suffixIcon, 
-      this.initialValueExisitingCust});
+      this.initialValueExisitingCust, this.keybordType});
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,7 @@ Text(textFieldTitle.toString(), style: TextStyle(
         TextFormField(
           // autofocus: true,
             onChanged: onChanged,
+            keyboardType: keybordType,
             controller: textFieldController,
             initialValue: initialValueExisitingCust.toString() == "null" ? null : null ,
 

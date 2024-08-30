@@ -74,7 +74,7 @@ class _ProfileBottomNavigationScreenState
     'Profile Tagline',
     'Highlight Profile',
     'Profile Visibility',
-    'Profile Manager',
+    'Profile Handler',
     'Private Investigator',
     'Complaints'
   ];
@@ -90,7 +90,7 @@ class _ProfileBottomNavigationScreenState
     'Profile Tagline': ProfileTagLineScreen(),
     'Highlight Profile': HighlightProfileFourtySixScreen(),
     'Profile Visibility': ReferAFriendFourtySeven2Screen(),
-    'Profile Manager': AllProfileManagerScreen(),
+    'Profile Handler': AllProfileManagerScreen(),
     'Private Investigator': AllInvestigatorThirtyEightScreen(),
     'Complaints': HighlightProfileFourtySixScreen(),
   };

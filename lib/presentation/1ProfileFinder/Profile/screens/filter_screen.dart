@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:country_picker/country_picker.dart';
 
 import 'dart:convert';
 
@@ -17,6 +18,19 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   TextEditingController tagName = TextEditingController();
   TextEditingController age = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+
+   void updateSelectedComplexion() {
+    // Collect the selected options into a list
+    List<String> selected = selectedOptions.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
+
+    // Join the selected options with a comma
+    selectedComplexion = selected.join(', ');
+    print(selectedComplexion);
+  }
 
   String? genderSeletedValue;
 
@@ -51,20 +65,22 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   dynamic responseData;
+
   String profile_finder_id = '';
   Future<void> postPreference() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       profile_finder_id = preferences.getString("uid2").toString();
     });
-    final url = Uri.parse('http://51.20.61.70:3000/saved_search/${profile_finder_id.toString()}');
+    final url = Uri.parse(
+        'http://51.20.61.70:3000/saved_search/${profile_finder_id.toString()}');
 
     final body = {
       'tag': tagName.text,
-      'country': 'india',
-      'city': 'madurai',
+      'country': selectedCountry,
+      'city': cityController.text,
       'age': age.text,
-      'complexion': 'Medium',
+      'complexion': selectedComplexion,
       'gender': genderSeletedValue,
       'denomination': denominationSeletedValue,
     };
@@ -92,6 +108,18 @@ class _FilterScreenState extends State<FilterScreen> {
     }
   }
 
+  String selectedCountry = "Country 🌍";
+  // This map stores the selected state of each option
+  Map<String, bool> selectedOptions = {
+    'Dark': false,
+    'Medium': false,
+    'Moderate Fair': false,
+    'Fair': false,
+    'Very Fair': false,
+  };
+
+  // This variable will store the final selection
+  String selectedComplexion = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,24 +165,67 @@ class _FilterScreenState extends State<FilterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
+                    InkWell(
+                        onTap: () {
+                          showCountryPicker(
+                              context: context,
+                              onSelect: (Country country) {
+                                print('Select country: ${country.name}');
+                                setState(() {
+                                  selectedCountry = country.name;
+                                });
+                              },
+                              moveAlongWithKeyboard: false,
+                              // Optional. Sets the theme for the country list picker.
+                              countryListTheme: CountryListThemeData(
+                                // Optional. Sets the border radius for the bottomsheet.
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(40.0),
+                                  topRight: Radius.circular(40.0),
+                                ),
+                                inputDecoration: InputDecoration(
+                                  labelText: 'Search',
+                                  hintText: 'Start typing to search',
+                                  prefixIcon: const Icon(Icons.search),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: const Color(0xFF8C98A8)
+                                          .withOpacity(0.2),
+                                    ),
+                                  ),
+                                ),
+                              ));
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(width: 1, color: Colors.black26),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                              child: selectedCountry.isEmpty
+                                  ? Text("Country 🌍")
+                                  : Text(selectedCountry)),
+                        )),
+                    SizedBox(
                       height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black26),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text("Country"),
-                      ),
-                    ),
-                    Container(
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black26),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text("City"),
+                      width: 160,
+                      child: TextFormField(
+                        controller: cityController,
+                        decoration: InputDecoration(
+                            hintText: "Enter City 🏯",
+                            hintStyle: const TextStyle(
+                                color: Colors.black87,
+                                fontWeight: FontWeight.w200,
+                                fontSize: 14),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black26),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black26),
+                                borderRadius: BorderRadius.circular(10))),
                       ),
                     ),
                   ],
@@ -199,36 +270,20 @@ class _FilterScreenState extends State<FilterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black26),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text("Dark"),
-                      ),
-                    ),
-                    Container(
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black26),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text("Medium"),
-                      ),
-                    ),
-                    Container(
-                      height: 40,
-                      width: 110,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black26),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text("Moderate Fair"),
-                      ),
-                    ),
+                    buildSelectableContainer('Dark'),
+                    buildSelectableContainer('Medium'),
+                    buildSelectableContainer('Moderate Fair', width: 110),
+
+                    // Container(
+                    //   height: 40,
+                    //   width: 100,
+                    //   decoration: BoxDecoration(
+                    //       border: Border.all(width: 1, color: Colors.black26),
+                    //       borderRadius: BorderRadius.circular(10)),
+                    //   child: Center(
+                    //     child: Text("Medium"),
+                    //   ),
+                    // ),
                   ],
                 ),
                 SizedBox(
@@ -237,26 +292,8 @@ class _FilterScreenState extends State<FilterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black26),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text("Fair"),
-                      ),
-                    ),
-                    Container(
-                      height: 40,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black26),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text("Very Fair"),
-                      ),
-                    ),
+                    buildSelectableContainer('Fair'),
+                    buildSelectableContainer('Very Fair'),
                   ],
                 ),
                 SizedBox(
@@ -294,6 +331,9 @@ class _FilterScreenState extends State<FilterScreen> {
                 SizedBox(
                   height: 25,
                 ),
+                SizedBox(
+                  height: 25,
+                ),
                 Text(
                   "Denomination*",
                   style: TextStyle(
@@ -320,13 +360,15 @@ class _FilterScreenState extends State<FilterScreen> {
                         ),
                         items: denomination,
                         value: denominationSeletedValue,
-                        onChanged:denominationselectedValueChange,
+                        onChanged: denominationselectedValueChange,
                       )),
                 ),
               ],
             ),
           ),
         ),
+
+        // Bottom navigation
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
           child: Row(
@@ -373,9 +415,46 @@ class _FilterScreenState extends State<FilterScreen> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ));
   }
+
+// Multiple selction CustomWidget
+
+  Widget buildSelectableContainer(String label, {double width = 100}) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          // Toggle the selected state
+          selectedOptions[label] = !selectedOptions[label]!;
+          // Update the selectedComplexion variable
+          updateSelectedComplexion();
+        });
+      },
+      child: Container(
+        height: 40,
+        width: width,
+        decoration: BoxDecoration(
+          color: selectedOptions[label]! ?   Color.fromRGBO(43, 68, 204, 1) : Colors.transparent,
+          border: Border.all(
+            width: 1,
+            color: selectedOptions[label]! ?   Color.fromRGBO(43, 68, 204, 1) : Colors.black26,
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(
+              color: selectedOptions[label]! ? Colors.white : Colors.black,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+ 
 }

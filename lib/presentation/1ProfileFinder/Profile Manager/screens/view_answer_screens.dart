@@ -6,10 +6,13 @@ import '../../../../widgets/CustomWidgetsCl/CustomClAll.dart';
 
 class PmViewanswerscreen extends StatelessWidget {
   String questions;
+  
+  String answer;
 
-   PmViewanswerscreen({
+  PmViewanswerscreen({
     Key? key,
     required this.questions,
+    required this.answer,
   }) : super(key: key);
 
   @override
@@ -49,7 +52,7 @@ class PmViewanswerscreen extends StatelessWidget {
               width: 360,
               
                child: Text(
-                "Yes sir,  she completed here graduation last year and her home is same place as her mentioned in her profile.",
+               answer,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                            ),
              ),
