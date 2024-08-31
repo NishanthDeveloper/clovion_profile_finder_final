@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Profile/screens/edit_filter.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Profile/screens/filter_screen.dart';
+import 'package:profile_finder/presentation/1ProfileFinder/Profile/screens/view_profiles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class SavedSearchScreen extends StatefulWidget {
   const SavedSearchScreen({super.key});
@@ -13,15 +14,14 @@ class SavedSearchScreen extends StatefulWidget {
 }
 
 class _SavedSearchScreenState extends State<SavedSearchScreen> {
+  String? userId;
+  List<dynamic> savedSearch = [];
+
   @override
   void initState() {
     loadUserId();
-    // TODO: implement initState
     super.initState();
   }
-
-  String? userId;
-  List<dynamic> savedSearch = [];
 
   Future<void> loadUserId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -65,7 +65,6 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,7 +90,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
                     Text(
                       "Save Search",
                       style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                      TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                     ),
                     Text(
                       "${savedSearch.length} Saved Preference Available",
@@ -125,7 +124,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
                         Text(
                           "Add",
                           style:
-                              TextStyle(color: Color.fromRGBO(123, 97, 255, 1)),
+                          TextStyle(color: Color.fromRGBO(123, 97, 255, 1)),
                         ),
                         Image.asset("assets/images/women-fill.png")
                       ],
@@ -157,7 +156,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
                             children: [
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 14, top: 17),
+                                const EdgeInsets.only(left: 14, top: 17),
                                 child: Container(
                                   height: 100,
                                   width: 95,
@@ -167,10 +166,10 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
                                   ),
                                   child: Center(
                                       child: Image.asset(
-                                    "assets/images/Folder.png",
-                                    height: 42,
-                                    width: 42,
-                                  )),
+                                        "assets/images/Folder.png",
+                                        height: 42,
+                                        width: 42,
+                                      )),
                                 ),
                               ),
                               SizedBox(
@@ -186,7 +185,10 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  Text("0 Profiles"),
+                                  Text(
+                                    "${filterdDataList.length} Profiles",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                   SizedBox(
                                     height: 8,
                                   ),
@@ -207,11 +209,11 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
                                             color: Color.fromRGBO(
                                                 123, 97, 255, 0.2),
                                             borderRadius:
-                                                BorderRadius.circular(10),
+                                            BorderRadius.circular(10),
                                           ),
                                           child: Center(
                                             child: Text(
-                                              "EdIt",
+                                              "Edit",
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   fontWeight: FontWeight.w600,
@@ -226,7 +228,15 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ViewProfile(
+                                              viewprofieData:  filterdDataList,
+                                                  ),
+                                            ),
+                                          );
                                         },
                                         child: Container(
                                           height: 35,
@@ -237,10 +247,10 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
                                                       123, 97, 255, 1),
                                                   width: 1),
                                               borderRadius:
-                                                  BorderRadius.circular(10)),
+                                              BorderRadius.circular(10)),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
+                                            MainAxisAlignment.spaceAround,
                                             children: [
                                               Text(
                                                 "View Profiles",
@@ -254,7 +264,6 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
                                       )
                                     ],
                                   ),
-                             //     ...filterdDataList.map((item) => Text(' - $item')),
                                 ],
                               )
                             ],
