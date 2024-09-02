@@ -50,10 +50,10 @@ class _ThreeSigninScreenState extends State<ThreeSigninScreen> {
     _userModel = (await ApiService().getUsers())!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
-
+  bool loginSuccess = true;
   void login(String url) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.clear();
+    await preferences.setBool('isLoggedIn', true);
 
     var headers = {
       'Context-Type': 'application/json',

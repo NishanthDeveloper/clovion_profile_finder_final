@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:profile_finder/My%20work/add_displayig_widget.dart';
 import 'package:profile_finder/My%20work/test.dart';
 import 'package:profile_finder/My%20work/user_card_widget.dart';
 import 'package:profile_finder/routes/app_routes.dart';
-
 import 'presentation/1ProfileFinder/MatchingList/MatchingListNavigationFourtyEightScreen.dart';
-
-// import 'package:flutter/dart:ui';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  runApp(const MyApp());
+
+  // Check login status
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 ThemeData _baseTheme = ThemeData(
@@ -23,7 +26,9 @@ ThemeData _baseTheme = ThemeData(
 );
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
+
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +37,11 @@ class MyApp extends StatelessWidget {
       title: 'marriyoo',
       debugShowCheckedModeBanner: false,
 
-    initialRoute: AppRoutes.oneSplashScreen,
-   routes: AppRoutes.routes,
-  //    home:  MatchingListNavigationFourtyEightScreen(),
+      initialRoute: isLoggedIn ? AppRoutes. FourteenScreenBottomNavigationscr : AppRoutes.oneSplashScreen,
+      routes: AppRoutes.routes,
     );
   }
 }
-
 
 
 

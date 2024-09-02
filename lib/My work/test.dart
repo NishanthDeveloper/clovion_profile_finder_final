@@ -53,7 +53,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       setState(() {
-        relatedList = data;
+        relatedList = data.reversed.toList();
       });
     } else {
       throw Exception('Failed to load related list');
@@ -70,7 +70,7 @@ class _MatchingListPageState extends State<MatchingListPage> {
         print("Status Code Ok");
         final data = json.decode(response.body);
         setState(() {
-          favoriteUsers = (data[userId] as List);
+          favoriteUsers = (data[userId] as List).reversed.toList();
         });
       } else {
         print('Failed to load favorites: ${response.statusCode}');

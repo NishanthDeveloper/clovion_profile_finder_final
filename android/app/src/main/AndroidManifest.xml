@@ -4,6 +4,7 @@
     <application
         android:label="Profile Finder"
         android:name="${applicationName}"
+        android:allowBackup="false"
         android:icon="@mipmap/launcher_icon">
 
         <activity

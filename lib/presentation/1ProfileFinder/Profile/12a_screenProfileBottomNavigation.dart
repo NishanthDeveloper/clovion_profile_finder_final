@@ -18,6 +18,7 @@ import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/T
 import 'package:profile_finder/presentation/1ProfileFinder/Profile%20Manager/AllProfileManagerScreen.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Profile/12screenProfile_complete.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/chat/chat_Home_screen.dart';
+import 'package:profile_finder/routes/app_routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utils/color_constant.dart';
@@ -627,11 +628,14 @@ class _ProfileBottomNavigationScreenState
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        "Logout",
-                        style: TextStyle(color: Colors.white),
+                    GestureDetector(
+                     onTap: () => _showLogoutDialog(context),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "Logout",
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                     const Padding(
@@ -703,5 +707,44 @@ class _ProfileBottomNavigationScreenState
         ],
       ),
     );
+  }
+  Future<void> _showLogoutDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // User must tap a button to dismiss the dialog
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Are you sure you want to log out?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: Text('Logout'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+                logout(context); // Proceed with the logout
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Future<void> logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('isLoggedIn'); // Clear the isLoggedIn flag
+
+    Navigator.pushReplacementNamed(context, AppRoutes.threeSigninScreen);
   }
 }
