@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:country_picker/country_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,20 +26,79 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
-List<String> data = [
-  "Music",
-  "Travel",
-  "Gaming",
-  "Reading",
-  "Photography",
-  "Writing",
-  "Painting or Drawing",
-  "Singing",
-  "Dancer",
-  "Movies",
-  "Swimming",
-  "Artist",
-];
+// This variable will store the final selection
+String selectedmultipleInterset = '';
+// This map stores the selected state of each option
+Map<String, bool> multipleInterset = {
+  "Music": false,
+  "Travel": false,
+  "Gaming": false,
+  "Reading": false,
+  "Photography": false,
+  "Writing": false,
+  "Painting or Drawing": false,
+  "Singing": false,
+  "Dancer": false,
+  "Movies": false,
+  "Swimming": false,
+  "Artist": false,
+};
+
+// This variable will store the final selection
+String selectedmultipleNotInterset = '';
+// This map stores the selected state of each option
+Map<String, bool> multipleNotInterset = {
+  "Music": false,
+  "Travel": false,
+  "Gaming": false,
+  "Reading": false,
+  "Photography": false,
+  "Writing": false,
+  "Painting or Drawing": false,
+  "Singing": false,
+  "Dancer": false,
+  "Movies": false,
+  "Swimming": false,
+  "Artist": false,
+};
+// This variable will store the final selection
+String selectedComplexion = '';
+// This map stores the selected state of each option
+Map<String, bool> multipleComplexion = {
+  "Dark": false,
+  "Medium": false,
+  "Moderate Fair": false,
+  "Fair": false,
+  "Very Fair": false,
+};
+// This variable will store the final selection
+String selectedFoodtype = '';
+// This map stores the selected state of each option
+Map<String, bool> multipleFoodtype = {
+  "Sweet": false,
+  "Umami": false,
+  "Bitter": false,
+  "Sour": false,
+  "Spicy": false,
+  "Savory": false,
+  "Salty": false,
+};
+String selectedDietPlan = '';
+// This map stores the selected state of each option
+Map<String, bool> multipleDietPlan = {
+  "Self Cooking": false,
+  "Made": false,
+  "Spouse or Others": false,
+  "Order from Outside": false,
+  "Buy frozen & bakeries": false,
+};
+
+String selectedCarring = '';
+// This map stores the selected state of each option
+Map<String, bool> multipleCarring = {
+  "Yes": false,
+  "No": false,
+};
 
 String interest = '';
 String nonInterest = '';
@@ -53,15 +113,18 @@ String criminalAffences = '';
 String orphan = '';
 String disabled = '';
 
+
+  String selectedCountry = "Country ";
+
 List<String> Dbditems = ["Yes", "No"];
 
-List<String> data_complexion = [
-  "Dark",
-  "Medium",
-  "Moderate Fair",
-  "Fair",
-  "Very Fair",
-];
+// List<String> data_complexion = [
+//   "Dark",
+//   "Medium",
+//   "Moderate Fair",
+//   "Fair",
+//   "Very Fair",
+// ];
 
 List<String> data_foodTaste = [
   "Sweet",
@@ -171,6 +234,8 @@ List<String> courseSchool = [
 ];
 
 List<String> salaryRange = [
+  "less than 2",
+  "Less than 5 lakhs",
   "More than 5 lakhs",
   "More than 10 lakhs",
   "More than 15 lakhs",
@@ -179,10 +244,8 @@ List<String> salaryRange = [
 ];
 
 class ThirteenScreenPrimaryDetails extends StatefulWidget {
-  const ThirteenScreenPrimaryDetails({super.key, required this.changePage});
-
-  final Function changePage;
-  
+  Function? changePage;
+  ThirteenScreenPrimaryDetails({super.key, this.changePage});
 
   @override
   State<ThirteenScreenPrimaryDetails> createState() =>
@@ -191,6 +254,83 @@ class ThirteenScreenPrimaryDetails extends StatefulWidget {
 
 class _ThirteenScreenPrimaryDetailsState
     extends State<ThirteenScreenPrimaryDetails> {
+  void updateMultipleInterset() {
+    // Collect the selected options into a list
+    List<String> selected = multipleInterset.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
+    // Join the selected options with a comma
+    selectedmultipleInterset = selected.join(', ');
+    print('Selected Interests: $selected');
+  }
+
+  // Not Interset
+  void updateMultipleNotInterset() {
+    // Collect the selected options into a list
+    List<String> selected = multipleNotInterset.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
+
+    print('Selected Interests: $selected');
+    // Join the selected options with a comma
+    selectedmultipleNotInterset = selected.join(', ');
+  }
+
+  // Complexion
+  void updateComplexion() {
+    // Collect the selected options into a list
+    List<String> selected = multipleComplexion.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
+
+    print('Selected Interests: $selected');
+    selectedComplexion= selected.join(', ');
+
+  }
+
+  // favFood taste
+  void updateFoodtase() {
+    // Collect the selected options into a list
+    List<String> selected = multipleFoodtype.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
+
+    print('Selected Interests: $selected');
+    selectedFoodtype= selected.join(', ');
+
+
+  }
+
+  // Diet plan
+  void updateDietPlan() {
+    // Collect the selected options into a list
+    List<String> selected = multipleDietPlan.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
+
+    print('Selected Interests: $selected');
+    selectedDietPlan = selected.join(', ');
+
+  }
+
+  // Carring
+  void updateCarring() {
+    // Collect the selected options into a list
+    List<String> selected = multipleCarring.entries
+        .where((entry) => entry.value)
+        .map((entry) => entry.key)
+        .toList();
+
+    print('Selected Interests: $selected');
+    selectedCarring = selected.join(', ');
+
+  }
+
   saveToSharedPrefferences(String nameOfID, String valueToSave) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
@@ -217,7 +357,7 @@ class _ThirteenScreenPrimaryDetailsState
 
   final int _value = 0;
   int _valueInterest = 0;
-  final int _valueNonInterest = 0;
+  int _valueNonInterest = 0;
   final int _valueComplexion = 0;
 
   int _valueFoodTaste = 0;
@@ -240,6 +380,7 @@ class _ThirteenScreenPrimaryDetailsState
   late String email;
   late String phone_number;
   late String dob;
+  
 
   List<File> selectedImages = [];
   final picker = ImagePicker();
@@ -370,112 +511,6 @@ class _ThirteenScreenPrimaryDetailsState
     final url =
         Uri.parse("http://${ApiService.ipAddress}/primarydetails/$uidUser");
     final request = http.MultipartRequest('POST', url);
-    // final file1 = File("/document/msf:1000000042");
-    // final file1 = filee;
-
-    // final file2 = filee;
-    // final file3 = filee;
-    // final file4 = filee;
-    // final file5 = filee;
-
-    // request.fields['marital_status'] = 'maritalStatusPrimaryDetails';
-    // request.fields['physical_mental_status'] = 'physical_mental_status';
-
-    // request.fields['primary_email'] = 'emailPrimaryDetails@gmail.com';
-
-    // request.fields['primary_phone_number'] ='phoneNumberPrimaryDetails';
-
-    // // request.fields['dob'] = 'dateofBirthPrimary';
-
-    // request.fields['why_marry'] = 'whyShouldMarry';
-
-    // request.fields['behind_decision'] = 'exactReason';
-
-    // request.fields['education_school'] = 'school';
-
-    // request.fields['education_year'] = 'schoolYearOfCompletion';
-
-    // request.fields['education_course'] = 'schoolCourse';
-
-    // request.fields['education_major'] = 'schoolMajor';
-
-    // request.fields['are_you_working_now'] = 'areYouWorkingNow';
-
-    // request.fields['company_name'] = 'companyName';
-
-    // request.fields['position'] = 'Position';
-    // request.fields['profession'] =
-    //     'schoolYearOfCompletion';
-
-    // request.fields['salary_range'] =
-    //    'salaryRange';
-
-    // request.fields['your_intrest'] =
-    //     'yourInterest';
-    // // request.fields['your_intrest'] =
-    // //     preferences.getString('schoolYearOfCompletion').toString();
-    // // request.fields['your_intrest'] =
-    // //     preferences.getString('schoolYearOfCompletion').toString();
-
-    // request.fields['non_intrest'] =
-    //     'nonInterest';
-    // // request.fields['non_intrest'] =
-    // //     preferences.getString('schoolYearOfCompletion').toString();
-
-    // request.fields['complexion'] =
-    //     'complexion';
-    // request.fields['food_taste'] =
-    //     'foodTasteVegOrNon';
-    // // request.fields['food_taste'] =
-    // //     preferences.getString('schoolYearOfCompletion').toString();
-
-    // request.fields['daily_diet_plan'] =
-    //     'dietPlan';
-    // request.fields['carriying_after_marriage'] =
-    //    'carryingAfterMarriage';
-    // request.fields['tobacco'] = 'useTobacco';
-    // request.fields['alcohol'] =
-    //     'consumeAlcohol';
-    // request.fields['drugs'] = 'useDrugs';
-    // request.fields['criminal_offence'] =
-    //    'criminalOffenses';
-    // request.fields['primary_country'] =
-    //    'schoolYearOfCompletion';
-
-    // request.files
-    //     .add(await http.MultipartFile.fromPath('selfie', headsizeFile!.path));
-
-    // request.files.add(await http.MultipartFile.fromPath(
-    //     'full_size_image', fullsizeFile!.path));
-
-    // request.files.add(await http.MultipartFile.fromPath(
-    //     'family_image', familyGroupPhotoFile!.path));
-
-    // request.files
-    //     .add(await http.MultipartFile.fromPath('gallery', filee!.path));
-//
-//
-//
-
-    // for (var i = 0; i < selectedImages.length; i++) {
-    //   request.files.add(
-    //       await http.MultipartFile.fromPath('gallery', selectedImages[i].path));
-    // }
-
-    // request.files.add(
-    //     await http.MultipartFile.fromPath('horoscope', horoscopeFile!.path));
-
-    // request.fields['profile_tag'] =
-    //     'profileTagline';
-    // request.fields['treet_mypartner'] =
-    //     'treatMyPartner';
-    // request.fields['treet_their_side'] =
-    //    'treatFromTheirSide';
-    // request.fields['orphan'] ='orphan';
-    // request.fields['disable'] ='disable';
-    // request.fields['whichorgan'] = 'disable';
-
-    // 38
 
     request.fields['marital_status'] =
         preferences.getString('maritalStatusPrimaryDetails').toString();
@@ -483,6 +518,8 @@ class _ThirteenScreenPrimaryDetailsState
         preferences.getString('physical_mental_status').toString();
     request.fields['primary_email'] =
         preferences.getString('emailPrimaryDetails').toString();
+        request.fields['primary_country'] =
+        selectedCountry.toString();
     request.fields['primary_phone_number'] =
         preferences.getString('phoneNumberPrimaryDetails').toString();
 
@@ -507,44 +544,37 @@ class _ThirteenScreenPrimaryDetailsState
         preferences.getString("areYouWorkingNow").toString();
     request.fields['company_name'] =
         preferences.getString("companyName").toString();
-    request.fields['position'] = preferences.getString("Position").toString();
+    request.fields['position'] = preferences.getString("position").toString();
     request.fields['profession'] =
-        preferences.getString("schoolYearOfCompletion").toString();
+        preferences.getString("profession").toString();
 
     request.fields['salary_range'] =
         preferences.getString("salaryRange").toString();
 
-    request.fields['your_intrest'] =
-        preferences.getString("yourInterest").toString();
+    request.fields['your_intrest'] = selectedmultipleInterset;
     // request.fields['your_intrest'] =
     //     preferences.getString("schoolYearOfCompletion").toString();
     // request.fields['your_intrest'] =
     //     preferences.getString("schoolYearOfCompletion").toString();
 
-    request.fields['non_intrest'] =
-        preferences.getString("nonInterest").toString();
+    request.fields['non_intrest'] = selectedmultipleNotInterset;
     // request.fields['non_intrest'] =
     //     preferences.getString("schoolYearOfCompletion").toString();
 
-    request.fields['complexion'] =
-        preferences.getString("complexion").toString();
-    request.fields['food_taste'] =
-        preferences.getString("foodTasteVegOrNon").toString();
+    request.fields['complexion'] = selectedComplexion;
+    request.fields['food_taste'] = selectedFoodtype;
     // request.fields['food_taste'] =
     //     preferences.getString("schoolYearOfCompletion").toString();
 
-    request.fields['daily_diet_plan'] =
-        preferences.getString("dietPlan").toString();
-    request.fields['carriying_after_marriage'] =
-        preferences.getString("carryingAfterMarriage").toString();
-    request.fields['tobacco'] = preferences.getString("useTobacco").toString();
+    request.fields['daily_diet_plan'] = selectedDietPlan;
+    request.fields['carriying_after_marriage'] = selectedCarring;
+    request.fields['tobacco'] = selectedCarring;
     request.fields['alcohol'] =
-        preferences.getString("consumeAlcohol").toString();
-    request.fields['drugs'] = preferences.getString("useDrugs").toString();
+       selectedCarring;
+    request.fields['drugs'] = selectedCarring;
     request.fields['criminal_offence'] =
-        preferences.getString("criminalOffenses").toString();
-    request.fields['primary_country'] =
-        preferences.getString("schoolYearOfCompletion").toString();
+        selectedCarring;
+    
 
     request.files
         .add(await http.MultipartFile.fromPath('selfie', headsizeFile!.path));
@@ -577,7 +607,7 @@ class _ThirteenScreenPrimaryDetailsState
         preferences.getString("treatFromTheirSide").toString();
     request.fields['orphan'] = preferences.getString("orphan").toString();
     request.fields['disable'] = preferences.getString("disable").toString();
-    request.fields['whichorgan'] = preferences.getString("disable").toString();
+    request.fields['whichorgan'] = preferences.getString("whichorgan").toString();
 
     for (var element in request.fields.entries) {
       print('${element.key} : ${element.value}');
@@ -589,18 +619,24 @@ class _ThirteenScreenPrimaryDetailsState
 // print(request.fields.entries);
 // print(request.files);
     try {
+      print(uidUser);
       final send = await request.send();
       final response = await http.Response.fromStream(send);
       print(response.statusCode);
       print(response.body);
-      print("length: ${selectedImages.length}");
+     var datass = response.body;
+      print("length: ${datass.length}");
+      print("length: ${datass}");
+
       if (response.statusCode == 200) {
         // Navigator.pushNamed(context, AppRoutes.FourteenScreenscr);
+        Navigator.pushNamed(context, AppRoutes.TwelveFamilyDetailsScreen);
         Fluttertoast.showToast(
           msg: "Primary Deatails Uploaded Successfully...!",
           backgroundColor: ColorConstant.deepPurpleA200,
           textColor: Colors.white,
           toastLength: Toast.LENGTH_SHORT,
+          
         );
 
         // widget.changePage;
@@ -719,6 +755,9 @@ class _ThirteenScreenPrimaryDetailsState
 
   @override
   Widget build(BuildContext context) {
+    var heeight = MediaQuery.of(context).size.height;
+    var wiidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body:
           // isLoading == true
@@ -736,7 +775,7 @@ class _ThirteenScreenPrimaryDetailsState
                 children: const [
                   Center(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 15),
+                      padding: EdgeInsets.only(top: 10),
                       child: Text(
                         'Primary Details',
                         // textAlign: TextAlign.center,
@@ -750,7 +789,7 @@ class _ThirteenScreenPrimaryDetailsState
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -758,13 +797,13 @@ class _ThirteenScreenPrimaryDetailsState
                     //
                     //
 
-                    WidgetTitleAndTextfield(
-                      textFieldHint: 'Enter',
-                      textFieldTitle: "Name*",
-                      onChanged: (newValue) {
-                        saveToSharedPrefferences("nameOfBrideGroom", newValue);
-                      },
-                    ),
+                    // WidgetTitleAndTextfield(
+                    //   textFieldHint: 'Enter',
+                    //   textFieldTitle: "Name*",
+                    //   onChanged: (newValue) {
+                    //     saveToSharedPrefferences("nameOfBrideGroom", newValue);
+                    //   },
+                    // ),
 
                     WidgetTitleAndDropdownSharedPref(
                       DdbTitle: "Marital Status*",
@@ -790,6 +829,61 @@ class _ThirteenScreenPrimaryDetailsState
                         saveToSharedPrefferences(
                             "emailPrimaryDetails", newValue);
                       },
+                    ),
+                       Text(
+                      "Country",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                      InkWell(
+                        onTap: () {
+                          showCountryPicker(
+                              context: context,
+                              onSelect: (Country country) {
+                                print('Select country: ${country.name}');
+                                setState(() {
+                                  selectedCountry = country.name;
+                                });
+                              },
+                              moveAlongWithKeyboard: false,
+                              // Optional. Sets the theme for the country list picker.
+                              countryListTheme: CountryListThemeData(
+                                // Optional. Sets the border radius for the bottomsheet.
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(40.0),
+                                  topRight: Radius.circular(40.0),
+                                ),
+                                inputDecoration: InputDecoration(
+                                  labelText: 'Search',
+                                  hintText: 'Start typing to search',
+                                  prefixIcon: const Icon(Icons.search),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: const Color(0xFF8C98A8)
+                                          .withOpacity(0.2),
+                                    ),
+                                  ),
+                                ),
+                              ));
+                        },
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                              border:
+                                  Border.all(width: 0, color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: selectedCountry.isEmpty
+                                ? Text("Country")
+                                : Text(selectedCountry),
+                          ),
+                        )),
+                         const SizedBox(
+                      height: 10,
                     ),
 
                     Text(
@@ -1023,19 +1117,32 @@ class _ThirteenScreenPrimaryDetailsState
                     //   minuteInterval: 1,
                     //   mode: CupertinoDatePickerMode.date,
                     // )),
-
-                    WidgetTitleAndDropdownSharedPref(
-                      DdbTitle: "Course*",
-                      DdbHint: _users.educationCourse ?? "Select",
-                      DbdItems: courseSchool,
-                      sharePrefId: 'schoolCourse',
+                    WidgetTitleAndTextfield(
+                      textFieldHint: _users.educationCourse ?? "Enter",
+                      textFieldTitle: "Course*",
+                      onChanged: (newValue) async {
+                        saveToSharedPrefferences("schoolCourse", newValue);
+                      },
                     ),
-                    WidgetTitleAndDropdownSharedPref(
-                      DdbTitle: "Major*",
-                      DdbHint: _users.educationMajor ?? "Select",
-                      DbdItems: courseSchool,
-                      sharePrefId: 'schoolMajor',
+                    WidgetTitleAndTextfield(
+                      textFieldHint: _users.educationMajor ?? "Enter",
+                      textFieldTitle: "Major*",
+                      onChanged: (newValue) async {
+                        saveToSharedPrefferences("schoolMajor", newValue);
+                      },
                     ),
+                    // WidgetTitleAndDropdownSharedPref(
+                    //   DdbTitle: "Course*",
+                    //   DdbHint: _users.educationCourse ?? "Select",
+                    //   DbdItems: courseSchool,
+                    //   sharePrefId: 'schoolCourse',
+                    // ),
+                    // WidgetTitleAndDropdownSharedPref(
+                    //   DdbTitle: "Major*",
+                    //   DdbHint: _users.educationMajor ?? "Select",
+                    //   DbdItems: courseSchool,
+                    //   sharePrefId: 'schoolMajor',
+                    // ),
 
                     Padding(
                       padding: const EdgeInsets.only(top: 15, bottom: 15),
@@ -1131,6 +1238,13 @@ class _ThirteenScreenPrimaryDetailsState
                         saveToSharedPrefferences("position", newValue);
                       },
                     ),
+                     WidgetTitleAndTextfield(
+                      textFieldHint: 'Enter',
+                      textFieldTitle: "profession*",
+                      onChanged: (newValue) {
+                        saveToSharedPrefferences("profession", newValue);
+                      },
+                    ),
 
                     WidgetTitleAndDropdown(
                       DdbTitle: "Salary Range (Yearly)*",
@@ -1159,47 +1273,301 @@ class _ThirteenScreenPrimaryDetailsState
                       ),
                     ),
 
+// Multi Selction Part
                     D10HCustomClSizedBoxWidget(),
-                    CustomClChoiceChip(
-                      valuePrimary: _valueInterest,
-                      dataInput: data,
-                      subTitle: "Choose your closest one from the List.",
-                      title: "Your Interest?",
-                      sharedPreffID: 'yourInterest',
-                      onselected: () {
-                        setState(() {
-                          interest = data[_valueInterest];
-                        });
-                      },
+                    Text(
+                      'Your Interest?',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                     ),
                     D10HCustomClSizedBoxWidget(),
-                    CustomClChoiceChip(
-                      valuePrimary: _valueNonInterest,
-                      dataInput: data,
-                      subTitle: 'Choose your closest one from the List.',
-                      title: 'Not Interest?',
-                      sharedPreffID: 'nonInterest',
-                      onselected: () {
-                        setState(() {
-                          nonInterest = data[_valueNonInterest];
-                        });
-                      },
+                    Text(
+                      'Choose your closest one from the List',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
                     ),
                     D10HCustomClSizedBoxWidget(),
-                    CustomClChoiceChip(
-                      valuePrimary: _valueComplexion,
-                      dataInput: data_complexion,
-                      subTitle: 'Choose your closest one from the List.',
-                      title: 'Complexion?',
-                      sharedPreffID: 'complexion',
-                      onselected: () {
-                        setState(() {
-                          complexion = data_complexion[_valueComplexion];
-                        });
-                      },
-                    ),
                     D10HCustomClSizedBoxWidget(),
 
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Music',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                        ),
+                        MultiWidget(
+                          textdata: 'Travel',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                        ),
+                        MultiWidget(
+                          textdata: 'Gaming',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Reading',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                        ),
+                        MultiWidget(
+                          textdata: 'Photography',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                          widthh: 130,
+                        ),
+                        MultiWidget(
+                          textdata: 'Writing',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Painting or Drawing',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                          widthh: 170,
+                        ),
+                        MultiWidget(
+                          textdata: 'Singing',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Dancer',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                        ),
+                        MultiWidget(
+                          textdata: 'Movies',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                        ),
+                        MultiWidget(
+                          textdata: 'Artist',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                        ),
+                      ],
+                    ),
+
+                    // CustomClChoiceChip(
+                    //   valuePrimary: _valueInterest,
+                    //   dataInput: data,
+                    //   subTitle: "Choose your closest one from the List.",
+                    //   title: "Your Interest?",
+                    //   sharedPreffID: 'yourInterest',
+                    //   onselected: () {
+                    //     setState(() {
+                    //       interest = data[_valueInterest];
+                    //     });
+                    //   },
+                    // ),
+
+                    D10HCustomClSizedBoxWidget(),
+                    // CustomClChoiceChip(
+                    //   valuePrimary: _valueNonInterest,
+                    //   // dataInput: data,
+                    //   subTitle: 'Choose your closest one from the List.',
+                    //   title: 'Not Interest?',
+                    //   sharedPreffID: 'nonInterest',
+                    //   onselected: () {
+                    //     setState(() {
+                    //       // nonInterest = data[_valueNonInterest];
+                    //     });
+                    //   },
+                    // ),
+
+// Multi Selction Part
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    Text(
+                      'Not Interest?',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                    ),
+                    D10HCustomClSizedBoxWidget(),
+                    Text(
+                      'Choose your closest one from the List',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                    ),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Music',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                        ),
+                        MultiWidget(
+                          textdata: 'Travel',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                        ),
+                        MultiWidget(
+                          textdata: 'Gaming',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Reading',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                        ),
+                        MultiWidget(
+                          textdata: 'Photography',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                          widthh: 130,
+                        ),
+                        MultiWidget(
+                          textdata: 'Writing',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Painting or Drawing',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                          widthh: 170,
+                        ),
+                        MultiWidget(
+                          textdata: 'Singing',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Dancer',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                        ),
+                        MultiWidget(
+                          textdata: 'Movies',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                        ),
+                        MultiWidget(
+                          textdata: 'Artist',
+                          multipleInterset: multipleNotInterset,
+                          updateMultipleInterset: updateMultipleNotInterset,
+                        ),
+                      ],
+                    ),
+
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    Text(
+                      'Complexion?',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                    ),
+                    D10HCustomClSizedBoxWidget(),
+                    Text(
+                      'Choose your closest one from the List',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                    ),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Dark',
+                          multipleInterset: multipleComplexion,
+                          updateMultipleInterset: updateComplexion,
+                        ),
+                        MultiWidget(
+                          textdata: 'Very Fair',
+                          multipleInterset: multipleComplexion,
+                          updateMultipleInterset: updateComplexion,
+                          widthh: 130,
+                        ),
+                        MultiWidget(
+                          textdata: 'Fair',
+                          multipleInterset: multipleComplexion,
+                          updateMultipleInterset: updateComplexion,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Moderate Fair',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                          widthh: 130,
+                        ),
+                        MultiWidget(
+                          textdata: 'Medium',
+                          multipleInterset: multipleInterset,
+                          updateMultipleInterset: updateMultipleInterset,
+                        ),
+                      ],
+                    ),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
                     Text(
                       "Food Taste?",
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -1210,7 +1578,6 @@ class _ThirteenScreenPrimaryDetailsState
 
                     Text(
                         "What is the opinion of your daily diet plan after marriage."),
-
 
                     FoodTasteRadioWidget(),
                     // Row(
@@ -1350,93 +1717,308 @@ class _ThirteenScreenPrimaryDetailsState
                     D10HCustomClSizedBoxWidget(
                       height: 50,
                     ),
-                    CustomClChoiceChip(
-                      valuePrimary: _valueFoodTaste,
-                      dataInput: data_foodTaste,
-                      // subTitle: '',
-                      // title: '',
-                      sharedPreffID: "foodTasteType",
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Sweet',
+                          multipleInterset: multipleFoodtype,
+                          updateMultipleInterset: updateFoodtase,
+                        ),
+                        MultiWidget(
+                          textdata: 'Bitter',
+                          multipleInterset: multipleFoodtype,
+                          updateMultipleInterset: updateFoodtase,
+                          widthh: 130,
+                        ),
+                        MultiWidget(
+                          textdata: 'Umami',
+                          multipleInterset: multipleFoodtype,
+                          updateMultipleInterset: updateFoodtase,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Sour',
+                          multipleInterset: multipleFoodtype,
+                          updateMultipleInterset: updateFoodtase,
+                          widthh: 130,
+                        ),
+                        MultiWidget(
+                          textdata: 'Spicy',
+                          multipleInterset: multipleFoodtype,
+                          updateMultipleInterset: updateFoodtase,
+                        ),
+                        MultiWidget(
+                          textdata: 'Savory',
+                          multipleInterset: multipleFoodtype,
+                          updateMultipleInterset: updateFoodtase,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        MultiWidget(
+                          textdata: 'Salty',
+                          multipleInterset: multipleFoodtype,
+                          updateMultipleInterset: updateFoodtase,
+                          widthh: 130,
+                        ),
+                      ],
                     ),
                     //
                     D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
                     //
-                    CustomClChoiceChip(
-                      sharedPreffID: "dietPlan",
-                      valuePrimary: _valueFoodmaking,
-                      dataInput: data_diet_plan,
-                      // subTitle: '',
-                      title:
-                          "What is the opinion of your daily diet plan after marriage?",
+                    // CustomClChoiceChip(
+                    //   sharedPreffID: "dietPlan",
+                    //   valuePrimary: _valueFoodmaking,
+                    //   dataInput: data_diet_plan,
+                    //   // subTitle: '',
+                    //   title:
+                    //       "What is the opinion of your daily diet plan after marriage?",
+                    // ),
+
+                    Text(
+                      "What is the opinion of your daily diet plan after marriage?",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    Row(
+                      children: [
+                        MultiWidget(
+                          textdata: 'Self Cooking',
+                          multipleInterset: multipleDietPlan,
+                          updateMultipleInterset: updateDietPlan,
+                          widthh: 106,
+                        ),
+                        MultiWidget(
+                          textdata: 'Self Made',
+                          multipleInterset: multipleDietPlan,
+                          updateMultipleInterset: updateDietPlan,
+                          widthh: 90,
+                        ),
+                        MultiWidget(
+                          textdata: 'Spouse or Others',
+                          multipleInterset: multipleDietPlan,
+                          updateMultipleInterset: updateDietPlan,
+                          widthh: 140,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MultiWidget(
+                          textdata: 'Order from Outside',
+                          multipleInterset: multipleDietPlan,
+                          updateMultipleInterset: updateDietPlan,
+                          widthh: 160,
+                        ),
+                        MultiWidget(
+                          textdata: 'Buy frozen & bakeries',
+                          multipleInterset: multipleDietPlan,
+                          updateMultipleInterset: updateFoodtase,
+                          widthh: 170,
+                        ),
+                      ],
                     ),
                     //
-                    D10HCustomClSizedBoxWidget(
-                      height: 5,
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    //
+
+                    Text(
+                      "Are you willing to carrying after marriage?",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),
-                    //
-                    CustomClChoiceChip(
-                      sharedPreffID: "carryingAfterMarriage",
-                      valuePrimary: _valueCaring,
-                      dataInput: data_carrying,
-                      // subTitle: '',
-                      title: "Are you willing to carrying after marriage?",
-                    ),
-                    //
-                    //
-                    D10HCustomClSizedBoxWidget(
-                      height: 5,
-                    ),
-                    //
-                    CustomClChoiceChip(
-                      valuePrimary: _valuetobacco,
-                      dataInput: data_carrying,
-                      // subTitle: '',
-                      title: "Are you use tobacco products?",
-                      sharedPreffID: "useTobacco",
-                    ),
-                    //
-                    D10HCustomClSizedBoxWidget(
-                      height: 5,
-                    ),
-                    //
-                    CustomClChoiceChip(
-                      valuePrimary: _valueAlcohol,
-                      dataInput: data_carrying,
-                      // subTitle: '',
-                      title: "Are you consume alcohol products?",
-                      sharedPreffID: "consumeAlcohol",
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    Row(
+                      children: [
+                        MultiWidget(
+                          textdata: 'Yes',
+                          multipleInterset: multipleCarring,
+                          updateMultipleInterset: updateCarring,
+                          widthh: 106,
+                        ),
+                        MultiWidget(
+                          textdata: 'No',
+                          multipleInterset: multipleCarring,
+                          updateMultipleInterset: updateCarring,
+                          widthh: 80,
+                        ),
+                      ],
                     ),
                     //
                     //
-                    D10HCustomClSizedBoxWidget(
-                      height: 5,
+
+                    //
+
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    //
+
+                    Text(
+                      "Are you use tobacco products?",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    Row(
+                      children: [
+                        MultiWidget(
+                          textdata: 'Yes',
+                          multipleInterset: multipleCarring,
+                          updateMultipleInterset: updateCarring,
+                          widthh: 106,
+                        ),
+                        MultiWidget(
+                          textdata: 'No',
+                          multipleInterset: multipleCarring,
+                          updateMultipleInterset: updateCarring,
+                          widthh: 80,
+                        ),
+                      ],
                     ),
                     //
-                    CustomClChoiceChip(
-                      valuePrimary: _valueDrugs,
-                      dataInput: data_carrying,
-                      // subTitle: '',
-                      title: "Are you use Illegal drugs ever in your life?",
-                      sharedPreffID: "useDrugs",
+
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    //
+
+                    Text(
+                      "Are you consume alcohol products?",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    Row(
+                      children: [
+                        MultiWidget(
+                          textdata: 'Yes',
+                          multipleInterset: multipleCarring,
+                          updateMultipleInterset: updateCarring,
+                          widthh: 106,
+                        ),
+                        MultiWidget(
+                          textdata: 'No',
+                          multipleInterset: multipleCarring,
+                          updateMultipleInterset: updateCarring,
+                          widthh: 80,
+                        ),
+                      ],
                     ),
                     //
                     //
-                    D10HCustomClSizedBoxWidget(
-                      height: 5,
-                    ),
+                    // D10HCustomClSizedBoxWidget(
+                    //   height: 5,
+                    // ),
+                    // //
+                    // CustomClChoiceChip(
+                    //   valuePrimary: _valueDrugs,
+                    //   dataInput: data_carrying,
+                    //   // subTitle: '',
+                    //   title: "Are you use Illegal drugs ever in your life?",
+                    //   sharedPreffID: "useDrugs",
+                    // ),
+
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
                     //
-                    CustomClChoiceChip(
-                      valuePrimary: _valueCriminal,
-                      dataInput: data_carrying,
-                      // subTitle: '',
-                      title:
-                          "Do you have any Criminal offences for allegations in any country ever in your life?",
-                      sharedPreffID: "criminalOffenses",
+
+                    Text(
+                      "Are you use Illegal drugs ever in your life?",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),
-                    //
-                    //
-                    D10HCustomClSizedBoxWidget(
-                      height: 5,
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    Row(
+                      children: [
+                        MultiWidget(
+                          textdata: 'Yes',
+                          multipleInterset: multipleCarring,
+                          updateMultipleInterset: updateCarring,
+                          widthh: 106,
+                        ),
+                        MultiWidget(
+                          textdata: 'No',
+                          multipleInterset: multipleCarring,
+                          updateMultipleInterset: updateCarring,
+                          widthh: 80,
+                        ),
+                      ],
                     ),
+                    // //
+                    // //
+                    // D10HCustomClSizedBoxWidget(
+                    //   height: 5,
+                    // ),
+                    // //
+                    // CustomClChoiceChip(
+                    //   valuePrimary: _valueCriminal,
+                    //   dataInput: data_carrying,
+                    //   // subTitle: '',
+                    //   title:
+                    //       "Do you have any Criminal offences for allegations in any country ever in your life?",
+                    //   sharedPreffID: "criminalOffenses",
+                    // ),
+
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    //
+
+                    Text(
+                      "Do you have any Criminal offences for allegations in any country ever in your life?",
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    Row(
+                      children: [
+                        MultiWidget(
+                          textdata: 'Yes',
+                          multipleInterset: multipleCarring,
+                          updateMultipleInterset: updateCarring,
+                          widthh: 106,
+                        ),
+                        MultiWidget(
+                          textdata: 'No',
+                          multipleInterset: multipleCarring,
+                          updateMultipleInterset: updateCarring,
+                          widthh: 80,
+                        ),
+                      ],
+                    ),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
+                    D10HCustomClSizedBoxWidget(),
                     //
 
                     Text(
@@ -2087,9 +2669,10 @@ class _ThirteenScreenPrimaryDetailsState
                   ),
                   child: TextButton(
                       onPressed: () {
-                         widget.changePage;
-                         uploadDataPrimaryDetails();
-                        
+                        Navigator.pushNamed(context, AppRoutes.TwelveFamilyDetailsScreen);
+                        widget.changePage;
+                        uploadDataPrimaryDetails();
+
                         // Navigator.pushNamed(context, AppRoutes.FourteenScreenscr);
                         // print("Uploading Data to aws");
 
@@ -2108,7 +2691,147 @@ class _ThirteenScreenPrimaryDetailsState
       ),
     );
   }
+
+  // Container multiwidget() {
+  //   return Container(
+  //                   decoration: BoxDecoration(border: Border.all(width: 2)),
+  //                   height: heightt * 0.07,
+  //                   width: width,
+  //                   // width: 50,
+  //                   child: Row(
+  //                     children: [Icon(Icons.check), Text("data")],
+  //                   ),
+  //                 );
+  // }
+
+  // Widget multiwidget(String textdata, {double widthh = 100}) {
+  //   return  Padding(
+  //     padding: const EdgeInsets.only(left: 10),
+  //     child: InkWell(
+
+  //       onTap:  () {
+  //   setState(() {
+  //     multipleInterset[textdata] = !multipleInterset[textdata]!;
+  //     updateMultipleInterset();
+
+  //   });
+  // },
+  //       child: Container(
+  //         decoration: BoxDecoration(
+  //           color: ColorConstant.whiteA700,
+  //           border: Border.all(
+  //             width: 1,
+  //             color: isSelected
+  //                 ? ColorConstant.deepPurpleA200
+  //                 : ColorConstant.clGreyFontColor2,
+  //           ),
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         height: 50,
+  //         width: widthh,
+  //         child: Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //           children: [
+  //             if (multipleInterset)
+  //               Icon(
+  //                 Icons.check,
+  //                 size: 20,
+  //               ),
+  //             Padding(
+  //               padding: const EdgeInsets.only(right: 4),
+  //               child: Text(
+  //               textdata,
+  //                 style: TextStyle(
+  //                   fontSize: 13,
+  //                   fontWeight: FontWeight.w500,
+  //                   color: isSelected
+  //                       ? ColorConstant.deepPurpleA200
+  //                       : Colors.black,
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
+
+class MultiWidget extends StatefulWidget {
+  final String textdata;
+  final double widthh;
+  final Map<String, bool> multipleInterset;
+  final Function updateMultipleInterset;
+
+  const MultiWidget({
+    Key? key,
+    required this.textdata,
+    required this.multipleInterset,
+    required this.updateMultipleInterset,
+    this.widthh = 100,
+  }) : super(key: key);
+
+  @override
+  _MultiWidgetState createState() => _MultiWidgetState();
+}
+
+class _MultiWidgetState extends State<MultiWidget> {
+  bool get isSelected => widget.multipleInterset[widget.textdata] ?? false;
+
+  void toggleSelection() {
+    setState(() {
+      widget.multipleInterset[widget.textdata] = !isSelected;
+      widget.updateMultipleInterset();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: InkWell(
+        onTap: toggleSelection,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              width: 1,
+              color: isSelected ? Colors.deepPurpleAccent : Colors.grey,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          height: 50,
+          width: widget.widthh,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              if (isSelected)
+                Icon(
+                  Icons.check,
+                  size: 20,
+                  color: Colors.deepPurpleAccent,
+                ),
+              Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: Text(
+                  widget.textdata,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                    color: isSelected ? Colors.deepPurpleAccent : Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 
 // Widget _primaryDetailsPageMain() {
 //     return

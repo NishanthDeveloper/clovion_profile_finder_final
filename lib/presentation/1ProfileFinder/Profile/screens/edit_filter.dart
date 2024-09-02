@@ -5,6 +5,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../MatchingList/1screen_advertisement.dart';
 
 class EditFilterScreen extends StatefulWidget {
   const EditFilterScreen({super.key});
@@ -25,6 +28,19 @@ class _EditFilterScreenState extends State<EditFilterScreen> {
       const DropdownMenuItem(value: "Female", child: Text("Female")),
       const DropdownMenuItem(value: "Others", child: Text("Others")),
     ];
+  }
+   String? userId;
+  List<dynamic> savedSearch = [];
+
+  Future<void> loadUserId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getString('uid2');
+      print(prefs.getString("uid2").toString());
+    });
+    // if (userId != null) {
+    //   fetchSavedSearch();
+    // }
   }
 
   void genderselectedValueChange(String? newValue) {
@@ -50,7 +66,7 @@ class _EditFilterScreenState extends State<EditFilterScreen> {
   dynamic responseData;
 
   Future<void> postPreference() async {
-    final url = Uri.parse('http://51.20.61.70:3000/saved_search/MWOJGKTCQ71');
+    final url = Uri.parse('http://${ApiService.ipAddress}/saved_search/$userId');
 
     final body = {
       'tag': tagName.text,

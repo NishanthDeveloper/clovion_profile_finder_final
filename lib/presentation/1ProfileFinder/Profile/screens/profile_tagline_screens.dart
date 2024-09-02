@@ -41,7 +41,7 @@ class _ProfileTagLineScreenState extends State<ProfileTagLineScreen> {
 
     final url =
         Uri.parse("http://${ApiService.ipAddress}/about_candidate/$uidUser");
-    final request = http.MultipartRequest('PUT', url);
+    final request = http.MultipartRequest('POST', url);
     //  request.files
     //     .add(await http.MultipartFile.fromPath('files', "headsizeFile!.path"));
     // request.fields['about_candidate_value'] = "aboutMee";

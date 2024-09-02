@@ -5,6 +5,8 @@ import 'package:profile_finder/presentation/1ProfileFinder/Profile/screens/edit_
 import 'package:profile_finder/presentation/1ProfileFinder/Profile/screens/filter_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../MatchingList/1screen_advertisement.dart';
+
 class SavedSearchScreen extends StatefulWidget {
   const SavedSearchScreen({super.key});
 
@@ -39,7 +41,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
       print("User ID for Favourites: $userId");
 
       final response = await http.get(
-        Uri.parse('http://51.20.61.70:3000/saved_search/$userId'),
+        Uri.parse('http://${ApiService.ipAddress}/saved_search/$userId'),
       );
 
       if (response.statusCode == 200) {
@@ -198,7 +200,7 @@ class _SavedSearchScreenState extends State<SavedSearchScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      EditFilterScreen()));
+                                                      FilterScreen()));
                                         },
                                         child: Container(
                                           height: 35,

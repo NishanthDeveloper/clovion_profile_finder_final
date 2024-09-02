@@ -36,7 +36,7 @@ class _RequestedListWidgetState extends State<RequestedListWidget>
                 text: "Sent",
               ),
               Tab(
-                text: "Recived",
+                text: "Rceived",
               )
             ],
           ),

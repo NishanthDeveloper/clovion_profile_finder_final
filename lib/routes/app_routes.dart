@@ -29,6 +29,7 @@ import '../presentation/1ProfileFinder/Profile/31screenUpload.dart';
 import '../presentation/1ProfileFinder/Profile/33screenGallery.dart';
 import '../presentation/1ProfileFinder/Registeration/10screenFillTheForm.dart';
 import '../presentation/1ProfileFinder/Registeration/11-0screen_main_screen.dart';
+import '../presentation/1ProfileFinder/Registeration/11-1screen_primary_details.dart';
 import '../presentation/1ProfileFinder/Registeration/11-2screenFamily_details.dart';
 import '../presentation/1ProfileFinder/Registeration/11-3screen_contact_details.dart';
 import '../presentation/1ProfileFinder/Registeration/1ScreenSplash.dart';
@@ -187,7 +188,7 @@ class AppRoutes {
     nineThisProfileForWhomScreen: (context) => NineThisProfileForWhomScreen(),
     tenFillTheFormScreen: (context) => TenFillTheFormScreen(registerForWhomm: '',),
     // iphone1313ProTenScreen: (context) => Iphone1313ProTenScreen(),
-    ElevenPrimaryDetailsScreen: (context) => ThirteenScreen(registerForWhom: '',),
+    ElevenPrimaryDetailsScreen: (context) => ThirteenScreenPrimaryDetails(),
     TwelveFamilyDetailsScreen: (context) =>
         Thirteen_Screen_Family_DetailsScreen(),
 

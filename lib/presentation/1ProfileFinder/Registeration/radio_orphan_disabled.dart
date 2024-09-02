@@ -10,135 +10,120 @@ class RadioOrphanAndDisabled extends StatefulWidget {
 }
 
 class _RadioOrphanAndDisabledState extends State<RadioOrphanAndDisabled> {
-  int? _valueOrphan = 1;
-  
-  int? _valueDisable = 1;
+  int? _valueOrphan; // Set initial value to null
+  bool _showOrganTextField = false;
+  int? _valueDisable; // Set initial value to null
 
-   saveToSharedPrefferences(String nameOfID, String valueToSave) async {
+  saveToSharedPrefferences(String nameOfID, String valueToSave) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
     preferences.setString(nameOfID, valueToSave);
   }
 
- 
- 
- 
- 
- 
   @override
   Widget build(BuildContext context) {
-    return 
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        D10HCustomClSizedBoxWidget(),
-                        Text(
-                      "Are you an orphan?",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Radio(
-                                      value: 1,
-                                      groupValue: _valueOrphan,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _valueOrphan = value as int;
-                                        });
-                                        saveToSharedPrefferences("orphan",
-                                            _valueOrphan == 1 ? "Yes" : "No");
-                                      }),
-                                  const SizedBox(
-                                    width: 2,
-                                  ),
-                                  const Text("Yes")
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 40,
-                            ),
-                            Container(
-                              child: Row(
-                                children: [
-                                  Radio(
-                                      value: 2,
-                                      groupValue: _valueOrphan,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _valueOrphan = value as int;
-                                        });
-                                        saveToSharedPrefferences("orphan",
-                                            _valueOrphan == 2 ? "No" : "Yes");
-                                      }),
-                                  const SizedBox(
-                                    width: 2,
-                                  ),
-                                  const Text("No")
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      
-                    
-                    Text(
-                      "Are you an disable?",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Row(
-                            children: [
-                              Radio(
-                                  value: 1,
-                                  groupValue: _valueDisable,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _valueDisable = value as int;
-                                    });
-                                    saveToSharedPrefferences("disable",
-                                        _valueDisable == 1 ? "Yes" : "No");
-                                  }),
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              const Text("Yes")
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 40,
-                        ),
-                        Container(
-                          child: Row(
-                            children: [
-                              Radio(
-                                  value: 2,
-                                  groupValue: _valueDisable,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _valueDisable = value as int;
-                                    });
-                                    saveToSharedPrefferences("disable",
-                                        _valueDisable == 2 ? "No" : "Yes");
-                                  }),
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              const Text("No")
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                      ]
-                    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        D10HCustomClSizedBoxWidget(),
+        Text(
+          "Are you an orphan?",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Radio(
+                  value: 1,
+                  groupValue: _valueOrphan,
+                  onChanged: (value) {
+                    setState(() {
+                      _valueOrphan = value as int?;
+                    });
+                    saveToSharedPrefferences("orphan",
+                        _valueOrphan == 1 ? "Yes" : "No");
+                  },
+                ),
+                const SizedBox(width: 2),
+                const Text("Yes")
+              ],
+            ),
+            const SizedBox(width: 40),
+            Row(
+              children: [
+                Radio(
+                  value: 2,
+                  groupValue: _valueOrphan,
+                  onChanged: (value) {
+                    setState(() {
+                      _valueOrphan = value as int?;
+                    });
+                    saveToSharedPrefferences("orphan",
+                        _valueOrphan == 2 ? "No" : "Yes");
+                  },
+                ),
+                const SizedBox(width: 2),
+                const Text("No")
+              ],
+            ),
+          ],
+        ),
+        Text(
+          "Are you disabled?",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Radio(
+                  value: 1,
+                  groupValue: _valueDisable,
+                  onChanged: (value) {
+                    setState(() {
+                      _valueDisable = value as int?;
+                      _showOrganTextField = _valueDisable == 1;
+                    });
+                    saveToSharedPrefferences("disable", "Yes");
+                  },
+                ),
+                const SizedBox(width: 2),
+                const Text("Yes")
+              ],
+            ),
+            const SizedBox(width: 40),
+            Row(
+              children: [
+                Radio(
+                  value: 2,
+                  groupValue: _valueDisable,
+                  onChanged: (value) {
+                    setState(() {
+                      _valueDisable = value as int?;
+                      _showOrganTextField = _valueDisable == 1;
+                    });
+                    saveToSharedPrefferences("disable", "No");
+                  },
+                ),
+                const SizedBox(width: 2),
+                const Text("No")
+              ],
+            ),
+          ],
+        ),
+        if (_showOrganTextField)
+          TextField(
+            decoration: InputDecoration(
+              labelText: "Which organ?",
+              border: OutlineInputBorder(),
+            ),
+            onChanged: (value) {
+              saveToSharedPrefferences("whichorgan", value);
+            },
+          ),
+      ],
+    );
   }
 }

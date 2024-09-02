@@ -99,6 +99,7 @@ class _FilterScreenState extends State<FilterScreen> {
         setState(() {
           responseData = decodedResponse;
         });
+        Navigator.pop(context);
       } else {
         print('Failed to post preference: ${response.statusCode}');
         print('Response: ${response.body}');

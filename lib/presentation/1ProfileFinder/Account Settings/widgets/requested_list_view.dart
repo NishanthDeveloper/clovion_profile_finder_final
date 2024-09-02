@@ -114,7 +114,7 @@ class _requestedListViewState extends State<requestedListView> {
                 ),
                 Container(
                   height: 140,
-                  width: 144,
+                  width: 134,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -166,7 +166,7 @@ class _requestedListViewState extends State<requestedListView> {
                             ),
                             Container(
                               height: 50,
-                              width: 140,
+                              width: 120,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: AssetImage(
@@ -202,7 +202,7 @@ class _requestedListViewState extends State<requestedListView> {
                             ),
                             Container(
                               height: 50,
-                              width: 140,
+                              width: 120,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: AssetImage(

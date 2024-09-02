@@ -12,13 +12,14 @@ class WidgetTitleAndDropdown extends StatefulWidget {
   final List<String> DbdItems;
 
   final dynamic onChanged;
+  final String? selectedValue; 
 
   const WidgetTitleAndDropdown({
     super.key,
     required this.DdbTitle,
     required this.DdbHint,
     required this.DbdItems,
-    required this.onChanged,
+    required this.onChanged, this.selectedValue,
   });
 
   @override
@@ -54,6 +55,7 @@ class _WidgetTitleAndDropdownState extends State<WidgetTitleAndDropdown> {
             // underline: SizedBox(),
             isExpanded: true,
             // autofocus: true,
+            value: widget.selectedValue, 
 
             dropdownColor: Colors.white,
             // focusColor: Colors.white,

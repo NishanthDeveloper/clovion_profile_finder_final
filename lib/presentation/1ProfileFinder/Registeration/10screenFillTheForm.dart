@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -24,13 +25,62 @@ import '../../../widgets/UploadDocument.dart';
 class TenFillTheFormScreen extends StatefulWidget {
   final String registerForWhomm;
   final Function? changePage;
-  const TenFillTheFormScreen({super.key, required this.registerForWhomm, this.changePage});
+  const TenFillTheFormScreen(
+      {super.key, required this.registerForWhomm, this.changePage});
 
   @override
   State<TenFillTheFormScreen> createState() => _TenFillTheFormScreenState();
 }
 
 class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
+  void showError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+
+  bool validateFields(BuildContext context) {
+    if (nameOfApplController.text.isEmpty ||
+        addOfApplController.text.isEmpty ||
+        heightOfApplController.text.isEmpty ||
+        weightOfApplController.text.isEmpty ||
+        bithPlaceOfApplController.text.isEmpty ||
+        gender == null ||
+        marital == null ||
+        physical == null ||
+        religion == null ||
+        age == null ||
+        birth_country == null ||
+        birth_city == null ||
+        origin == null ||
+        r_country == null ||
+        r_state == null ||
+        r_status == null ||
+        denomination == null ||
+        blood_group == null ||
+        temple_name.isEmpty ||
+        temple_street.isEmpty ||
+        temple_post_code == null ||
+        temple_country == null ||
+        temple_city == null ||
+        temple_phone_number.isEmpty ||
+        temple_diocese == null ||
+        temple_local_admin == null ||
+        emergency_name.isEmpty ||
+        emergency_relation.isEmpty ||
+        emergency_phone_number.isEmpty ||
+        emergency_email.isEmpty ||
+        emergency_marital_status == null ||
+        occupations == null) {
+      showError(context, "Please fill all required fields.");
+      return false;
+    }
+    return true;
+  }
+
   PageController _pageController = PageController();
   String heading = "Fill The Form";
 
@@ -39,18 +89,84 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
   String? Height;
 
   String? countryCode;
+  String? martials;
+  String? physicalStatus;
 
-  List<String> maritalSts = ["Single", "Married", "Divorced", "Widow"];
+  // mariyal status
+  List<String> maritalSts = [];
+
+  Future<void> fetchMaritalStsStatus() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://${ApiServices.ipAddress}/superadmin/dropdownn/marital_status'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        setState(() {
+          // If the API returns an empty list or null, show "No Data"
+          if (data == null || data.isEmpty) {
+            maritalSts = ["No Data"];
+          } else {
+            maritalSts =
+                List<String>.from(data.map((item) => item['marital_status']));
+          }
+        });
+      } else {
+        setState(() {
+          maritalSts = ["No Data"];
+        });
+        throw Exception('Failed to load physical statuses');
+      }
+    } catch (e) {
+      setState(() {
+        maritalSts = ["No Data"];
+      });
+      print("Error: $e");
+    }
+  }
+
+// Physical Status
+  List<String> physicalSts = [];
+  Future<void> fetchPhysicalStsStatus() async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://${ApiServices.ipAddress}/superadmin/dropdownn/physical_status'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        setState(() {
+          // If the API returns an empty list or null, show "No Data"
+          if (data == null || data.isEmpty) {
+            physicalSts = ["No Data"];
+          } else {
+            physicalSts =
+                List<String>.from(data.map((item) => item['physical_status']));
+          }
+        });
+      } else {
+        setState(() {
+          physicalSts = ["No Data"];
+        });
+        throw Exception('Failed to load physical statuses');
+      }
+    } catch (e) {
+      setState(() {
+        physicalSts = ["No Data"];
+      });
+      print("Error: $e");
+    }
+  }
 
   List<String> genderItems = [
     "Male",
     "Female",
     "Others",
-  ];
-
-  List<String> physicalSts = [
-    "Normal",
-    "Disabled",
   ];
 
   List<String> religionSts = [
@@ -152,44 +268,46 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
 
   String name = 'saran';
   String address = '55 B';
-   String height = '';
-   String weight = '';
-   String marital= '';
-   String gender= '';
+  String height = '';
+  String weight = '';
+  String marital = '';
+  String gender = '';
 
-   String physical= '';
-   String religion= '';
-   String age= '';
-   String birth_place= '';
-   String birth_country= '';
-   String birth_time= '';
-   String birth_city= '';
-   String origin= '';
-   String r_country= '';
-   String r_state= '';
-   String r_status= '';
-   String denomination= '';
-   String blood_group= '';
-   String temple_name= '';
-   String temple_street= '';
-   String temple_post_code= '';
-   String temple_country= '';
-   String temple_city= '';
-   String temple_phone_number= '';
-   String temple_diocese= '';
-   String temple_local_admin= '';
-   String emergency_name= '';
-   String emergency_relation= '';
-   String emergency_phone_number= '';
-   String emergency_email= '';
-   String emergency_marital_status= '';
-   String occupations= '';
+  String physical = '';
+  String religion = '';
+  String age = '';
+  String birth_place = '';
+  String birth_country = '';
+  String birth_time = '';
+  String birth_city = '';
+  String origin = '';
+  String r_country = '';
+  String r_state = '';
+  String r_status = '';
+  String denomination = '';
+  String blood_group = '';
+  String temple_name = '';
+  String temple_street = '';
+  String temple_post_code = '';
+  String temple_country = '';
+  String temple_city = '';
+  String temple_phone_number = '';
+  String temple_diocese = '';
+  String temple_local_admin = '';
+  String emergency_name = '';
+  String emergency_relation = '';
+  String emergency_phone_number = '';
+  String emergency_email = '';
+  String emergency_marital_status = '';
+  String occupations = '';
 
   @override
   void initState() {
     fToast = FToast();
     fToast.init(context);
     super.initState();
+    fetchMaritalStsStatus();
+    fetchPhysicalStsStatus();
   }
 
   String? filename;
@@ -222,9 +340,9 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
   TextEditingController addOfApplController = TextEditingController();
   TextEditingController weightOfApplController = TextEditingController();
   TextEditingController heightOfApplController = TextEditingController();
+  TextEditingController bithPlaceOfApplController = TextEditingController();
+
   TextInputType keyboardType = TextInputType.number;
-  
-  
 
   late String uidUser;
 
@@ -242,46 +360,6 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
     final url =
         Uri.parse("http://${ApiServices.ipAddress}/profileform/$uidUser");
     final request = http.MultipartRequest('POST', url);
-    // Navigator.pushNamed(context, AppRoutes.ThirteenScreenscr); // temperory
-    // final file = File('/home/abijith/Pictures/flower.jpeg');
-    // request.files.add(await http.MultipartFile.fromPath('id_card_2', file.path));
-    // request.fields['name'] = 'Abijith';
-    // request.fields['address'] = '33/111-A';
-    // request.fields['height'] = '180';
-    // request.fields['weight'] = '190';
-    // request.fields['gender'] = 'Male';
-    
-    // request.fields['marital'] = 'single';
-    // request.fields['physical'] = 'good';
-    // request.fields['religion'] = 'Hindu';
-    // request.fields['age'] = '24';
-    // request.fields['birth_place'] = 'NagerCoil';
-    // request.fields['birth_country'] = 'India';
-    // request.fields['birth_time'] = '23:00';
-    // request.fields['birth_city'] = 'Kanyakumari';
-    // request.fields['origin'] = 'Indian';
-    // request.fields['r_country'] = 'Turkey';
-    // request.fields['r_state'] = 'Turkey State';
-    // request.fields['r_status'] = 'Turkey Single';
-    // request.fields['denomination'] = 'Turkey Denomination';
-    // request.fields['blood_group'] = 'O+';
-    // request.files.add(await http.MultipartFile.fromPath('id_card_2', filee!.path));
-    // request.fields['temple_name'] = 'Sivan Kovil';
-    // request.fields['temple_street'] = 'Sivan Kovil Street';
-    // request.fields['temple_post_code'] = '9876543210';
-    // request.fields['temple_country'] = 'USA';
-    // request.fields['temple_city'] = 'USA City';
-    // request.fields['temple_phone_number'] = '9876543210';
-    // request.fields['temple_diocese'] = 'Sivan Kovil Diocese';
-    // request.fields['temple_local_admin'] = 'Sivan Admin';
-    // request.fields['emergency_name'] = 'Abilash';
-    // request.fields['emergency_relation'] = 'Friend';
-    // request.fields['emergency_phone_number'] = '9898989898';
-    // request.fields['emergency_email'] = 'abilash@gmail.com';
-    // request.fields['emergency_marital_status'] = 'emergency single';
-    // request.fields['emergency_occupations'] = 'developer';
-
-    //
 
     request.fields['name'] =
         // preferences.getString("nameOfapplicant").toString();
@@ -298,26 +376,28 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
         // '55';
 
         weightOfApplController.text;
-         request.fields['gender'] = gender;
+    request.fields['birth_place'] = bithPlaceOfApplController.text;
+
+    request.fields['gender'] = gender;
     request.fields['marital'] = marital;
     request.fields['physical'] = physical;
     request.fields['religion'] = religion;
     request.fields['age'] = age;
-    request.fields['birth_place'] = birth_place.toString();
-    request.fields['birth_country'] = birth_country.toString();
+
+    request.fields['birth_country'] = birth_country;
     request.fields['birth_city'] = birth_city;
     request.fields['birth_time'] = '23:00';
     request.fields['origin'] = origin.toString();
-    request.fields['r_country'] = r_country.toString();
-    request.fields['r_state'] = r_state.toString();
+    request.fields['r_country'] = r_country;
+    request.fields['r_state'] = r_state;
     request.fields['r_status'] = r_status.toString();
     request.fields['denomination'] = denomination.toString();
     request.fields['blood_group'] = blood_group.toString();
-    request.fields['r_status'] = 'jgh';
+    // request.fields['r_status'] = 'jgh';
     request.files
         .add(await http.MultipartFile.fromPath('id_card_2', filee!.path));
     request.fields['temple_name'] = temple_name;
-    request.fields['temple_street'] = temple_street.toString();
+    request.fields['temple_street'] = temple_street;
     request.fields['temple_post_code'] = temple_post_code.toString();
     request.fields['temple_country'] = temple_country.toString();
     request.fields['temple_city'] = temple_city.toString();
@@ -337,13 +417,14 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
       final send = await request.send();
       final response = await http.Response.fromStream(send);
       print(response.statusCode);
+      print(request.fields);
       print(response.body);
 
       if (response.statusCode == 200) {
-
         print('Form Filled Succesfully');
+
+        Navigator.pushNamed(context, AppRoutes.ElevenPrimaryDetailsScreen);
         
-        Navigator.pushNamed(context, AppRoutes.ThirteenScreenscr);
       }
     } catch (e) {
       print("Error While Uploading File $e");
@@ -406,18 +487,25 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   textFieldHint: 'Enter',
                   textFieldTitle: "Name of Applicant*",
                   onChanged: (newValue) {
-                    saveToSharedPrefferences("nameOfapplicant", newValue);
+                    if (newValue == null || newValue.trim().isEmpty) {
+                      saveToSharedPrefferences("nameOfapplicant", "No Data");
+                    } else {
+                      saveToSharedPrefferences("nameOfapplicant", newValue);
+                    }
                   },
                   textFieldController: nameOfApplController,
                 ),
-
 
                 // Enter Address
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
                   textFieldTitle: "Address of Applicant*",
                   onChanged: (newValue) {
-                    saveToSharedPrefferences("addressOfapplicant", newValue);
+                    if (newValue == null || newValue.trim().isEmpty) {
+                      saveToSharedPrefferences("addressOfapplicant", "No Data");
+                    } else {
+                      saveToSharedPrefferences("addressOfapplicant", newValue);
+                    }
                   },
                   textFieldController: addOfApplController,
                 ),
@@ -427,30 +515,42 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   keybordType: keyboardType,
                   textFieldHint: 'Enter',
                   textFieldTitle: "Height*",
-                  // textFieldController: controller[0] ,
-
                   onChanged: (newValue) {
-                    print("controller value is ${controller[0].value}");
+                    print(
+                        "controller value is ${heightOfApplController.value.text}");
+
+                    // Check if the input value is null or empty
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      height = newValue;
+                      height = valueToSave;
                     });
-                    saveToSharedPrefferences("height", newValue);
+
+                    saveToSharedPrefferences("height", valueToSave);
                   },
                   textFieldController: heightOfApplController,
                 ),
 
-
-              // EnterWeight
+                // EnterWeight
                 WidgetTitleAndTextfield(
                   keybordType: keyboardType,
                   textFieldHint: 'Enter',
                   textFieldTitle: "Weight in KGLB*",
-                  // textFieldController: controller[1] ,
                   onChanged: (newValue) {
+                    // Check if the input value is null or empty
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      weight = newValue;
+                      weight = valueToSave;
                     });
-                    saveToSharedPrefferences("weight", newValue);
+
+                    saveToSharedPrefferences("weight", valueToSave);
                   },
                   textFieldController: weightOfApplController,
                 ),
@@ -462,9 +562,13 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   DbdItems: genderItems,
                   onChanged: (String? newValue) {
                     setState(() {
-                      dropdownValue = newValue!;
-                      gender = newValue;
+                      // Check if newValue is null, and set a default value "No Data" if it is
+                      dropdownValue = newValue ?? "No Data";
+                      gender = dropdownValue!;
                     });
+
+                    // Save to shared preferences
+                    saveToSharedPrefferences("gender", dropdownValue!);
                   },
                 ),
 
@@ -515,46 +619,94 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   textFieldTitle: "Age*",
                   // textFieldController: controller[2],
                   onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      age = newValue;
+                      age = valueToSave;
                     });
 
                     saveToSharedPrefferences("age", newValue);
                   },
                 ),
+
+                // birthPlace
                 WidgetTitleAndTextfield(
-                 
                   textFieldHint: 'Enter',
                   textFieldTitle: "Birth Place*",
                   // textFieldController: controller[2],
                   onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      birth_place = newValue;
+                      birth_place = valueToSave;
                     });
 
-                    saveToSharedPrefferences("birth_place", newValue);
+                    saveToSharedPrefferences('birth_place', newValue);
                   },
+                  textFieldController: bithPlaceOfApplController,
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Birth Country*",
-                  DdbHint: "Select",
-                  DbdItems: Dbditems,
-                  onChanged: (String? newValue) {
+
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Birth Country*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      dropdownValue = newValue!;
-                      birth_country = newValue;
+                      birth_country = valueToSave;
                     });
+
+                    saveToSharedPrefferences('birth_country', newValue);
                   },
+                
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Birth City*",
-                  DdbHint: "Select",
-                  DbdItems: cityChoose,
-                  onChanged: (String? newValue) {
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Birth Country*",
+                //   DdbHint: "Select",
+                //   DbdItems: Dbditems,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //       birth_country = newValue;
+                //     });
+                //   },
+                // ),
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Birth City*",
+                //   DdbHint: "Select",
+                //   DbdItems: cityChoose,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //       birth_city = newValue;
+                //     });
+                //   },
+                // ),
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Birth City*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      dropdownValue = newValue!;
-                      birth_city = newValue;
+                      birth_city = valueToSave;
                     });
+
+                    saveToSharedPrefferences('birth_city', newValue);
                   },
                 ),
 
@@ -567,39 +719,90 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                     });
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Country of Origin*",
-                  DdbHint: "Select",
-                  DbdItems: countryChoose,
-                  onChanged: (String? newValue) {
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Country of Origin*",
+                //   DdbHint: "Select",
+                //   DbdItems: countryChoose,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //       origin = newValue;
+                //     });
+                //   },
+                // ),
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Country of Origin*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      dropdownValue = newValue!;
-                      origin = newValue;
+                      origin = valueToSave;
                     });
+
+                    saveToSharedPrefferences('origin', newValue);
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Residing Country*",
-                  DdbHint: "Select",
-                  DbdItems: residingCounrtyChoose,
-                  onChanged: (String? newValue) {
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Residing Country*",
+                //   DdbHint: "Select",
+                //   DbdItems: residingCounrtyChoose,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //       r_country = newValue;
+                //     });
+                //     // uploadAboutMe("Residing Country", dropdownValue.toString());
+                //   },
+                // ),
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Residing Country*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      dropdownValue = newValue!;
-                      r_country = newValue;
+                      r_country = valueToSave;
                     });
-                    // uploadAboutMe("Residing Country", dropdownValue.toString());
+
+                    saveToSharedPrefferences('r_country', newValue);
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Residing State*",
-                  DdbHint: "Select",
-                  DbdItems: stateChoose,
-                  onChanged: (String? newValue) {
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Residing State*",
+                //   DdbHint: "Select",
+                //   DbdItems: stateChoose,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //       r_state = newValue;
+                //     });
+                //     // uploadAboutMe("Residing State", dropdownValue.toString());
+                //   },
+                // ),
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Residing State*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      dropdownValue = newValue!;
-                      r_state = newValue;
+                      r_state = valueToSave;
                     });
-                    // uploadAboutMe("Residing State", dropdownValue.toString());
+
+                    saveToSharedPrefferences('r_country', newValue);
                   },
                 ),
                 WidgetTitleAndDropdown(
@@ -710,65 +913,151 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Name of Parish / Temple / Mosque*",
-                  DdbHint: "Select",
-                  DbdItems: nameofParishChoose,
-                  onChanged: (String? newValue) {
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Name of Parish / Temple / Mosque*",
+                //   DdbHint: "Select",
+                //   DbdItems: nameofParishChoose,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //       temple_name = newValue;
+                //     });
+                //     // uploadAboutMe("Name of Parish / Temple / Mosque",
+                //     //     dropdownValue.toString());
+                //   },
+                // ),
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Name of Parish / Temple / Mosque*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      dropdownValue = newValue!;
-                      temple_name = newValue;
+                      temple_name = valueToSave;
                     });
-                    // uploadAboutMe("Name of Parish / Temple / Mosque",
-                    //     dropdownValue.toString());
+
+                    saveToSharedPrefferences('temple_name', newValue);
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Street*",
-                  DdbHint: "Select",
-                  DbdItems: cityChoose,
-                  onChanged: (String? newValue) {
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Street*",
+                //   DdbHint: "Select",
+                //   DbdItems: cityChoose,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //       temple_street = newValue;
+                //     });
+                //     // uploadAboutMe("Street", dropdownValue.toString());
+                //   },
+                // ),
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Street*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      dropdownValue = newValue!;
-                      temple_street = newValue;
+                      temple_street = valueToSave;
                     });
-                    // uploadAboutMe("Street", dropdownValue.toString());
+
+                    saveToSharedPrefferences('temple_street', newValue);
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Post Code*",
-                  DdbHint: "Select",
-                  DbdItems: cityChoose,
-                  onChanged: (String? newValue) {
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Post Code*",
+                //   DdbHint: "Select",
+                //   DbdItems: cityChoose,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //       temple_post_code = newValue;
+                //     });
+                //     // uploadAboutMe("Post Code", dropdownValue.toString());
+                //   },
+                // ),
+                WidgetTitleAndTextfield(
+                  keybordType: keyboardType,
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Post Code*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      dropdownValue = newValue!;
-                      temple_post_code = newValue;
+                      temple_post_code = valueToSave;
                     });
-                    // uploadAboutMe("Post Code", dropdownValue.toString());
+
+                    saveToSharedPrefferences('temple_post_code', newValue);
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Country*",
-                  DdbHint: "Select",
-                  DbdItems: countryChoose,
-                  onChanged: (String? newValue) {
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Country*",
+                //   DdbHint: "Select",
+                //   DbdItems: countryChoose,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //       temple_country = newValue;
+                //     });
+                //     // uploadAboutMe("Country", dropdownValue.toString());
+                //   },
+                // ),
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Country*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      dropdownValue = newValue!;
-                      temple_country = newValue;
+                      temple_country = valueToSave;
                     });
-                    // uploadAboutMe("Country", dropdownValue.toString());
+
+                    saveToSharedPrefferences('temple_country', newValue);
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "City*",
-                  DdbHint: "Select",
-                  DbdItems: cityChoose,
-                  onChanged: (String? newValue) {
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "City*",
+                //   DdbHint: "Select",
+                //   DbdItems: cityChoose,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //       temple_city = newValue;
+                //     });
+                //     // uploadAboutMe("City", dropdownValue.toString());
+                //   },
+                // ),
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "City*",
+                  // textFieldController: controller[2],
+                  onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      dropdownValue = newValue!;
-                      temple_city = newValue;
+                      temple_city = valueToSave;
                     });
-                    // uploadAboutMe("City", dropdownValue.toString());
+
+                    saveToSharedPrefferences('temple_city', newValue);
                   },
                 ),
                 Text("Phone Number"),
@@ -836,6 +1125,7 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                     Expanded(
                       flex: 7,
                       child: TextField(
+                          keyboardType: TextInputType.number,
                           onChanged: (value) {
                             temple_phone_number = value;
                           },
@@ -861,15 +1151,32 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   height: 20,
                 ),
 
+                // WidgetTitleAndTextfield(
+                //   textFieldHint: 'Enter',
+                //   textFieldTitle: "Diocese*",
+                //   onChanged: (newValue) {
+                //     setState(() {
+                //       // dropdownValue = newValue!;
+                //       temple_diocese = newValue;
+                //     });
+                //     // uploadAboutMe(_detailName[1], dropdownValue.toString());
+                //   },
+                // ),
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
                   textFieldTitle: "Diocese*",
+                  // textFieldController: controller[2],
                   onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      // dropdownValue = newValue!;
-                      temple_diocese = newValue;
+                      temple_diocese = valueToSave;
                     });
-                    // uploadAboutMe(_detailName[1], dropdownValue.toString());
+
+                    saveToSharedPrefferences('temple_diocese', newValue);
                   },
                 ),
                 WidgetTitleAndDropdown(
@@ -905,14 +1212,31 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                 //   },
                 // ),
 
+                // WidgetTitleAndTextfield(
+                //   textFieldHint: 'Enter',
+                //   textFieldTitle: "Name*",
+                //   onChanged: (newValue) {
+                //     setState(() {
+                //       // dropdownValue = newValue!;
+                //       emergency_name = newValue;
+                //     });
+                //   },
+                // ),
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
                   textFieldTitle: "Name*",
+                  // textFieldController: controller[2],
                   onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      // dropdownValue = newValue!;
-                      emergency_name = newValue;
+                      emergency_name = valueToSave;
                     });
+
+                    saveToSharedPrefferences('emergency_name', newValue);
                   },
                 ),
 
@@ -930,25 +1254,60 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   },
                 ),
 
+                // WidgetTitleAndTextfield(
+                //   textFieldHint: 'Enter',
+                //   textFieldTitle: "Phone Number*",
+                //   onChanged: (newValue) {
+                //     setState(() {
+                //       // dropdownValue = newValue!;
+                //       emergency_phone_number = newValue;
+                //     });
+                //   },
+                // ),
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
                   textFieldTitle: "Phone Number*",
+                  // textFieldController: controller[2],
                   onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      // dropdownValue = newValue!;
-                      emergency_phone_number = newValue;
+                      emergency_phone_number = valueToSave;
                     });
+
+                    saveToSharedPrefferences(
+                        'emergency_phone_number', newValue);
                   },
                 ),
 
+                // WidgetTitleAndTextfield(
+                //   textFieldHint: 'Enter',
+                //   textFieldTitle: "Email ID*",
+                //   onChanged: (newValue) {
+                //     setState(() {
+                //       // dropdownValue = newValue!;
+                //       emergency_email = newValue;
+                //     });
+                //   },
+                // ),
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
                   textFieldTitle: "Email ID*",
+                  // textFieldController: controller[2],
                   onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      // dropdownValue = newValue!;
-                      emergency_email = newValue;
+                      emergency_email = valueToSave;
                     });
+
+                    saveToSharedPrefferences('emergency_email', newValue);
                   },
                 ),
 
@@ -965,15 +1324,51 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                     //     "Emergency Marital Status", dropdownValue.toString());
                   },
                 ),
+                //  WidgetTitleAndTextfield(
 
+                //   textFieldHint: 'Enter',
+                //   textFieldTitle: "Marital Status*",
+                //   // textFieldController: controller[2],
+                //   onChanged: (newValue) {
+                //     final valueToSave =
+                //         (newValue == null || newValue.trim().isEmpty)
+                //             ? "No Data"
+                //             : newValue;
+
+                //     setState(() {
+                //       emergency_marital_status = valueToSave;
+                //     });
+
+                //     saveToSharedPrefferences('emergency_marital_status', newValue);
+                //   },
+
+                // ),
+
+                // WidgetTitleAndTextfield(
+                //   textFieldHint: 'Enter',
+                //   textFieldTitle: "Occupationnn*",
+                //   onChanged: (newValue) {
+                //     setState(() {
+                //       // dropdownValue = newValue!;
+                //       occupations = newValue;
+                //     });
+                //   },
+                // ),
                 WidgetTitleAndTextfield(
                   textFieldHint: 'Enter',
                   textFieldTitle: "Occupationnn*",
+                  // textFieldController: controller[2],
                   onChanged: (newValue) {
+                    final valueToSave =
+                        (newValue == null || newValue.trim().isEmpty)
+                            ? "No Data"
+                            : newValue;
+
                     setState(() {
-                      // dropdownValue = newValue!;
-                      occupations = newValue;
+                      occupations = valueToSave;
                     });
+
+                    saveToSharedPrefferences('emergency_occupations', newValue);
                   },
                 ),
 
@@ -1018,8 +1413,7 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                       borderRadius: BorderRadius.circular(10)),
                   child: IconButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, AppRoutes.nineThisProfileForWhomScreen);
+                        Navigator.pop(context);
                       },
                       icon: Icon(
                         Icons.arrow_back,
@@ -1055,12 +1449,10 @@ class _TenFillTheFormScreenState extends State<TenFillTheFormScreen> {
                   ),
                   child: TextButton(
                       onPressed: () {
-                        print("Uploading Data to aws");
-                        widget.changePage;
-                        uploadDataFilltheform();
-
-                        // Navigator.pushNamed(
-                        //     context, AppRoutes.ThirteenScreenscr);
+                        if (validateFields(context)) {
+                          print("Uploading Data to AWS");
+                          uploadDataFilltheform();
+                        }
                       },
                       child: Text(
                         "Go Next",

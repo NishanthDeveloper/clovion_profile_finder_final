@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,6 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../model_final/model_final.dart';
+import '../../../routes/app_routes.dart';
+
 
 class Thirteen_Screen_Family_DetailsScreen extends StatefulWidget {
   @override
@@ -31,6 +34,9 @@ class _Thirteen_Screen_Family_DetailsScreenState
   List<String> _dropdownItemListtwo = ["Item One", "Item Two", "Item Three"];
 
   int? _siblingYounger = 1;
+    String selectedCountry = "Country ";
+    String selectedMotherCountry = "Country ";
+
   //
   //
   List<String> familyStatus = [
@@ -76,6 +82,7 @@ class _Thirteen_Screen_Family_DetailsScreenState
   List<String> maritalSts = ["Single", "Married", "Divorced", "Widow"];
 
   late String uidUser;
+  
 
   //
   //
@@ -98,22 +105,22 @@ class _Thirteen_Screen_Family_DetailsScreenState
     request.fields['father_name'] =
         preferences.getString("family_status_value").toString();
     request.fields['father_country'] =
-        preferences.getString("family_status_value").toString();
+       selectedCountry.toString();
     request.fields['father_city'] =
         preferences.getString("father_city_value").toString();
-    '';
+    
     request.fields['father_job'] =
-        preferences.getString("father_job_value").toString();
+        preferences.getString("father_job").toString();
     request.fields['father_family_name'] =
         preferences.getString("father_family_name").toString();
     request.fields['mother_name'] =
         preferences.getString("mother_name_value").toString();
     request.fields['mother_country'] =
-        preferences.getString("mother_country_value").toString();
+        selectedMotherCountry.toString();
     request.fields['mother_city'] =
         preferences.getString("mother_city_value").toString();
     request.fields['mother_job'] =
-        preferences.getString("mother_job_value").toString();
+        preferences.getString("mother_job").toString();
     request.fields['mother_family_name'] =
         preferences.getString("mother_family_name").toString();
     request.fields['sibling_name'] =
@@ -187,8 +194,9 @@ class _Thirteen_Screen_Family_DetailsScreenState
       final response = await http.Response.fromStream(send);
       print(response.statusCode);
       print(response.body);
+      print(request.fields);
       if (response.statusCode == 200) {
-        // Navigator.pushNamed(context, AppRoutes.FourteenScreenscr);
+        Navigator.pushNamed(context, AppRoutes.Thirteen_Screen_Contact_DetailsScreenScr);
         Fluttertoast.showToast(
           msg: "Family Deatails Uploaded Successfully...!",
           backgroundColor: ColorConstant.deepPurpleA200,
@@ -295,14 +303,69 @@ class _Thirteen_Screen_Family_DetailsScreenState
                     saveToSharedPrefferences("father_name_value", newValue);
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Father's Birth Country*",
-                  DdbHint: "Select",
-                  DbdItems: countryChoose,
-                  onChanged: (newValue) {
-                    saveToSharedPrefferences("father_country_value", newValue);
-                  },
-                ),
+                   Text(
+                      "Father's Birth Country",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                      InkWell(
+                        onTap: () {
+                          showCountryPicker(
+                              context: context,
+                              onSelect: (Country country) {
+                                print('Select country: ${country.name}');
+                                setState(() {
+                                  selectedCountry = country.name;
+                                });
+                              },
+                              moveAlongWithKeyboard: false,
+                              // Optional. Sets the theme for the country list picker.
+                              countryListTheme: CountryListThemeData(
+                                // Optional. Sets the border radius for the bottomsheet.
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(40.0),
+                                  topRight: Radius.circular(40.0),
+                                ),
+                                inputDecoration: InputDecoration(
+                                  labelText: 'Search',
+                                  hintText: 'Start typing to search',
+                                  prefixIcon: const Icon(Icons.search),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: const Color(0xFF8C98A8)
+                                          .withOpacity(0.2),
+                                    ),
+                                  ),
+                                ),
+                              ));
+                        },
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                              border:
+                                  Border.all(width: 0, color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: selectedCountry.isEmpty
+                                ? Text("Enter")
+                                : Text(selectedCountry),
+                          ),
+                        )),
+                         const SizedBox(
+                      height: 20,
+                    ),
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Father's Birth Country*",
+                //   DdbHint: "Select",
+                //   DbdItems: countryChoose,
+                //   onChanged: (newValue) {
+                //     saveToSharedPrefferences("father_country_value", newValue);
+                //   },
+                // ),
                 WidgetTitleAndDropdown(
                   DdbTitle: "Family Status*",
                   DdbHint: "Select",
@@ -311,14 +374,35 @@ class _Thirteen_Screen_Family_DetailsScreenState
                     saveToSharedPrefferences("father_family_name", newValue);
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "City*",
-                  DdbHint: "Select",
-                  DbdItems: cityChoose,
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "City*",
                   onChanged: (newValue) {
                     saveToSharedPrefferences("cityChoose", newValue);
                   },
                 ),
+                 WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Father Family Name*",
+                  onChanged: (newValue) {
+                    saveToSharedPrefferences("father_family_name", newValue);
+                  },
+                ),
+                 WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Father job",
+                  onChanged: (newValue) {
+                    saveToSharedPrefferences("father_job", newValue);
+                  },
+                ),
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "City*",
+                //   DdbHint: "Select",
+                //   DbdItems: cityChoose,
+                //   onChanged: (newValue) {
+                //     saveToSharedPrefferences("cityChoose", newValue);
+                //   },
+                // ),
                 D10HCustomClSizedBoxWidget(),
 
                 Text(
@@ -334,30 +418,106 @@ class _Thirteen_Screen_Family_DetailsScreenState
                     saveToSharedPrefferences("mother_name_value", newValue);
                   },
                 ),
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Mother's Birth Country*",
-                  DdbHint: "Select",
-                  DbdItems: countryChoose,
-                  onChanged: (newValue) {
-                    saveToSharedPrefferences("mother_country_value", newValue);
-                  },
-                ),
-
-                WidgetTitleAndDropdown(
-                  DdbTitle: "City*",
-                  DdbHint: "Select",
-                  DbdItems: cityChoose,
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Mother's Birth Country*",
+                //   DdbHint: "Select",
+                //   DbdItems: countryChoose,
+                //   onChanged: (newValue) {
+                //     saveToSharedPrefferences("mother_country_value", newValue);
+                //   },
+                // ),
+                 Text(
+                      "Mother's Birth Country",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                      InkWell(
+                        onTap: () {
+                          showCountryPicker(
+                              context: context,
+                              onSelect: (Country country) {
+                                print('Select country: ${country.name}');
+                                setState(() {
+                                  selectedMotherCountry = country.name;
+                                });
+                              },
+                              moveAlongWithKeyboard: false,
+                              // Optional. Sets the theme for the country list picker.
+                              countryListTheme: CountryListThemeData(
+                                // Optional. Sets the border radius for the bottomsheet.
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(40.0),
+                                  topRight: Radius.circular(40.0),
+                                ),
+                                inputDecoration: InputDecoration(
+                                  labelText: 'Search',
+                                  hintText: 'Start typing to search',
+                                  prefixIcon: const Icon(Icons.search),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: const Color(0xFF8C98A8)
+                                          .withOpacity(0.2),
+                                    ),
+                                  ),
+                                ),
+                              ));
+                        },
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                              border:
+                                  Border.all(width: 0, color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: selectedMotherCountry.isEmpty
+                                ? Text("Enter")
+                                : Text(selectedMotherCountry),
+                          ),
+                        )),
+                         const SizedBox(
+                      height: 20,
+                    ),
+                 WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "City*",
                   onChanged: (newValue) {
                     saveToSharedPrefferences("mother_city_value", newValue);
                   },
                 ),
 
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Mother's Job*",
-                  DdbHint: "Select",
-                  DbdItems: occupationChoose,
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "City*",
+                //   DdbHint: "Select",
+                //   DbdItems: cityChoose,
+                //   onChanged: (newValue) {
+                //     saveToSharedPrefferences("mother_city_value", newValue);
+                //   },
+                // ),
+
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Mother's Job*",
+                //   DdbHint: "Select",
+                //   DbdItems: occupationChoose,
+                //   onChanged: (newValue) {
+                //     saveToSharedPrefferences("mother_job_value", newValue);
+                //   },
+                // ),
+                  WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Mother's Job*",
                   onChanged: (newValue) {
-                    saveToSharedPrefferences("mother_job_value", newValue);
+                    saveToSharedPrefferences("mother_job", newValue);
+                  },
+                ),
+                WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "mother Family Name*",
+                  onChanged: (newValue) {
+                    saveToSharedPrefferences("mother_family_name", newValue);
                   },
                 ),
 
@@ -432,13 +592,20 @@ class _Thirteen_Screen_Family_DetailsScreenState
                   ],
                 ),
 
-                WidgetTitleAndDropdown(
-                  DdbTitle: "Occupation*",
-                  DdbHint: "Select",
-                  DbdItems: occupationChoose,
+                // WidgetTitleAndDropdown(
+                //   DdbTitle: "Occupation*",
+                //   DdbHint: "Select",
+                //   DbdItems: occupationChoose,
+                //   onChanged: (newValue) {
+                //     saveToSharedPrefferences(
+                //         "sibling_occupation_value", newValue);
+                //   },
+                // ),
+                   WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "Occupation*",
                   onChanged: (newValue) {
-                    saveToSharedPrefferences(
-                        "sibling_occupation_value", newValue);
+                    saveToSharedPrefferences("sibling_occupation_value", newValue);
                   },
                 ),
 
@@ -456,6 +623,13 @@ class _Thirteen_Screen_Family_DetailsScreenState
                   textFieldTitle: "Email ID*",
                   onChanged: (newValue) {
                     saveToSharedPrefferences("sibling_email_value", newValue);
+                  },
+                ),
+                 WidgetTitleAndTextfield(
+                  textFieldHint: 'Enter',
+                  textFieldTitle: "sibling's Job*",
+                  onChanged: (newValue) {
+                    saveToSharedPrefferences("sibling_job_value", newValue);
                   },
                 ),
 

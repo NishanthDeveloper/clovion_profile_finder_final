@@ -5,17 +5,35 @@ import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/WidgetTitleAndDropdown.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/WidgetTitleAndTextfield.dart';
 
+import '../../../My work/wishlist.dart';
 import '../Account Settings/widgets/notification.dart';
 
-class ReferAFriendFourtySeven2Screen extends StatelessWidget {
-  const ReferAFriendFourtySeven2Screen({super.key});
+class ReferAFriendFourtySeven2Screen extends StatefulWidget {
+   ReferAFriendFourtySeven2Screen({super.key});
+
+  @override
+  State<ReferAFriendFourtySeven2Screen> createState() => _ReferAFriendFourtySeven2ScreenState();
+}
+
+class _ReferAFriendFourtySeven2ScreenState extends State<ReferAFriendFourtySeven2Screen> {
+    // Define the list of gender options
+  final List<String> _genders = ['Male', 'Female', 'Other'];
+
+  // Define the variable to store the selected gender
+  String? _selectedGender;
+
+   void _handleGenderChange(String? newValue) {
+    setState(() {
+      _selectedGender = newValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(
         notificationPage: NotificationPage(),
-          testingNextPage: ReferAFriendFourtySeven2Screen()),
+          testingNextPage: WishlistPage()),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
@@ -46,11 +64,13 @@ class ReferAFriendFourtySeven2Screen extends StatelessWidget {
                   textFieldTitle: 'Phone Number*',
                   textFieldHint: 'Enter',
                   onChanged: (value) {}),
-              const WidgetTitleAndDropdown(
-                DbdItems: [],
-                DdbHint: '',
+               WidgetTitleAndDropdown(
+                selectedValue: _selectedGender,
+                DbdItems: _genders,
+                DdbHint: 'Select Gender',
                 DdbTitle: 'Gender*',
-                onChanged: null,
+                onChanged: _handleGenderChange,
+                
               ),
               //
               SizedBox(

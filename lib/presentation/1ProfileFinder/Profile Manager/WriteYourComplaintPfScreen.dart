@@ -44,7 +44,7 @@ class _WriteYourComplaintPfScreenState
     // const my_private_investicator_id = "Y9M0YCN82YA";
     final url = Uri.parse(
         "http://${ApiService.ipAddress}/alldata/$profile_finder_id");
-    var request = http.MultipartRequest('POST', url);
+    var request = http.MultipartRequest('PUT', url);
     request.fields['my_manager'] =
         widget.profile_manager_id_ques; 
     request.fields['complaints'] = complaint;

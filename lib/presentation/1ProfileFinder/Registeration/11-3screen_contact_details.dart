@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -32,6 +33,7 @@ class _ThirteenScreenContactDetailsState
     "Item Two",
     "Item Three"
   ];
+  String selectedCountry = "Country ";
 
   saveToSharedPrefferences(String nameOfID, String valueToSave) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -128,7 +130,7 @@ class _ThirteenScreenContactDetailsState
           );
           // Future.delayed(const Duration(seconds: 10), () {});
           Navigator.pushNamed(
-              context, AppRoutes.FourteenScreenBottomNavigationscr);
+              context, AppRoutes.threeSigninScreen);
         }
       } catch (e) {
         print("Error While UploadingFile$e");
@@ -249,22 +251,88 @@ class _ThirteenScreenContactDetailsState
                   saveToSharedPrefferences("contact_father_zipcode", newValue);
                 },
               ),
-              WidgetTitleAndDropdown(
-                DdbTitle: "Country*",
-                DdbHint: _users.contactFatherCountry.toString() == "null"
-                    ? "Select"
-                    : _users.contactFatherCountry.toString(),
-                DbdItems: countryChoose,
-                onChanged: (newValue) {
-                  saveToSharedPrefferences("contact_father_country", newValue);
-                },
-              ),
-              WidgetTitleAndDropdown(
-                DdbTitle: "City*",
-                DdbHint: _users.contactFatherCity.toString() == "null"
-                    ? "Select"
-                    : _users.contactFatherCity.toString(),
-                DbdItems: cityChoose,
+              // WidgetTitleAndDropdown(
+              //   DdbTitle: "Country*",
+              //   DdbHint: _users.contactFatherCountry.toString() == "null"
+              //       ? "Select"
+              //       : _users.contactFatherCountry.toString(),
+              //   DbdItems: countryChoose,
+              //   onChanged: (newValue) {
+              //     saveToSharedPrefferences("contact_father_country", newValue);
+              //   },
+              // ),
+                
+                   Text(
+                      "Country*",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                      InkWell(
+                        onTap: () {
+                          showCountryPicker(
+                              context: context,
+                              onSelect: (Country country) {
+                                print('Select country: ${country.name}');
+                                setState(() {
+                                  selectedCountry = country.name;
+                                });
+                              },
+                              moveAlongWithKeyboard: false,
+                              // Optional. Sets the theme for the country list picker.
+                              countryListTheme: CountryListThemeData(
+                                // Optional. Sets the border radius for the bottomsheet.
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(40.0),
+                                  topRight: Radius.circular(40.0),
+                                ),
+                                inputDecoration: InputDecoration(
+                                  labelText: 'Search',
+                                  hintText: 'Start typing to search',
+                                  prefixIcon: const Icon(Icons.search),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: const Color(0xFF8C98A8)
+                                          .withOpacity(0.2),
+                                    ),
+                                  ),
+                                ),
+                              ));
+                        },
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                              border:
+                                  Border.all(width: 0, color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: selectedCountry.isEmpty
+                                ? Text("Enter")
+                                : Text(selectedCountry),
+                          ),
+                        )),
+                         const SizedBox(
+                      height: 20,
+                    ),
+              // WidgetTitleAndDropdown(
+              //   DdbTitle: "City*",
+              //   DdbHint: _users.contactFatherCity.toString() == "null"
+              //       ? "Select"
+              //       : _users.contactFatherCity.toString(),
+              //   DbdItems: cityChoose,
+              //   onChanged: (newValue) {
+              //     saveToSharedPrefferences("contact_father_city", newValue);
+              //   },
+              // ),
+               WidgetTitleAndTextfield(
+                initialValueExisitingCust: _users.contactFatherName,
+                textFieldHint: _users.contactFatherName.toString() == "null"
+                    ? 'Enter'
+                    : _users.contactFatherName.toString(),
+                textFieldTitle: "City*",
                 onChanged: (newValue) {
                   saveToSharedPrefferences("contact_father_city", newValue);
                 },

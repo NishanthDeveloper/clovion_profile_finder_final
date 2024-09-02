@@ -242,59 +242,38 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
   //     print('A network error occurred');
   //   }
   // }
+void signup() async {
+  print('Sign up method');
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  preferences.clear();
+  print('method');
 
-  void signup() async {
-    print('Sign up method');
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.clear();
+  var headers = {
+    'Content-Type': 'application/json',
+  };
 
-    var headers = {
-      // 'Content-Type': 'application/json',
-      'Context-Type': 'application/json',
-    };
+  var requestBody = {
+    'email': emailController.text,
+    'mobile': '+$countryCode ${mobileNoController.text}',
+    'password': passwordController.text,
+    'referral_code': refferalCodeController.text,
+    'name': firstNameController.text,
+    'door_no': doorNumberController.text,
+    'street_name': streetNameController.text,
+    'address': addressController.text,
+    'pincode': pincodeController.text,
+    'my_manager': selectedHiringManager.toString(),
+  };
 
-    var requestBody = {
-      // 'email': 'umsrn333@gmail.com',
-      // 'mobile': 9876543210,
-      // 'password': "12345",
-      // 'password2': "12345",
-      // 'code': "",
-
-      // 'email': emailController.text,
-      // 'mobile': mobileNoController.text,
-      // 'password': passwordController.text,
-      // 'password2': confirmPasswordController.text,
-      // 'code': refferalCodeController.text
-
-      'email': emailController.text,
-      'mobile': '+$countryCode ${mobileNoController.text}',
-      'password': passwordController.text,
-      'referral_code': refferalCodeController.text,
-      'name': firstNameController.text,
-      'door_no': doorNumberController.text,
-      'street_name': streetNameController.text,
-      'address': addressController.text,
-      'pincode': pincodeController.text,
-      'my_manager': selectedHiringManager.toString(),
-
-      // 'email': 'abc@gmail.com',
-      // 'mobile': '9876543211',
-      // 'password': '123456',
-      // 'referral_code': '123123',
-    };
-
-    // print(mobileNoController.text.runtimeType);
-
+  try {
     var response = await http.post(
       Uri.parse('http://${ApiService.ipAddress}/signup/'),
-      // Uri.parse('http://10.0.2.2:8000/signup/'),
-
       headers: headers,
-      // body: jsonEncode(requestBody),
-      body: requestBody,
+      body: jsonEncode(requestBody),
     );
 
-    // http://10.0.2.2:8000/
+    print('Sign ');
+    print(response.statusCode);
 
     if (response.statusCode == 200) {
       setState(() {
@@ -303,8 +282,8 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
         preferences.setString("uid2", userUidclean.toString());
         preferences.setString("userEmail", emailController.text);
       });
-      // Navigator.pushNamed(context, AppRoutes.iphone1313ProSixScreen);
-      // ignore: use_build_context_synchronously
+      print(response.statusCode);
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) {
@@ -316,10 +295,15 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
         }),
       );
     } else {
-      userUidclean =
-          emailController.text.substring(2, emailController.text.length - 2);
+      // Handle unexpected status codes
+      print('Error: ${response.statusCode}');
+      print('Response body: ${response.body}');
     }
+  } catch (e) {
+    print("Error While Signing Up: $e");
   }
+}
+
 
   @override
   void initState() {
