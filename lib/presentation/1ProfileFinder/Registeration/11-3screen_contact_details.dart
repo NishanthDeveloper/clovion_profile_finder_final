@@ -181,6 +181,8 @@ class _ThirteenScreenContactDetailsState
 
   @override
   Widget build(BuildContext context) {
+      var heigh = MediaQuery.of(context).size.height;
+    var wid = MediaQuery.of(context).size.height;
     return Scaffold(
       body:
           //  isLoading == true
@@ -379,7 +381,7 @@ class _ThirteenScreenContactDetailsState
               ),
               Row(mainAxisSize: MainAxisSize.min, children: [
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -387,7 +389,7 @@ class _ThirteenScreenContactDetailsState
                       ),
                       child:
                       Padding(
-                            padding: const EdgeInsets.only(left: 10),
+                            padding: const EdgeInsets.only(left: 1),
                             child: IntlPhoneField(
                                             // flagsButtonMargin: EdgeInsets.only(left: 10),
                                             disableLengthCheck: true,
@@ -481,10 +483,10 @@ class _ThirteenScreenContactDetailsState
                       ),
                 ),
                 const SizedBox(
-                  width: 10,
+                  width: 6,
                 ),
                 Expanded(
-                  flex: 6,
+                  flex: 5,
                   child: TextFormField(
                       initialValue: _users.primaryPhoneNumber == "null"
                           ? null
@@ -524,7 +526,7 @@ class _ThirteenScreenContactDetailsState
               ),
               Row(mainAxisSize: MainAxisSize.min, children: [
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -533,7 +535,7 @@ class _ThirteenScreenContactDetailsState
                       child: 
 
                       Padding(
-                            padding: const EdgeInsets.only(left: 10),
+                            padding: const EdgeInsets.only(left: 1),
                             child: IntlPhoneField(
                                             // flagsButtonMargin: EdgeInsets.only(left: 10),
                                             disableLengthCheck: true,
@@ -581,10 +583,10 @@ class _ThirteenScreenContactDetailsState
                       ),
                 ),
                 const SizedBox(
-                  width: 10,
+                  width: 6,
                 ),
                 Expanded(
-                  flex: 6,
+                  flex: 5,
                   child: TextFormField(
                       initialValue: _users.whatsapp == "null"
                           ? null

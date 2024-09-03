@@ -78,6 +78,8 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+     var heigh = MediaQuery.of(context).size.height;
+    var wid = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color.fromRGBO(244, 242, 255, 1),
       body: ListView.separated(
@@ -97,8 +99,9 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                 }),
               ),
               child: Container(
+                
                 height: 120,
-                width: double.infinity,
+                width: wid*0.9,
                 color: Colors.white,
                 child: Padding(
                   padding: EdgeInsets.only(left: 20),
@@ -113,7 +116,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                       SizedBox(width: 15),
                       SizedBox(
                         height: 120,
-                        width: 260,
+                        width: wid*0.3,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,

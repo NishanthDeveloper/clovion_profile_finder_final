@@ -77,7 +77,7 @@ class _ProfileBottomNavigationScreenState
     'Profile Visibility',
     'Profile Handler',
     'Private Investigator',
-    'Complaints'
+   // 'Complaints'
   ];
 
   // Set initial value to "Addon"
@@ -93,7 +93,7 @@ class _ProfileBottomNavigationScreenState
     'Profile Visibility': ReferAFriendFourtySeven2Screen(),
     'Profile Handler': AllProfileManagerScreen(),
     'Private Investigator': AllInvestigatorThirtyEightScreen(),
-    'Complaints': HighlightProfileFourtySixScreen(),
+   // 'Complaints': HighlightProfileFourtySixScreen(),
   };
 
   late String userUid;
@@ -139,6 +139,8 @@ class _ProfileBottomNavigationScreenState
 
   @override
   Widget build(BuildContext context) {
+          var heigh = MediaQuery.of(context).size.height;
+    var wid = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -233,7 +235,7 @@ class _ProfileBottomNavigationScreenState
                       height: 30,
                     ),
                     CircleAvatar(
-                      radius: 57,
+                      radius: wid*0.05,
                       backgroundImage:
                           NetworkImage(_users.profilePicture.toString()),
                     ),
@@ -248,7 +250,7 @@ class _ProfileBottomNavigationScreenState
                         children: [
                           Container(
                             height: 24,
-                            width: 80,
+                            width: wid*0.09,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: Color(0xffF4F2FF),
@@ -279,8 +281,8 @@ class _ProfileBottomNavigationScreenState
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 10),
                           ),
-                          const SizedBox(
-                            width: 5,
+                           SizedBox(
+                            width: wid*0.05,
                             height: 5,
                           ),
                           Text(

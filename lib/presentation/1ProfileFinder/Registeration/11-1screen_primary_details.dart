@@ -755,10 +755,11 @@ class _ThirteenScreenPrimaryDetailsState
 
   @override
   Widget build(BuildContext context) {
-    var heeight = MediaQuery.of(context).size.height;
-    var wiidth = MediaQuery.of(context).size.width;
+         var heigh = MediaQuery.of(context).size.height;
+    var wid = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      
       body:
           // isLoading == true
           //     ? Center(child: CircularProgressIndicator())
@@ -1289,7 +1290,12 @@ class _ThirteenScreenPrimaryDetailsState
                     D10HCustomClSizedBoxWidget(),
                     D10HCustomClSizedBoxWidget(),
 
-                    Row(
+                    Container(
+                      width: wid*0.8,
+                      child: Column(
+                        
+                        children: [
+                          Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MultiWidget(
@@ -1374,6 +1380,9 @@ class _ThirteenScreenPrimaryDetailsState
                           updateMultipleInterset: updateMultipleInterset,
                         ),
                       ],
+                    ),
+                        ],
+                      ),
                     ),
 
                     // CustomClChoiceChip(
@@ -1421,7 +1430,11 @@ class _ThirteenScreenPrimaryDetailsState
                     D10HCustomClSizedBoxWidget(),
                     D10HCustomClSizedBoxWidget(),
 
-                    Row(
+                  Container(
+                    width: wid*0.8,
+                    child: Column(
+                      children: [
+                          Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MultiWidget(
@@ -1507,6 +1520,9 @@ class _ThirteenScreenPrimaryDetailsState
                         ),
                       ],
                     ),
+                      ],
+                    ),
+                  ),
 
                     D10HCustomClSizedBoxWidget(),
                     D10HCustomClSizedBoxWidget(),
@@ -1525,7 +1541,11 @@ class _ThirteenScreenPrimaryDetailsState
                     D10HCustomClSizedBoxWidget(),
                     D10HCustomClSizedBoxWidget(),
 
-                    Row(
+                    Container(
+                      width : wid*0.8,
+                      child:Column(
+                        children:[
+                          Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MultiWidget(
@@ -1564,6 +1584,9 @@ class _ThirteenScreenPrimaryDetailsState
                           updateMultipleInterset: updateMultipleInterset,
                         ),
                       ],
+                    ),
+                        ]
+                      )
                     ),
                     D10HCustomClSizedBoxWidget(),
                     D10HCustomClSizedBoxWidget(),
@@ -1718,7 +1741,11 @@ class _ThirteenScreenPrimaryDetailsState
                       height: 50,
                     ),
 
-                    Row(
+                  Container(
+                    width: wid*0.8,
+                    child: Column(
+                      children: [
+                          Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         MultiWidget(
@@ -1776,6 +1803,9 @@ class _ThirteenScreenPrimaryDetailsState
                         ),
                       ],
                     ),
+                      ],
+                    ),
+                  ),
                     //
                     D10HCustomClSizedBoxWidget(),
                     D10HCustomClSizedBoxWidget(),
@@ -1797,7 +1827,11 @@ class _ThirteenScreenPrimaryDetailsState
                     ),
                     D10HCustomClSizedBoxWidget(),
                     D10HCustomClSizedBoxWidget(),
-                    Row(
+                   Container(
+                    width: wid*0.8,
+                    child: Column(
+                      children: [
+                         Row(
                       children: [
                         MultiWidget(
                           textdata: 'Self Cooking',
@@ -1839,6 +1873,9 @@ class _ThirteenScreenPrimaryDetailsState
                         ),
                       ],
                     ),
+                      ],
+                    ),
+                   ),
                     //
                     D10HCustomClSizedBoxWidget(),
                     D10HCustomClSizedBoxWidget(),
