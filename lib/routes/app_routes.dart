@@ -1,7 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/PrivateInvestigator/PaymentOfInvestigatorFourtyScreen.dart';
+import 'package:profile_finder/test.dart';
 
 import '../presentation/1ProfileFinder/HappyCouplesUI/AddThirtyFourScreen.dart';
 import '../presentation/1ProfileFinder/HappyCouplesUI/HappyCouplesPackagesThirtySixScreen.dart';
@@ -161,7 +163,8 @@ class AppRoutes {
 
   static const String paymentOfInvestigatorFourtyScreen =
       'payment_Of_Investigator_FourtyScreen';
-
+  static const String testScreen =
+      'test_screen';
 
       
 
@@ -169,6 +172,7 @@ class AppRoutes {
 
 
   static Map<String, WidgetBuilder> routes = {
+    testScreen:(context) =>TestScreen(),
     oneSplashScreen: (context) => OneSplashScreen(),
     twoWelcomeScreen: (context) => TwoWelcomeScreen(),
     threeSigninScreen: (context) => ThreeSigninScreen(),

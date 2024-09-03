@@ -31,7 +31,9 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
 
   String? valueChoose;
   List<String> hiringManager = [];
+  List<String> hiringManagername = [];
   String? selectedHiringManager;
+  String? selectedHiringManagerUid;
 
   final List<String> _dropdownItemList = ["Item One", "Item Two", "Item Three"];
 
@@ -131,6 +133,7 @@ class _FourSignUpScreenState extends State<FourSignUpScreen> {
     for (var i = 0; i < allData.length; i++) {
       setState(() {
         hiringManager.add(allData[i]['uid']);
+        hiringManagername.add(allData[i]['first_name']);
       });
     }
   }
@@ -262,7 +265,7 @@ void signup() async {
     'street_name': streetNameController.text,
     'address': addressController.text,
     'pincode': pincodeController.text,
-    'my_manager': selectedHiringManager.toString(),
+    'my_manager':selectedHiringManagerUid.toString(),
   };
 
   try {
@@ -560,7 +563,7 @@ void signup() async {
                               // Email Field
                               const Padding(
                                 padding: EdgeInsets.only(top: 20),
-                                child: Text("Emaill ID*"),
+                                child: Text("Email ID*"),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 8),
@@ -789,17 +792,24 @@ void signup() async {
 
                               // Hiring manger
                               WidgetTitleAndDropdown(
-                                DdbTitle: "Hiring Manager*",
+                                DdbTitle: "Profile Handler*",
                                 DdbHint: "Select",
-                                DbdItems: hiringManager,
+                                DbdItems: hiringManagername,
                                 onChanged: (String? newValue) {
                                   setState(() {
-                                    selectedHiringManager = newValue!;
-                                    print(selectedHiringManager);
+                                    selectedHiringManager = newValue!; // Forcefully unwrap `newValue`
+                                    int selectedIndex = hiringManagername.indexOf(selectedHiringManager!);
+                                    selectedHiringManagerUid = hiringManager[selectedIndex];
+                                    print("Selected Hiring Manager Name: $selectedHiringManager");
+                                    print("Selected Hiring Manager UID: $selectedHiringManagerUid");
+
+                                    // Now you can use `selectedHiringManagerUid` to make your API call
+                                    // For example:
+                                    // uploadAboutMe("HiringManagerUid", selectedHiringManagerUid);
                                   });
-                                  // uploadAboutMe("Physical Status", dropdownValue.toString());
                                 },
                               ),
+
 
                               // referal Code Field
                               Text("Refferal Code"),

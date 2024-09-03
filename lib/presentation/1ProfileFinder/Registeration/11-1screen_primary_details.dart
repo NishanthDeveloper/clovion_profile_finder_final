@@ -823,7 +823,7 @@ class _ThirteenScreenPrimaryDetailsState
                     ),
 
                     WidgetTitleAndTextfield(
-                      textFieldHint: _users.email ?? 'Enter',
+                      textFieldHint:  'Enter your email',
                       textFieldTitle: "Email*",
                       onChanged: (newValue) {
                         saveToSharedPrefferences(

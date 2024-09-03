@@ -110,7 +110,7 @@ class _PrivacyWidgetState extends State<PrivacyWidget> {
                 CircleAvatar(
                   radius: 35,
                   backgroundImage: NetworkImage(
-                      user['id_card_1'] ?? '') as ImageProvider,
+                      user['profile_picture'] ?? '') as ImageProvider,
                 ),
                 SizedBox(width: 10),
                 Expanded(

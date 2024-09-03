@@ -8,20 +8,19 @@ import 'package:http/http.dart' as http;
 import 'package:profile_finder/core/utils/color_constant.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/MatchingList/1screen_advertisement.dart';
 import 'package:profile_finder/presentation/1ProfileFinder/Registeration/9screenThisProfileForWhom.dart';
-import 'package:profile_finder/presentation/1ProfileFinder/Registeration/profile_picture.dart';
 import 'package:profile_finder/routes/app_routes.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomClAll.dart';
 import 'package:profile_finder/widgets/CustomWidgetsCl/CustomWidgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class EightUploadTheIDScreen extends StatefulWidget {
-  const EightUploadTheIDScreen({super.key});
+class ProfilePictureUpload extends StatefulWidget {
+  const ProfilePictureUpload({super.key});
 
   @override
-  State<EightUploadTheIDScreen> createState() => _EightUploadTheIDScreenState();
+  State<ProfilePictureUpload> createState() => _ProfilePictureUploadState();
 }
 
-class _EightUploadTheIDScreenState extends State<EightUploadTheIDScreen> {
+class _ProfilePictureUploadState extends State<ProfilePictureUpload> {
   // String url = "http://3.86.99.140:8000/profileidcard/{YLEM2CJOOBT}";
 
   //     FormData data = FormData.fromMap({
@@ -136,9 +135,9 @@ class _EightUploadTheIDScreenState extends State<EightUploadTheIDScreen> {
     // var dio = Dio();
 
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-        //  type: FileType.custom,
-        //   allowedExtensions: ['pdf'],
-        );
+      //  type: FileType.custom,
+      //   allowedExtensions: ['pdf'],
+    );
 
     if (result != null) {
       File file = File(result.files.single.path ?? " ");
@@ -158,14 +157,14 @@ class _EightUploadTheIDScreenState extends State<EightUploadTheIDScreen> {
 
     String uidUser = preferences.getString("uid2").toString();
 
-    final url = Uri.parse("http://${ApiService.ipAddress}/profileidcard/$uidUser");
+    final url = Uri.parse("http://${ApiService.ipAddress}/profilepicture/$uidUser");
     // final file = File("/home/abijith/Pictures/cat.jpg");
 
     // final file2 = File("/home/abijith/Pictures/flower.jpeg");
     final request = http.MultipartRequest('POST', url);
     // request.files.add(await http.MultipartFile.fromPath('id_card_1', filepath.toString()));
     request.files
-        .add(await http.MultipartFile.fromPath('id_card_1', filee!.path ?? ""));
+        .add(await http.MultipartFile.fromPath('profile_picture', filee!.path ?? ""));
 
     // request.files.add(await http.MultipartFile.fromPath('id_card_1', file2.path));
     // request.fields['email'] = [
@@ -185,18 +184,18 @@ class _EightUploadTheIDScreenState extends State<EightUploadTheIDScreen> {
 
       if (response.statusCode == 200) {
 
-         print("Succesfully Uploaded");
+        print("Succesfully Uploaded");
 
-          Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return ProfilePictureUpload();
-                              }),
-                            );
-        
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return NineThisProfileForWhomScreen();
+          }),
+        );
+
       }
 
-     
+
     } catch (e) {
       print("Error While Uploading File $e");
     }
@@ -237,7 +236,7 @@ class _EightUploadTheIDScreenState extends State<EightUploadTheIDScreen> {
                         ),
                         const D10HCustomClSizedBoxWidget(),
                         Text(
-                          'Upload the ID of who Handling the account.',
+                          'Upload the Profile Picture of who Handling the account.',
                           style: TextStyle(
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w400,
@@ -250,7 +249,7 @@ class _EightUploadTheIDScreenState extends State<EightUploadTheIDScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'ID Card*',
+                          'Profile Picture*',
                           style: TextStyle(
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w700,
@@ -303,20 +302,20 @@ class _EightUploadTheIDScreenState extends State<EightUploadTheIDScreen> {
                                         borderRadius: BorderRadius.circular(8)),
                                     child: filepath == "abc"
                                         ? Padding(
-                                            padding: const EdgeInsets.all(10),
-                                            child: SvgPicture.asset(
-                                                "assets/images/img_group228.svg"
-                                                // height: 50,
-                                                ))
+                                        padding: const EdgeInsets.all(10),
+                                        child: SvgPicture.asset(
+                                            "assets/images/img_group228.svg"
+                                          // height: 50,
+                                        ))
                                         : ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: Image.file(
-                                              filee!,
-                                              fit: BoxFit.cover,
-                                              width: 80,
-                                              height: 80,
-                                            )),
+                                        borderRadius:
+                                        BorderRadius.circular(8),
+                                        child: Image.file(
+                                          filee!,
+                                          fit: BoxFit.cover,
+                                          width: 80,
+                                          height: 80,
+                                        )),
                                   ),
                                 ),
                                 // filepath == "abc" ?
@@ -343,7 +342,7 @@ class _EightUploadTheIDScreenState extends State<EightUploadTheIDScreen> {
                             uploadSingleFile();
 //  Navigator.pushNamed(context, AppRoutes.nineThisProfileForWhomScreen);
 
-                           
+
 
                             //  Navigator.pushNamed(
                             //   context, AppRoutes.ThirteenScreenscr);
@@ -381,11 +380,11 @@ class _EightUploadTheIDScreenState extends State<EightUploadTheIDScreen> {
             )));
   }
 
-  // onTapGonext(BuildContext context) {
-  //   Navigator.pushNamed(context, AppRoutes.iphone1313ProElevenScreen);
-  // }
+// onTapGonext(BuildContext context) {
+//   Navigator.pushNamed(context, AppRoutes.iphone1313ProElevenScreen);
+// }
 
-  // onTapTxtIfdontwantto(BuildContext context) {
-  //   Navigator.pushNamed(context, AppRoutes.threeSigninScreen);
-  // }
+// onTapTxtIfdontwantto(BuildContext context) {
+//   Navigator.pushNamed(context, AppRoutes.threeSigninScreen);
+// }
 }

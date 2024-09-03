@@ -36,17 +36,19 @@ class MyApp extends StatelessWidget {
       theme: _baseTheme,
       title: 'marriyoo',
       debugShowCheckedModeBanner: false,
-
-      initialRoute: isLoggedIn ? AppRoutes. FourteenScreenBottomNavigationscr : AppRoutes.oneSplashScreen,
+    /*
+      initialRoute: isLoggedIn
+          ? AppRoutes.FourteenScreenBottomNavigationscr
+          : AppRoutes.testScreen,
+     */
+      initialRoute: AppRoutes.oneSplashScreen,
       routes: AppRoutes.routes,
     );
   }
 }
 
-
-
 /*
-  
+
   // List<MyInvestigator> myInvestigator = [];
 
   // Future<String?> fetchMyInvestigatorData() async {
@@ -69,10 +71,10 @@ class MyApp extends StatelessWidget {
   // }
 
 
-// 
-   body: 
+//
+   body:
 
-      _isLoading ? 
+      _isLoading ?
 
         const Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -92,12 +94,12 @@ class MyApp extends StatelessWidget {
         )
 
         :
-        
-      
+
+
       SingleChildScrollView(
 
 
-  // 
+  //
 
 
   */
