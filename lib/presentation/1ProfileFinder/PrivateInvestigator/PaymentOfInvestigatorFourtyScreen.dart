@@ -50,6 +50,7 @@ class _PaymentOfInvestigatorFourtyScreenState
     debugPrint('Fetchdata response');
     debugPrint(response.statusCode.toString());
     if (response.statusCode == 200) {
+
     List<dynamic> jsonResponse = jsonDecode(response.body);
     setState(() {
 
@@ -315,27 +316,6 @@ String _profile_finder_id = '';
           child: Column(
             children: [
 
-
-              Text(piMyClients.length.toString()),
-
-              
-
-               Text(
-                    MyInvestigatorsUidList.toString(),
-                    style: TextStyle(),
-                  ),
-              
-                  Text(MyInvestigatorsUidList!
-                      .contains(widget.private_investicator_id)
-                      .toString()),
-              
-                      Text(widget.private_investicator_id, style: TextStyle(),),
-              
-                      Text(userList[0].uid.toString(), style: TextStyle(),),
-              
-                  // Text(profile_finder_id),
-
-                  Text( userList[0].totalRatings.toString(), style: TextStyle(),),
 
 
               loadingfetchMyPiInv || loadingFetchData ? CircularProgressIndicator() :
