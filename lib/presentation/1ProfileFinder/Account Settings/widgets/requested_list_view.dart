@@ -60,6 +60,9 @@ class _requestedListViewState extends State<requestedListView> {
   }
   @override
   Widget build(BuildContext context) {
+    var heigh = MediaQuery.of(context).size.height;
+    var wid = MediaQuery.of(context).size.height;
+
     return ListView.builder(
       itemCount: requested_List.length,
       itemBuilder: (context, index) {
@@ -114,7 +117,7 @@ class _requestedListViewState extends State<requestedListView> {
                 ),
                 Container(
                   height: 140,
-                  width: 134,
+                  width: wid*0.2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -156,36 +159,22 @@ class _requestedListViewState extends State<requestedListView> {
 
                 Column(
                   children: [
+                     SizedBox(
+                              height: 10,
+                            ),
                     Container(
                         height: 120,
                         //   color: Colors.deepOrange,
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              height: 50,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      "assets/images/rect_green.png",
-                                    ),
-                                  )),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          SizedBox(
-                                            width: 0.5,
-                                          ),
-                                          Image.asset('assets/images/hand.png'),
-                                         Text(
+                             Container(
+                                height: heigh*0.06,
+                                width: wid*0.09,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff27AE60),
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Center(
+                                  child: Text(
                                            requested_List[index]['action'] != 'empty' ? requested_List[index]['action'].toString().toUpperCase() : "Pending",
                                             style: TextStyle(
                                               color: Colors.white,
@@ -193,57 +182,108 @@ class _requestedListViewState extends State<requestedListView> {
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                ),
+                              ),
+                               SizedBox(
+                              height: 10,
+                            ),
+                             Container(
+                               height: heigh*0.06,
+                                width: wid*0.09,
+                                decoration: BoxDecoration(
+                                    color: Color(0xffE5E5E5),
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Center(
+                                  child: Text(
+                                    'Reject',
+                                    style: TextStyle(
+                                      color: Color(0xff6E717A),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              height: 50,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      "assets/images/rect_grey.png",
-                                    ),
-                                  )),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          SizedBox(
-                                            width: 0.5,
-                                          ),
-                                          Image.asset(
-                                              'assets/images/cancel.png'),
-                                          Text(
-                                            'Cancel',
-                                            style: TextStyle(
-                                              color: Color(0xff6E717A),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                           
+                           
+                            // Container(
+                            //   height: 50,
+                            //   width: 120,
+                            //   decoration: BoxDecoration(
+                            //       image: DecorationImage(
+                            //         image: AssetImage(
+                            //           "assets/images/rect_green.png",
+                            //         ),
+                            //       )),
+                            //   child: Stack(
+                            //     children: [
+                            //       Positioned(
+                            //         child: Center(
+                            //           child: Row(
+                            //             mainAxisAlignment:
+                            //             MainAxisAlignment.spaceEvenly,
+                            //             children: [
+                            //               SizedBox(
+                            //                 width: 0.5,
+                            //               ),
+                            //               Image.asset('assets/images/hand.png'),
+                            //              Text(
+                            //                requested_List[index]['action'] != 'empty' ? requested_List[index]['action'].toString().toUpperCase() : "Pending",
+                            //                 style: TextStyle(
+                            //                   color: Colors.white,
+                            //                   fontSize: 16,
+                            //                   fontWeight: FontWeight.w500,
+                            //                 ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                            // Container(
+                            //   height: 50,
+                            //   width: 120,
+                            //   decoration: BoxDecoration(
+                            //       image: DecorationImage(
+                            //         image: AssetImage(
+                            //           "assets/images/rect_grey.png",
+                            //         ),
+                            //       )),
+                            //   child: Stack(
+                            //     children: [
+                            //       Positioned(
+                            //         child: Center(
+                            //           child: Row(
+                            //             mainAxisAlignment:
+                            //             MainAxisAlignment.spaceEvenly,
+                            //             children: [
+                            //               SizedBox(
+                            //                 width: 0.5,
+                            //               ),
+                            //               Image.asset(
+                            //                   'assets/images/cancel.png'),
+                            //               Text(
+                            //                 'Cancel',
+                            //                 style: TextStyle(
+                            //                   color: Color(0xff6E717A),
+                            //                   fontSize: 16,
+                            //                   fontWeight: FontWeight.w500,
+                            //                 ),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         )),
                   ],
                 ),
-                SizedBox(
-                  width: 10,
-                )
+               
               ],
             ),
           ),

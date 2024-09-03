@@ -337,6 +337,10 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var he = MediaQuery.of(context).size.height;
+    var we = MediaQuery.of(context).size.width;
+
+
     if (userList.isNotEmpty) {
       //  return Scaffold();
       return Scaffold(
@@ -537,7 +541,7 @@ class _PmCloseDealScreenState extends State<PmCloseDealScreen> {
                                             width: 15,
                                           ),
                                           SizedBox(
-                                            width: 320,
+                                            width: we*0.7,
                                             child: Text(
                                               complaint == 'empty'
                                                   ? 'No Questions Right Now '

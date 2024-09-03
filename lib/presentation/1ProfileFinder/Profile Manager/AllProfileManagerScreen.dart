@@ -748,6 +748,8 @@ class _AllProfileManagerScreenState extends State<AllProfileManagerScreen> {
 
   @override
   Widget build(BuildContext context) {
+      var heigh = MediaQuery.of(context).size.height;
+    var wid = MediaQuery.of(context).size.height;
     // return Scaffold();
     return Scaffold(
       appBar:  ClAppbarLeadGridSuffHeart(

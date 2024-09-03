@@ -131,6 +131,8 @@ class _FourteenProfileCompletenessState
 
   @override
   Widget build(BuildContext context) {
+      var heigh = MediaQuery.of(context).size.height;
+    var wid = MediaQuery.of(context).size.height;
     return
 
         // isLoading == true ? Scaffold(body: Center(child: CircularProgressIndicator())) :
@@ -169,7 +171,7 @@ class _FourteenProfileCompletenessState
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
                           height: 10,
-                          width: 170,
+                          width: wid*0.2,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: LinearProgressIndicator(
