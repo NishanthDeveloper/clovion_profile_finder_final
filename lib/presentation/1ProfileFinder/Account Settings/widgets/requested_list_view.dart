@@ -75,7 +75,6 @@ class _requestedListViewState extends State<requestedListView> {
                 color: Color.fromRGBO(255, 255, 255, 1),
                 borderRadius: BorderRadius.circular(8)),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 // StackContainer
                 Stack(
@@ -118,7 +117,7 @@ class _requestedListViewState extends State<requestedListView> {
                 ),
                 Container(
                   height: 140,
-               //  width: 50,
+                  width: wid*0.2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -196,7 +195,7 @@ class _requestedListViewState extends State<requestedListView> {
                                     borderRadius: BorderRadius.circular(5)),
                                 child: Center(
                                   child: Text(
-                                    'Cancel',
+                                    'Reject',
                                     style: TextStyle(
                                       color: Color(0xff6E717A),
                                       fontSize: 16,
